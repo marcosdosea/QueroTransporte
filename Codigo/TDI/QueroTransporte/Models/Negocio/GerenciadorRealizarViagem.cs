@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorRealizarViagem {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorRealizarViagem
+    {
 
-        public GerenciadorRealizarViagem() {
+        public GerenciadorRealizarViagem()
+        {
         }
 
-        public void realizarViagem() {
+        public void RealizarViagem()
+        {
             // TODO implement here
         }
 

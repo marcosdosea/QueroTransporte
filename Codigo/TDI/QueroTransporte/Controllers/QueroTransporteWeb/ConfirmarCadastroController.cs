@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.QueroTransporteWeb{
+namespace QueroTransporte.QueroTransporteWeb
+{
     public class ConfirmarCadastroController : Controller
     {
 
-        public ConfirmarCadastroController() {
+        public ConfirmarCadastroController()
+        {
         }
 
 
 
-        public void confirmar() {
+        public void Confirmar()
+        {
             // TODO implement here
         }
 

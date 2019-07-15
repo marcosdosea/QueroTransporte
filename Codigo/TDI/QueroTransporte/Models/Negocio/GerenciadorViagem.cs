@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorViagem {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorViagem
+    {
 
-        public GerenciadorViagem() {
+        public GerenciadorViagem()
+        {
         }
 
 
@@ -15,19 +18,23 @@ namespace QueroTransporte.Negocio{
 
 
 
-        public void consultarViagens() {
+        public void ConsultarViagens()
+        {
             // TODO implement here
         }
 
-        public void cadastrarViagem() {
+        public void CadastrarViagem()
+        {
             // TODO implement here
         }
 
-        public void alterarVeiculo() {
+        public void AlterarVeiculo()
+        {
             // TODO implement here
         }
 
-        public void excluirViagem() {
+        public void ExcluirViagem()
+        {
             // TODO implement here
         }
 

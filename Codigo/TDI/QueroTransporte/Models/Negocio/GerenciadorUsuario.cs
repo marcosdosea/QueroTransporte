@@ -4,44 +4,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorUsuario {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorUsuario
+    {
 
-        public GerenciadorUsuario() {
+        public GerenciadorUsuario()
+        {
         }
 
 
 
 
-        public void cadastrarCliente() {
+        public void CadastrarCliente()
+        {
             // TODO implement here
         }
 
-        public void validarCliente() {
+        public void ValidarCliente()
+        {
             // TODO implement here
         }
 
-        public void cadastrarMotorista() {
+        public void CadastrarMotorista()
+        {
             // TODO implement here
         }
 
-        public void alterarCliente() {
+        public void AlterarCliente()
+        {
             // TODO implement here
         }
 
-        public void removerCliente() {
+        public void RemoverCliente()
+        {
             // TODO implement here
         }
 
-        public void buscarCliente() {
+        public void buscarCliente()
+        {
             // TODO implement here
         }
 
-        public void autenticarUsuario() {
+        public void AutenticarUsuario()
+        {
             // TODO implement here
         }
 
-        public void validarDados() {
+        public void ValidarDados()
+        {
             // TODO implement here
         }
 

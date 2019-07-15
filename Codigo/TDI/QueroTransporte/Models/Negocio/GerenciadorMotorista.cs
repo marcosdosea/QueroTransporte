@@ -4,36 +4,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorMotorista {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorMotorista
+    {
 
-        public GerenciadorMotorista() {
+        public GerenciadorMotorista()
+        {
         }
 
 
 
 
-        public void cadastrarMotorista() {
+        public void CadastrarMotorista()
+        {
             // TODO implement here
         }
 
-        public void validarMotorista() {
+        public void ValidarMotorista()
+        {
             // TODO implement here
         }
 
-        public void alterarMotorista() {
+        public void AlterarMotorista()
+        {
             // TODO implement here
         }
 
-        public void consultarMotorista() {
+        public void ConsultarMotorista()
+        {
             // TODO implement here
         }
 
-        public void removerMotorista() {
+        public void RemoverMotorista()
+        {
             // TODO implement here
         }
 
-        public void confirmarCadastro() {
+        public void ConfirmarCadastro()
+        {
             // TODO implement here
         }
 

@@ -4,32 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorAdministrador {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorAdministrador
+    {
 
-        public GerenciadorAdministrador() {
+        public GerenciadorAdministrador()
+        {
         }
 
 
 
 
-        public void confirmarCadastro() {
+        public void ConfirmarCadastro()
+        {
             // TODO implement here
         }
 
-        public void inserirAdm() {
+        public void InserirAdm()
+        {
             // TODO implement here
         }
 
-        public void alterarAdm() {
+        public void AlterarAdm()
+        {
             // TODO implement here
         }
 
-        public void buscarAdm() {
+        public void BuscarAdm()
+        {
             // TODO implement here
         }
 
-        public void excluirAdm() {
+        public void ExcluirAdm()
+        {
             // TODO implement here
         }
 

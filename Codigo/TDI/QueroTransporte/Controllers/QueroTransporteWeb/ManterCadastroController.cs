@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.QueroTransporteWeb{
+namespace QueroTransporte.QueroTransporteWeb
+{
     public class ManterCadastroController : Controller
     {
 
-        public ManterCadastroController() {
+        public ManterCadastroController()
+        {
         }
 
     }

@@ -5,24 +5,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.QueroTransporteWeb{
+namespace QueroTransporte.QueroTransporteWeb
+{
     public class ManterMotoristaController : Controller
     {
 
-        public ManterMotoristaController() {
+        public ManterMotoristaController()
+        {
         }
 
 
 
-        public void create() {
+        public void Create()
+        {
             // TODO implement here
         }
 
-        public void edit() {
+        public void Edit()
+        {
             // TODO implement here
         }
 
-        public void details() {
+        public void Details()
+        {
             // TODO implement here
         }
 

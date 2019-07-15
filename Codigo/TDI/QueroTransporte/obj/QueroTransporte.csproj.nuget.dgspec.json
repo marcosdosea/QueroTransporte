@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projetos\\QueroTransporte\\Codigo\\PROJETO EM TDI\\QueroTransporte\\QueroTransporte.csproj": {}
+    "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\TDI\\QueroTransporte\\QueroTransporte.csproj": {}
   },
   "projects": {
-    "D:\\Projetos\\QueroTransporte\\Codigo\\PROJETO EM TDI\\QueroTransporte\\QueroTransporte.csproj": {
+    "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\TDI\\QueroTransporte\\QueroTransporte.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\QueroTransporte\\Codigo\\PROJETO EM TDI\\QueroTransporte\\QueroTransporte.csproj",
+        "projectUniqueName": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\TDI\\QueroTransporte\\QueroTransporte.csproj",
         "projectName": "QueroTransporte",
-        "projectPath": "D:\\Projetos\\QueroTransporte\\Codigo\\PROJETO EM TDI\\QueroTransporte\\QueroTransporte.csproj",
-        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\QueroTransporte\\Codigo\\PROJETO EM TDI\\QueroTransporte\\obj\\",
+        "projectPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\TDI\\QueroTransporte\\QueroTransporte.csproj",
+        "packagesPath": "C:\\Users\\igorb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\TDI\\QueroTransporte\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\igorb\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -53,7 +53,6 @@
               "version": "[2.1.2, )"
             },
             "Microsoft.NETCore.App": {
-              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true

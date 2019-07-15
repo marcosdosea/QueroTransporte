@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.QueroTransporteWeb{
+namespace QueroTransporte.QueroTransporteWeb
+{
     public class AutenticarUsuarioController : Controller
     {
 
@@ -14,7 +15,8 @@ namespace QueroTransporte.QueroTransporteWeb{
         }
 
 
-        public void autenticar() {
+        public void Autenticar()
+        {
             // TODO implement here
         }
 

@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorRota {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorRota
+    {
 
-        public GerenciadorRota() {
+        public GerenciadorRota()
+        {
         }
 
 
@@ -16,11 +19,13 @@ namespace QueroTransporte.Negocio{
 
 
 
-        public void consultarRota() {
+        public void ConsultarRota()
+        {
             // TODO implement here
         }
 
-        public void validarDados() {
+        public void ValidarDados()
+        {
             // TODO implement here
         }
 

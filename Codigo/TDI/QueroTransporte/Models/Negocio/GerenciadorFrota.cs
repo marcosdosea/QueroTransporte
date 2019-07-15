@@ -4,27 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorFrota {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorFrota
+    {
 
-        public GerenciadorFrota() {
+        public GerenciadorFrota()
+        {
         }
 
 
 
-        public void inserirFrota() {
+        public void InserirFrota()
+        {
             // TODO implement here
         }
 
-        public void alterarFrota() {
+        public void alterarFrota()
+        {
             // TODO implement here
         }
 
-        public void buscarFrota() {
+        public void buscarFrota()
+        {
             // TODO implement here
         }
 
-        public void excluirFrota() {
+        public void excluirFrota()
+        {
             // TODO implement here
         }
 

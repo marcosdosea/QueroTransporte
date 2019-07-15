@@ -5,15 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.QueroTransporteWeb{
+namespace QueroTransporte.QueroTransporteWeb
+{
     public class ObterRelatorioDeGastosComConsumiveisController : Controller
     {
 
-        public ObterRelatorioDeGastosComConsumiveisController() {
+        public ObterRelatorioDeGastosComConsumiveisController()
+        {
         }
 
 
-        public void obter() {
+        public void Obter()
+        {
             // TODO implement here
         }
 

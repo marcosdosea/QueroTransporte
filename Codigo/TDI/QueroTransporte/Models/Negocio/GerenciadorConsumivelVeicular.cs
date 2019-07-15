@@ -4,27 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueroTransporte.Negocio{
-    public class GerenciadorConsumivelVeicular {
+namespace QueroTransporte.Negocio
+{
+    public class GerenciadorConsumivelVeicular
+    {
 
-        public GerenciadorConsumivelVeicular() {
+        public GerenciadorConsumivelVeicular()
+        {
         }
 
 
 
-        public void cadastrarConsumivel() {
+        public void CadastrarConsumivel()
+        {
             // TODO implement here
         }
 
-        public void alterarConsumivelVeicular() {
+        public void AlterarConsumivelVeicular()
+        {
             // TODO implement here
         }
 
-        public void buscarConsumivel() {
+        public void BuscarConsumivel()
+        {
             // TODO implement here
         }
 
-        public void excluirConsumivel() {
+        public void ExcluirConsumivel()
+        {
             // TODO implement here
         }
 
