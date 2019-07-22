@@ -8,7 +8,7 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorVeiculo
+    public class GerenciadorVeiculo : IGerenciadorVeiculo
     {
 
         private readonly BD_QUERO_TRANSPORTEContext _context;
@@ -29,14 +29,14 @@ namespace QueroTransporte.Negocio
 
             _veiculo.Id = veiculoModel.Id;
             _veiculo.AnoFabricacao = veiculoModel.AnoFabricacao;
-            _veiculo.AnoModelo = veiculoModel.AnoModelo ;
-            _veiculo.Capacidade = veiculoModel.Capacidade ;
-            _veiculo.Categoria = veiculoModel.Categoria ;
-            _veiculo.Chassi = veiculoModel.Chassi ;
-            _veiculo.Cor = veiculoModel.Cor ;
-            _veiculo.DataEmplacamento = veiculoModel.DataEmplacamento ;
-            _veiculo.Frota = veiculoModel.IdFrota ;
-            _veiculo.Marca = veiculoModel.Marca ;
+            _veiculo.AnoModelo = veiculoModel.AnoModelo;
+            _veiculo.Capacidade = veiculoModel.Capacidade;
+            _veiculo.Categoria = veiculoModel.Categoria;
+            _veiculo.Chassi = veiculoModel.Chassi;
+            _veiculo.Cor = veiculoModel.Cor;
+            _veiculo.DataEmplacamento = veiculoModel.DataEmplacamento;
+            _veiculo.Frota = veiculoModel.IdFrota;
+            _veiculo.Marca = veiculoModel.Marca;
             _veiculo.Modelo = veiculoModel.Modelo;
             _veiculo.Placa = veiculoModel.Placa;
 
@@ -58,7 +58,7 @@ namespace QueroTransporte.Negocio
             Atribuir(veiculoModel, _veiculo);
             _context.Update(_veiculo);
             _context.SaveChanges();
-           
+
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace QueroTransporte.Negocio
             _veiculo.Modelo = veiculoModel.Modelo;
             _veiculo.Placa = veiculoModel.Placa;
         }
-        
+
 
         /// <summary>
         /// 
@@ -114,7 +114,7 @@ namespace QueroTransporte.Negocio
         /// <returns></returns>
         private IQueryable<VeiculoModel> GetQuery()
         {
-            IQueryable<Veiculo> Veiculo  = _context.Veiculo;
+            IQueryable<Veiculo> Veiculo = _context.Veiculo;
             var query = from veiculo in Veiculo
                         select new VeiculoModel
                         {
@@ -125,7 +125,7 @@ namespace QueroTransporte.Negocio
                             Categoria = veiculo.Categoria,
                             Chassi = veiculo.Chassi,
                             Cor = veiculo.Cor,
-                            IdFrota = (int) veiculo.Frota,
+                            IdFrota = (int)veiculo.Frota,
                             DataEmplacamento = veiculo.DataEmplacamento,
                             Marca = veiculo.Marca,
                             Modelo = veiculo.Modelo,

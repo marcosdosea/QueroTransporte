@@ -6,7 +6,7 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorUsuario
+    public class GerenciadorUsuario : IGerenciadorUsuario
     {
 
         public GerenciadorUsuario()
