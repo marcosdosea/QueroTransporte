@@ -6,7 +6,7 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorObterRelatorioDeViagensPorPeriodo
+    public class GerenciadorObterRelatorioDeViagensPorPeriodo : IGerenciadorObterRelatorioDeViagensPorPeriodo
     {
 
         public GerenciadorObterRelatorioDeViagensPorPeriodo()
