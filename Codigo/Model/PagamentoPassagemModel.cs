@@ -19,6 +19,7 @@ namespace QueroTransporte.Model
         public DateTime Data { get; set; }
         [Required]
         [Display(Name = "Tipo Pagamento")]
-        public Enum Tipo { get; set; }
+        public int Tipo { get; set; }
+        // 0 = A vista, 1 = Credito, 2 = Cartao
     }
 }

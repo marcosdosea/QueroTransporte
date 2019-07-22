@@ -29,8 +29,10 @@ namespace QueroTransporte.Model
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime HorarioChegada { get; set; }
         [Required]
+		[Display(Name = "Dia da Semana")]
         public string DiaSemana { get; set; }
         [Required]
+		[Display(Name = "Rota Composta")]
         public bool IsComposta { get; set; }
     }
 }

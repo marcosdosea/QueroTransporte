@@ -24,6 +24,7 @@ namespace QueroTransporte.Model
         [Required]
         public string Telefone { get; set; }
         [Required]
-        public Enum Tipo { get; set; }
+        public int Tipo { get; set; }
+        // 0 = ADM, 1 = Cliente, 2 = Motorista, 3 = Gestor
     }
 }

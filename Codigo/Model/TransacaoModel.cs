@@ -26,6 +26,7 @@ namespace QueroTransporte.Model
         [Required]
         public int IdUsuario { get; set; }
         [MaxLength(45)]
-        public Enum Status { get; set; }
+        public int Status { get; set; }
+        // 0 = Cancelado, 1 = Pendente, 2 = Aprovado
     }
 }

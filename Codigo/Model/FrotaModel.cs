@@ -17,6 +17,7 @@ namespace QueroTransporte.Model
         [MaxLength(400)]
         public string Descricao { get; set; }
         [Required]
+		[Display(Name = "Rota Publica")]
         public bool IsPublic { get; set; }
     }
 }
