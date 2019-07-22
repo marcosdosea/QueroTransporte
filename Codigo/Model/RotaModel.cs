@@ -13,8 +13,10 @@ namespace QueroTransporte.Model
         [Key]
         public int Id { get; set; }
         [Required]
+        [MaxLength(30)]
         public string Origem { get; set; }
         [Required]
+        [MaxLength(30)]
         public string Destino { get; set; }
         [Required]
         [Display(Name = "Horario partida")]

@@ -16,8 +16,10 @@ namespace QueroTransporte.Model
         [Display(Name = "Categoria CNH")]
         public string Categoria { get; set; }
         [Required]
-        public string Validade { get; set; }
+        [Display(Name = "Validade CNH")]
+        public DateTime Validade { get; set; }
         [Required]
+        [MaxLength(12)]
         [Display(Name = "Numero CNH")]
         public string Cnh { get; set; }
         [Required]

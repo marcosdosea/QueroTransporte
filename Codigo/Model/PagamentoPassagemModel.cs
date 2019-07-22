@@ -18,6 +18,7 @@ namespace QueroTransporte.Model
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Data { get; set; }
         [Required]
-        public string Tipo { get; set; }
+        [Display(Name = "Tipo Pagamento")]
+        public Enum Tipo { get; set; }
     }
 }

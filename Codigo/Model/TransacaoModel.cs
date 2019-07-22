@@ -13,6 +13,7 @@ namespace QueroTransporte.Model
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Saldo de Créditos")]
         public double QtdCreditos { get; set; }
         [Required]
         [Display(Name = "Status Pagamento")]
@@ -25,6 +26,6 @@ namespace QueroTransporte.Model
         [Required]
         public int IdUsuario { get; set; }
         [MaxLength(45)]
-        public string Status { get; set; }
+        public Enum Status { get; set; }
     }
 }

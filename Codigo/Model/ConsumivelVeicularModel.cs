@@ -18,7 +18,7 @@ namespace QueroTransporte.Model
         [Display(Name = "Custo")]
         public double Valor { get; set; }
         [Required]
-        [Display(Name = "Emplacamento")]
+        [Display(Name = "Data da Despesa")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataDespesa { get; set; }

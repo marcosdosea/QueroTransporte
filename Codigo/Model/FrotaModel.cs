@@ -14,6 +14,7 @@ namespace QueroTransporte.Model
         public int Id { get; set; }
         [Required]
         public string Titulo { get; set; }
+        [MaxLength(400)]
         public string Descricao { get; set; }
         [Required]
         public bool IsPublic { get; set; }

@@ -20,7 +20,7 @@ namespace QueroTransporte.Model
         [Display(Name = "Data Solicitação Veiculo")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public string DataSolicitacao { get; set; }
+        public DateTime DataSolicitacao { get; set; }
         [Required]
         public bool IsAtendida { get; set; }
     }
