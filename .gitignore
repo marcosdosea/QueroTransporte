@@ -1,1 +1,5 @@
-Codigo/TDI/.vs
+Codigo/.vs/*
+Codigo/Business/obj/*
+Codigo/Model/obj/*
+Codigo/Persistence/obj/*
+Codigo/QueroTransporteWeb/obj/*

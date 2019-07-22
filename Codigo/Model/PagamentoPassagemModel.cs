@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -8,8 +9,17 @@ namespace QueroTransporte.Model
 {
     public class PagamentoPassagemModel
     {
+        [Required]
+        [Key]
         public int Id { get; set; }
-        public string Data { get; set; }
-        public string Tipo { get; set; }
+        [Required]
+        [Display(Name = "Data pagamento")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Data { get; set; }
+        [Required]
+        [Display(Name = "Tipo Pagamento")]
+        public int Tipo { get; set; }
+        // 0 = A vista, 1 = Credito, 2 = Cartao
     }
 }
