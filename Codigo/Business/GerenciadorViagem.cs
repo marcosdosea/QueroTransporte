@@ -6,7 +6,7 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorViagem
+    public class GerenciadorViagem : IGerenciadorViagem
     {
 
         public GerenciadorViagem()

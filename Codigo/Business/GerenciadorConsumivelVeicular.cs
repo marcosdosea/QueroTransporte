@@ -6,14 +6,12 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorConsumivelVeicular
+    public class GerenciadorConsumivelVeicular : IGerenciadorConsumivelVeicular
     {
 
         public GerenciadorConsumivelVeicular()
         {
         }
-
-
 
         public void CadastrarConsumivel()
         {

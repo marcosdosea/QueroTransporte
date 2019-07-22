@@ -6,14 +6,12 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorCreditoViagem
+    public class GerenciadorCreditoViagem : IGerenciadorCreditoViagem
     {
 
         public GerenciadorCreditoViagem()
         {
         }
-
-
 
         public void ComprarCredito()
         {
