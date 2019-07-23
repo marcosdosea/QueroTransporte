@@ -12,3 +12,17 @@ C:\Users\igorb\Desktop\TDI\Business\bin\Debug\netcoreapp2.1\Persistence.pdb
 C:\Users\igorb\Desktop\TDI\Business\obj\Debug\netcoreapp2.1\Business.csproj.CopyComplete
 C:\Users\igorb\Desktop\TDI\Business\obj\Debug\netcoreapp2.1\Business.dll
 C:\Users\igorb\Desktop\TDI\Business\obj\Debug\netcoreapp2.1\Business.pdb
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Business.deps.json
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Business.dll
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Business.pdb
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Model.dll
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Persistence.dll
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Model.pdb
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\bin\Debug\netcoreapp2.1\Persistence.pdb
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.csprojAssemblyReference.cache
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.csproj.CoreCompileInputs.cache
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.AssemblyInfoInputs.cache
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.AssemblyInfo.cs
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.csproj.CopyComplete
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.dll
+C:\Users\igorb\Desktop\QueroTransporte\Codigo\Business\obj\Debug\netcoreapp2.1\Business.pdb

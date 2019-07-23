@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj": {}
+    "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj": {}
   },
   "projects": {
-    "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj": {
+    "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj",
+        "projectUniqueName": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\obj\\",
+        "projectPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\igorb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\igorb\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -56,20 +56,20 @@
         }
       }
     },
-    "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj": {
+    "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj",
+        "projectUniqueName": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj",
         "projectName": "Persistence",
-        "projectPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj",
-        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Persistence\\obj\\",
+        "projectPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Persistence\\Persistence.csproj",
+        "packagesPath": "C:\\Users\\igorb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\igorb\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +82,8 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj": {
-                "projectPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj"
+              "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj"
               }
             }
           }

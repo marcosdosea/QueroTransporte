@@ -8,9 +8,9 @@ namespace QueroTransporte.QueroTransporteWeb
 {
     public class ManterVeiculoController : Controller
     {
-        private readonly GerenciadorVeiculo _gerenciadorVeiculo;
+        private readonly IGerenciadorVeiculo _gerenciadorVeiculo;
 
-        public ManterVeiculoController(GerenciadorVeiculo gerenciadorVeiculo)
+        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo)
         {
             _gerenciadorVeiculo = gerenciadorVeiculo;
         }

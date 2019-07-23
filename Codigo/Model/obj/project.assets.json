@@ -688,23 +688,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gabri\\.nuget\\packages\\": {},
+    "C:\\Users\\igorb\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj",
+      "projectUniqueName": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj",
       "projectName": "Model",
-      "projectPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\Model.csproj",
-      "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-      "outputPath": "D:\\UFS\\ProjetoESII\\QueroTransporte\\Codigo\\Model\\obj\\",
+      "projectPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\Model.csproj",
+      "packagesPath": "C:\\Users\\igorb\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\igorb\\Desktop\\QueroTransporte\\Codigo\\Model\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\igorb\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
