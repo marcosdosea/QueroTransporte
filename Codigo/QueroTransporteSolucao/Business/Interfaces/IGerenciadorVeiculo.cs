@@ -9,7 +9,8 @@ namespace QueroTransporte.Negocio
         VeiculoModel Buscar(int id);
         void Excluir(int Id);
         int Inserir(VeiculoModel veiculoModel);
-        IEnumerable<VeiculoModel> ObterPorNome(string modelo);
+        IEnumerable<VeiculoModel> ObterPorModelo(string modelo);
         IEnumerable<VeiculoModel> ObterTodos();
+        List<FrotaModel> ObterFrotas();
     }
 }

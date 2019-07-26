@@ -45,6 +45,8 @@ namespace QueroTransporteWeb
                     Configuration.GetConnectionString("QueroTransporteConnection")));
 
             services.AddTransient<IGerenciadorVeiculo,GerenciadorVeiculo>();
+            services.AddTransient<IGerenciadorRota, GerenciadorRota>();
+
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

@@ -19,7 +19,7 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// 
+        /// Inseri um veiculo na base de dados
         /// </summary>
         /// <param name="veiculoModel"></param>
         /// <returns></returns>
@@ -48,7 +48,7 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// 
+        /// Altera os dados de um veiculo da base de dados
         /// </summary>
         /// <param name="veiculoModel"></param>
         public void Alterar(VeiculoModel veiculoModel)
@@ -62,7 +62,7 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// 
+        /// Busca um veiculo na base de dados
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -74,7 +74,7 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// 
+        /// Exclui um veiculo na base de dados
         /// </summary>
         /// <param name="Id"></param>
         public void Excluir(int Id)
@@ -87,7 +87,7 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// 
+        /// Atribui dados de um objeto para outro
         /// </summary>
         /// <param name="veiculoModel"></param>
         /// <param name="_veiculo"></param>
@@ -109,7 +109,7 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// 
+        ///  retorna todas as rotas da base de dados
         /// </summary>
         /// <returns></returns>
         private IQueryable<VeiculoModel> GetQuery()
@@ -136,7 +136,7 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// 
+        /// Obtem todos os veiculos da base de dados
         /// </summary>
         /// <returns></returns>
         public IEnumerable<VeiculoModel> ObterTodos()
@@ -146,15 +146,31 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// 
+        /// Pesquisa veiculos por modelo
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        public IEnumerable<VeiculoModel> ObterPorNome(string modelo)
+        public IEnumerable<VeiculoModel> ObterPorModelo(string modelo)
         {
             IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo));
             return veiculos;
         }
 
+        public List<FrotaModel> ObterFrotas()
+        {
+            return GetQueryFrotas().ToList();
+        }
+
+        private IQueryable<FrotaModel> GetQueryFrotas()
+        {
+            IQueryable<Frota> Frota = _context.Frota;
+            var query = from frota in Frota
+                        select new FrotaModel
+                        {
+                            Id = frota.Id,
+                            Titulo = frota.Titulo
+                        };
+            return query;
+        } 
     }
 }

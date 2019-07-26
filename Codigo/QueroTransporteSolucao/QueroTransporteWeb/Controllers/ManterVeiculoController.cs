@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
 
@@ -23,6 +24,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
+            ViewBag.Frotas = new SelectList(_gerenciadorVeiculo.ObterFrotas(), "Id", "Titulo");
             return View();
         }
 
@@ -42,6 +44,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Edit(int Id)
         {
+            ViewBag.Frotas = new SelectList(_gerenciadorVeiculo.ObterFrotas(), "Id", "Titulo");
             VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
             return View(veiculo);
         }

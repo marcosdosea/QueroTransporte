@@ -20,19 +20,22 @@ namespace QueroTransporte.Model
         public string Destino { get; set; }
         [Required]
         [Display(Name = "Horario partida")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime HorarioSaida { get; set; }
+        public TimeSpan HorarioSaida { get; set; }
         [Required]
         [Display(Name = "Horario chegada")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime HorarioChegada { get; set; }
+        public TimeSpan HorarioChegada { get; set; }
         [Required]
 		[Display(Name = "Dia da Semana")]
         public string DiaSemana { get; set; }
+        [Display(Name = "Rota Anterior")]
+        public int? RotaId { get; set; }
         [Required]
 		[Display(Name = "Rota Composta")]
         public bool IsComposta { get; set; }
+
+
+        /* serve para concatenar informacoes como Origem,Destino e Id da para
+         usuário selecionar a rota correta*/
+        public string RotaComposta { get; set; }
     }
 }
