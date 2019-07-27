@@ -17,10 +17,10 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.IdFrota)
+            @Html.DisplayNameFor(model => model.IdFrota) 
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.IdFrota)
+            @Html.DisplayFor(model => model.IdFrota) - @ViewBag.TituloFrota
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Placa)
@@ -85,6 +85,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id}) |
     <a asp-action="Index">Back to List</a>
 </div>
