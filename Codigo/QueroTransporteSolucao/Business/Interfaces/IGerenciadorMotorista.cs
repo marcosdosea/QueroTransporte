@@ -1,11 +1,14 @@
-﻿namespace QueroTransporte.Negocio
+﻿using QueroTransporte.Model;
+using System.Collections.Generic;
+
+namespace QueroTransporte.Negocio
 {
     public interface IGerenciadorMotorista
     {
         void AlterarMotorista();
-        void CadastrarMotorista();
+        int CadastrarMotorista(MotoristaModel motoristaModel);
         void ConfirmarCadastro();
-        void ConsultarMotorista();
+        MotoristaModel ConsultarMotorista(int id);
         void RemoverMotorista();
         void ValidarMotorista();
     }
