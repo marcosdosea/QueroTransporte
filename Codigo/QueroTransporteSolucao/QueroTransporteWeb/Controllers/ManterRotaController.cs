@@ -15,9 +15,9 @@ namespace QueroTransporte.QueroTransporteWeb
     {
         private readonly IGerenciadorRota _gerenciadorRota;
 
-        public ManterRotaController(IGerenciadorRota gerenciadorRota)
+        public ManterRotaController(IGerenciadorRota GerenciadorRota)
         {
-            _gerenciadorRota = gerenciadorRota;
+            _gerenciadorRota = GerenciadorRota;
         }
 
         public IActionResult Index()
@@ -34,62 +34,62 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(RotaModel rotaModel)
+        public IActionResult Create(RotaModel Rota)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorRota.Inserir(rotaModel);
+                _gerenciadorRota.Inserir(Rota);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(rotaModel);
+            return View(Rota);
         }
 
 
         public IActionResult Edit(int Id)
         {
             ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            RotaModel rota = _gerenciadorRota.Buscar(Id);
-            ViewBag.Checked = rota.IsComposta;
-            return View(rota);
+            RotaModel Rota = _gerenciadorRota.Buscar(Id);
+            ViewBag.Checked = Rota.IsComposta;
+            return View(Rota);
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, RotaModel rotaModel)
+        public IActionResult Edit(int Id, RotaModel Rota)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorRota.Alterar(rotaModel);
+                _gerenciadorRota.Alterar(Rota);
                 return RedirectToAction(nameof(Index));
 
             }
-            return View(rotaModel);
+            return View(Rota);
         }
 
         public IActionResult Details(int Id)
         {
-            RotaModel rotaModel = _gerenciadorRota.Buscar(Id);
+            RotaModel Rota = _gerenciadorRota.Buscar(Id);
 
-            if (rotaModel.RotaId != null)
-                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
+            if (Rota.RotaId != null)
+                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)Rota.RotaId).DetalhesRota;
             else
                 ViewBag.DetalhesRota = "--";
 
-            return View(rotaModel);
+            return View(Rota);
         }
 
         public IActionResult Delete(int Id)
         {
-            RotaModel rotaModel = _gerenciadorRota.Buscar(Id);
+            RotaModel Rota = _gerenciadorRota.Buscar(Id);
 
-            if (rotaModel.RotaId != null)
-                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int) rotaModel.RotaId).DetalhesRota;
+            if (Rota.RotaId != null)
+                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int) Rota.RotaId).DetalhesRota;
             else
                 ViewBag.DetalhesRota = "--";
 
-            return View(rotaModel);
+            return View(Rota);
         }
 
         [HttpPost]

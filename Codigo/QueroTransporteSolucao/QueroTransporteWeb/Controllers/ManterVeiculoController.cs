@@ -13,10 +13,10 @@ namespace QueroTransporte.QueroTransporteWeb
         private readonly IGerenciadorFrota   _gerenciadorFrota;
 
 
-        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo, IGerenciadorFrota gerenciadorFrota)
+        public ManterVeiculoController(IGerenciadorVeiculo GerenciadorVeiculo, IGerenciadorFrota GerenciadorFrota)
         {
-            _gerenciadorVeiculo = gerenciadorVeiculo;
-            _gerenciadorFrota = gerenciadorFrota;
+            _gerenciadorVeiculo = GerenciadorVeiculo;
+            _gerenciadorFrota = GerenciadorFrota;
         }
 
 
@@ -33,15 +33,15 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VeiculoModel veiculo)
+        public ActionResult Create(VeiculoModel Veiculo)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Inserir(veiculo);
+                _gerenciadorVeiculo.Inserir(Veiculo);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(veiculo);
+            return View(Veiculo);
         }
 
 
@@ -55,29 +55,29 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, VeiculoModel veiculo)
+        public IActionResult Edit(int Id, VeiculoModel Veiculo)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Alterar(veiculo);
+                _gerenciadorVeiculo.Alterar(Veiculo);
                 return RedirectToAction(nameof(Index));
 
             }
-            return View(veiculo);
+            return View(Veiculo);
         }
 
         public IActionResult Details(int Id)
         {
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
-            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculo.IdFrota).Titulo;
-            return View(veiculo);
+            VeiculoModel Contexto = _gerenciadorVeiculo.Buscar(Id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(Contexto.IdFrota).Titulo;
+            return View(Contexto);
         }
 
         public IActionResult Delete(int Id)
         {
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
-            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculo.IdFrota).Titulo; 
-            return View(veiculo);
+            VeiculoModel Contexto = _gerenciadorVeiculo.Buscar(Id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(Contexto.IdFrota).Titulo; 
+            return View(Contexto);
         }
 
         [HttpPost]
