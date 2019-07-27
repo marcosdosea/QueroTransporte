@@ -13,9 +13,9 @@ namespace QueroTransporte.Negocio
 
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
-        public GerenciadorVeiculo(BD_QUERO_TRANSPORTEContext context)
+        public GerenciadorVeiculo(BD_QUERO_TRANSPORTEContext Context)
         {
-            this._context = context;
+            this._context = Context;
         }
 
         /// <summary>
@@ -23,22 +23,11 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="veiculoModel"></param>
         /// <returns></returns>
-        public int Inserir(VeiculoModel veiculoModel)
+        public int Inserir(VeiculoModel Veiculo)
         {
             Veiculo _veiculo = new Veiculo();
 
-            _veiculo.Id = veiculoModel.Id;
-            _veiculo.AnoFabricacao = veiculoModel.AnoFabricacao;
-            _veiculo.AnoModelo = veiculoModel.AnoModelo;
-            _veiculo.Capacidade = veiculoModel.Capacidade;
-            _veiculo.Categoria = veiculoModel.Categoria;
-            _veiculo.Chassi = veiculoModel.Chassi;
-            _veiculo.Cor = veiculoModel.Cor;
-            _veiculo.DataEmplacamento = veiculoModel.DataEmplacamento;
-            _veiculo.Frota = veiculoModel.IdFrota;
-            _veiculo.Marca = veiculoModel.Marca;
-            _veiculo.Modelo = veiculoModel.Modelo;
-            _veiculo.Placa = veiculoModel.Placa;
+            Atribuir(Veiculo, _veiculo);
 
 
             _context.Add(_veiculo);
@@ -51,11 +40,11 @@ namespace QueroTransporte.Negocio
         /// Altera os dados de um veiculo da base de dados
         /// </summary>
         /// <param name="veiculoModel"></param>
-        public void Alterar(VeiculoModel veiculoModel)
+        public void Alterar(VeiculoModel Veiculo)
         {
             Veiculo _veiculo = new Veiculo();
 
-            Atribuir(veiculoModel, _veiculo);
+            Atribuir(Veiculo, _veiculo);
             _context.Update(_veiculo);
             _context.SaveChanges();
 
@@ -64,11 +53,11 @@ namespace QueroTransporte.Negocio
         /// <summary>
         /// Busca um veiculo na base de dados
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
-        public VeiculoModel Buscar(int id)
+        public VeiculoModel Buscar(int Id)
         {
-            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Id.Equals(id));
+            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Id.Equals(Id));
             return veiculos.ElementAtOrDefault(0);
         }
 
@@ -88,22 +77,22 @@ namespace QueroTransporte.Negocio
         /// <summary>
         /// Atribui dados de um objeto para outro
         /// </summary>
-        /// <param name="veiculoModel"></param>
+        /// <param name="Veiculo"></param>
         /// <param name="_veiculo"></param>
-        private void Atribuir(VeiculoModel veiculoModel, Veiculo _veiculo)
+        private void Atribuir(VeiculoModel Veiculo, Veiculo _veiculo)
         {
-            _veiculo.Id = veiculoModel.Id;
-            _veiculo.AnoFabricacao = veiculoModel.AnoFabricacao;
-            _veiculo.AnoModelo = veiculoModel.AnoModelo;
-            _veiculo.Capacidade = veiculoModel.Capacidade;
-            _veiculo.Categoria = veiculoModel.Categoria;
-            _veiculo.Chassi = veiculoModel.Chassi;
-            _veiculo.Cor = veiculoModel.Cor;
-            _veiculo.DataEmplacamento = veiculoModel.DataEmplacamento;
-            _veiculo.Frota = veiculoModel.IdFrota;
-            _veiculo.Marca = veiculoModel.Marca;
-            _veiculo.Modelo = veiculoModel.Modelo;
-            _veiculo.Placa = veiculoModel.Placa;
+            _veiculo.Id = Veiculo.Id;
+            _veiculo.AnoFabricacao = Veiculo.AnoFabricacao;
+            _veiculo.AnoModelo = Veiculo.AnoModelo;
+            _veiculo.Capacidade = Veiculo.Capacidade;
+            _veiculo.Categoria = Veiculo.Categoria;
+            _veiculo.Chassi = Veiculo.Chassi;
+            _veiculo.Cor = Veiculo.Cor;
+            _veiculo.DataEmplacamento = Veiculo.DataEmplacamento;
+            _veiculo.Frota = Veiculo.IdFrota;
+            _veiculo.Marca = Veiculo.Marca;
+            _veiculo.Modelo = Veiculo.Modelo;
+            _veiculo.Placa = Veiculo.Placa;
         }
 
 
@@ -149,9 +138,9 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        public IEnumerable<VeiculoModel> ObterPorModelo(string modelo)
+        public IEnumerable<VeiculoModel> ObterPorModelo(string Modelo)
         {
-            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo));
+            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(Modelo));
             return veiculos;
         }
     }

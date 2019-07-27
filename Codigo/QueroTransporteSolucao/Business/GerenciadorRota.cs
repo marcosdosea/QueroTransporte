@@ -24,23 +24,11 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="rotaModel"></param>
         /// <returns></returns>
-        public int Inserir(RotaModel rotaModel)
+        public int Inserir(RotaModel Rota)
         {
             Rota _rota = new Rota();
 
-            _rota.Id = rotaModel.Id;
-            _rota.Origem = rotaModel.Origem;
-            _rota.Destino = rotaModel.Destino;
-            _rota.HorarioChegada = rotaModel.HorarioChegada;
-            _rota.HorarioSaida = rotaModel.HorarioSaida;
-            _rota.DiaSemana = rotaModel.DiaSemana;
-
-            if (rotaModel.IsComposta)
-                _rota.RotaId = rotaModel.RotaId;
-            else
-                _rota.RotaId = null;
-
-            _rota.EhComposta = rotaModel.IsComposta;
+            Atribuir(Rota, _rota);
 
             _context.Add(_rota);
             _context.SaveChanges();
@@ -52,11 +40,11 @@ namespace QueroTransporte.Negocio
         /// Altera os dados de uma rota da base de dados
         /// </summary>
         /// <param name="rotaModel"></param>
-        public void Alterar(RotaModel rotaModel)
+        public void Alterar(RotaModel Rota)
         {
             Rota _rota = new Rota();
 
-            Atribuir(rotaModel, _rota);
+            Atribuir(Rota, _rota);
             _context.Update(_rota);
             _context.SaveChanges();
 
@@ -65,13 +53,13 @@ namespace QueroTransporte.Negocio
         /// <summary>
         /// Busca uma rota na base de dados
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
-        public RotaModel Buscar(int id)
+        public RotaModel Buscar(int Id)
         {
-            IEnumerable<RotaModel> rotas = GetQuery().Where(rotaModel => rotaModel.Id.Equals(id));
+            IEnumerable<RotaModel> Rotas = GetQuery().Where(rotaModel => rotaModel.Id.Equals(Id));
 
-            return rotas.ElementAtOrDefault(0);
+            return Rotas.ElementAtOrDefault(0);
         }
 
         /// <summary>
@@ -92,21 +80,21 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="rotaModel"></param>
         /// <param name="_rota"></param>
-        private void Atribuir(RotaModel rotaModel, Rota _rota)
+        private void Atribuir(RotaModel Rota, Rota _rota)
         {
-            _rota.Id = rotaModel.Id;
-            _rota.Origem = rotaModel.Origem;
-            _rota.Destino = rotaModel.Destino;
-            _rota.HorarioChegada = rotaModel.HorarioChegada;
-            _rota.HorarioSaida = rotaModel.HorarioSaida;
-            _rota.DiaSemana = rotaModel.DiaSemana;
+            _rota.Id = Rota.Id;
+            _rota.Origem = Rota.Origem;
+            _rota.Destino = Rota.Destino;
+            _rota.HorarioChegada = Rota.HorarioChegada;
+            _rota.HorarioSaida = Rota.HorarioSaida;
+            _rota.DiaSemana = Rota.DiaSemana;
 
-            if (rotaModel.IsComposta)
-                _rota.RotaId = rotaModel.RotaId;
+            if (Rota.IsComposta)
+                _rota.RotaId = Rota.RotaId;
             else
                 _rota.RotaId = null;
 
-            _rota.EhComposta = rotaModel.IsComposta;
+            _rota.EhComposta = Rota.IsComposta;
         }
 
 
@@ -148,9 +136,9 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        public IEnumerable<RotaModel> ObterPorNome(string destino)
+        public IEnumerable<RotaModel> ObterPorNome(string Destino)
         {
-            IEnumerable<RotaModel> rotas = GetQuery().Where(RotaModel => RotaModel.Destino.StartsWith(destino));
+            IEnumerable<RotaModel> rotas = GetQuery().Where(RotaModel => RotaModel.Destino.StartsWith(Destino));
             return rotas;
         }
 
@@ -193,12 +181,8 @@ namespace QueroTransporte.Negocio
 
 
         // estes métodos serão utilizados apenas pela aplicação móvel
-        public void Consultar(RotaModel rotaModel)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void ValidarDados(RotaModel rotaModel)
+        public void ValidarDados(RotaModel Rota)
         {
             throw new NotImplementedException();
         }
