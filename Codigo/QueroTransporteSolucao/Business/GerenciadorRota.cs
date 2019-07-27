@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace QueroTransporte.Negocio
 {
     public class GerenciadorRota : IGerenciadorRota
@@ -153,8 +154,45 @@ namespace QueroTransporte.Negocio
             return rotas;
         }
 
-        // estes métodos serão utilizados apenas pela aplicação móvel
 
+        /// <summary>
+        /// Agrupa dados importantes para identificar cada rota
+        /// </summary>
+        /// <returns></returns>
+        public List<RotaModel> ObterDetalhesRota() {
+            List<RotaModel> rota = ObterTodos().ToList();
+
+            for (int i = 0; i < rota.Count; i++)
+            {
+                rota[i].DetalhesRota = rota[i].Id +" | " + rota[i].Origem +" - " + rota[i].Destino;
+            }
+
+            return rota;
+        }
+
+        /// <summary>
+        /// Agrupa dados importantes para identificar uma rota
+        /// </summary>
+        /// <returns></returns>
+        public RotaModel ObterDetalhesRota(int Id)
+        {
+            List<RotaModel> rota = ObterTodos().ToList();
+            int index = 0;
+
+            for (int i = 0; i < rota.Count; i++)
+            {
+                if (Id == rota[i].Id)
+                {
+                    rota[i].DetalhesRota = rota[i].Id + " | " + rota[i].Origem + " - " + rota[i].Destino;
+                    index = i;    
+                }    
+            }
+
+            return rota[index];
+        }
+
+
+        // estes métodos serão utilizados apenas pela aplicação móvel
         public void Consultar(RotaModel rotaModel)
         {
             throw new NotImplementedException();
@@ -163,17 +201,6 @@ namespace QueroTransporte.Negocio
         public void ValidarDados(RotaModel rotaModel)
         {
             throw new NotImplementedException();
-        }
-
-        public List<RotaModel> ToSelectList() {
-            List<RotaModel> rota = ObterTodos().ToList();
-
-            for (int i = 0; i < rota.Count; i++)
-            {
-                rota[i].RotaComposta = rota[i].Id +" | " + rota[i].Origem +" - " + rota[i].Destino;
-            }
-
-            return rota;
         }
     }
 }

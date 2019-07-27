@@ -48,6 +48,9 @@ namespace QueroTransporteWeb
             services.AddTransient<IGerenciadorRota, GerenciadorRota>();
 
 
+
+
+            services.AddTransient<IGerenciadorFrota, GerenciadorFrota>();
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

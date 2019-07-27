@@ -36,6 +36,6 @@ namespace QueroTransporte.Model
 
         /* serve para concatenar informacoes como Origem,Destino e Id da para
          usuário selecionar a rota correta*/
-        public string RotaComposta { get; set; }
+        public string DetalhesRota { get; set; }
     }
 }

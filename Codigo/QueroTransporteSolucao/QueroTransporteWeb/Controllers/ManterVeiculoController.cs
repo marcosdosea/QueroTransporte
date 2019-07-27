@@ -10,10 +10,13 @@ namespace QueroTransporte.QueroTransporteWeb
     public class ManterVeiculoController : Controller
     {
         private readonly IGerenciadorVeiculo _gerenciadorVeiculo;
+        private readonly IGerenciadorFrota   _gerenciadorFrota;
 
-        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo)
+
+        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo, IGerenciadorFrota gerenciadorFrota)
         {
             _gerenciadorVeiculo = gerenciadorVeiculo;
+            _gerenciadorFrota = gerenciadorFrota;
         }
 
 
@@ -24,7 +27,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
-            ViewBag.Frotas = new SelectList(_gerenciadorVeiculo.ObterFrotas(), "Id", "Titulo");
+            ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
             return View();
         }
 
@@ -44,7 +47,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Edit(int Id)
         {
-            ViewBag.Frotas = new SelectList(_gerenciadorVeiculo.ObterFrotas(), "Id", "Titulo");
+            ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
             VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
             return View(veiculo);
         }
@@ -66,12 +69,14 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Details(int Id)
         {
             VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculo.IdFrota).Titulo;
             return View(veiculo);
         }
 
         public IActionResult Delete(int Id)
         {
             VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculo.IdFrota).Titulo; 
             return View(veiculo);
         }
 

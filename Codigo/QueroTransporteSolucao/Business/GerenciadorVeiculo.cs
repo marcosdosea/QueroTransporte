@@ -69,7 +69,6 @@ namespace QueroTransporte.Negocio
         public VeiculoModel Buscar(int id)
         {
             IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Id.Equals(id));
-
             return veiculos.ElementAtOrDefault(0);
         }
 
@@ -155,22 +154,5 @@ namespace QueroTransporte.Negocio
             IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo));
             return veiculos;
         }
-
-        public List<FrotaModel> ObterFrotas()
-        {
-            return GetQueryFrotas().ToList();
-        }
-
-        private IQueryable<FrotaModel> GetQueryFrotas()
-        {
-            IQueryable<Frota> Frota = _context.Frota;
-            var query = from frota in Frota
-                        select new FrotaModel
-                        {
-                            Id = frota.Id,
-                            Titulo = frota.Titulo
-                        };
-            return query;
-        } 
     }
 }

@@ -11,6 +11,5 @@ namespace QueroTransporte.Negocio
         int Inserir(VeiculoModel veiculoModel);
         IEnumerable<VeiculoModel> ObterPorModelo(string modelo);
         IEnumerable<VeiculoModel> ObterTodos();
-        List<FrotaModel> ObterFrotas();
     }
 }

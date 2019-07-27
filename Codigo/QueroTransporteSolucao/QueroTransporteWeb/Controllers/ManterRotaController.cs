@@ -28,7 +28,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         { 
-            ViewBag.RotaList = new SelectList(_gerenciadorRota.ToSelectList(), "Id", "RotaComposta");
+            ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             return View(); 
         }
 
@@ -48,8 +48,9 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Edit(int Id)
         {
-            ViewBag.RotaList = new SelectList(_gerenciadorRota.ToSelectList(), "Id", "RotaComposta");
+            ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             RotaModel rota = _gerenciadorRota.Buscar(Id);
+            ViewBag.Checked = rota.IsComposta;
             return View(rota);
 
         }
@@ -70,12 +71,24 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Details(int Id)
         {
             RotaModel rotaModel = _gerenciadorRota.Buscar(Id);
+
+            if (rotaModel.RotaId != null)
+                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
+            else
+                ViewBag.DetalhesRota = "--";
+
             return View(rotaModel);
         }
 
         public IActionResult Delete(int Id)
         {
             RotaModel rotaModel = _gerenciadorRota.Buscar(Id);
+
+            if (rotaModel.RotaId != null)
+                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int) rotaModel.RotaId).DetalhesRota;
+            else
+                ViewBag.DetalhesRota = "--";
+
             return View(rotaModel);
         }
 

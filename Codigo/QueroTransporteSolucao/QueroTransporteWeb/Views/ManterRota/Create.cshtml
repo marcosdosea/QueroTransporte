@@ -1,0 +1,82 @@
+﻿@model QueroTransporte.Model.RotaModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>RotaModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Origem" class="control-label"></label>
+                <input asp-for="Origem" class="form-control" />
+                <span asp-validation-for="Origem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Destino" class="control-label"></label>
+                <input asp-for="Destino" class="form-control" />
+                <span asp-validation-for="Destino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioSaida" class="control-label"></label>
+                <input asp-for="HorarioSaida" class="form-control" />
+                <span asp-validation-for="HorarioSaida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioChegada" class="control-label"></label>
+                <input asp-for="HorarioChegada" class="form-control" />
+                <span asp-validation-for="HorarioChegada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaSemana" class="control-label"></label>
+                <input asp-for="DiaSemana" class="form-control" />
+                <span asp-validation-for="DiaSemana" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="ListElements">
+                <label asp-for="RotaId" class="control-label"></label>
+                @*ViewBag.RotaList is holding all the routs values*@
+                @Html.DropDownListFor(model => model.RotaId, ViewBag.RotaList as SelectList, new
+                { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RotaId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsComposta" type="checkbox" id="checkRota" /> @Html.DisplayNameFor(model => model.IsComposta)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ListElements').hide();
+        $('#checkRota').change(function () {
+            if (this.checked) {
+                $('#ListElements').show();
+            }
+            else {
+                $('#ListElements').hide();
+            }
+        });
+    });
+</script>
