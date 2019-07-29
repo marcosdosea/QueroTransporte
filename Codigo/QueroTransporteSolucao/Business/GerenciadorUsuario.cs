@@ -108,6 +108,10 @@ namespace QueroTransporte.Negocio
             return query;
         }
 
+        /// <summary>
+        /// O motivo é de fixar na lista de opcoes dos tipos na view, selectList
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<string> GetTipos()
         {
             IEnumerable <string> tipos = new string[] {"Cliente", "Motorista", "ADMIN", "Gestor" };
