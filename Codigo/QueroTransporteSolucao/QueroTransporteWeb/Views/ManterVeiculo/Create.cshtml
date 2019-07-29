@@ -8,6 +8,13 @@
 
 <h4>VeiculoModel</h4>
 <hr />
+
+@if (TempData["mensagemErro"] != null)
+{
+    <div class="field-error" id="error-div" style="color: red">
+        @TempData["mensagemErro"]
+    </div>
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">

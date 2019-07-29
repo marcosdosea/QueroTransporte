@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
@@ -15,9 +11,9 @@ namespace QueroTransporte.QueroTransporteWeb
     {
         private readonly IGerenciadorRota _gerenciadorRota;
 
-        public ManterRotaController(IGerenciadorRota GerenciadorRota)
+        public ManterRotaController(IGerenciadorRota gerenciadorRota)
         {
-            _gerenciadorRota = GerenciadorRota;
+            _gerenciadorRota = gerenciadorRota;
         }
 
         public IActionResult Index()
@@ -34,22 +30,22 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(RotaModel Rota)
+        public IActionResult Create(RotaModel rotaModel)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorRota.Inserir(Rota);
+                _gerenciadorRota.Inserir(rotaModel);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(Rota);
+            return View(rotaModel);
         }
 
 
-        public IActionResult Edit(int Id)
+        public IActionResult Edit(int id)
         {
             ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            RotaModel Rota = _gerenciadorRota.Buscar(Id);
+            RotaModel Rota = _gerenciadorRota.Buscar(id);
             ViewBag.Checked = Rota.IsComposta;
             return View(Rota);
 
@@ -57,46 +53,51 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, RotaModel Rota)
+        public IActionResult Edit(int id, RotaModel rotaModel)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorRota.Alterar(Rota);
+                _gerenciadorRota.Alterar(rotaModel);
                 return RedirectToAction(nameof(Index));
 
             }
-            return View(Rota);
+            return View(rotaModel);
         }
 
-        public IActionResult Details(int Id)
+        public IActionResult Details(int id)
         {
-            RotaModel Rota = _gerenciadorRota.Buscar(Id);
+            RotaModel rotaModel = _gerenciadorRota.Buscar(id);
 
-            if (Rota.RotaId != null)
-                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)Rota.RotaId).DetalhesRota;
+            if (rotaModel.RotaId != null)
+                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
             else
                 ViewBag.DetalhesRota = "--";
 
-            return View(Rota);
+            return View(rotaModel);
         }
 
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            RotaModel Rota = _gerenciadorRota.Buscar(Id);
+            RotaModel rotaModel = _gerenciadorRota.Buscar(id);
 
-            if (Rota.RotaId != null)
-                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int) Rota.RotaId).DetalhesRota;
+            if (rotaModel.RotaId != null)
+                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int) rotaModel.RotaId).DetalhesRota;
             else
                 ViewBag.DetalhesRota = "--";
 
-            return View(Rota);
+            return View(rotaModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int Id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-            _gerenciadorRota.Excluir(Id);
+            if (!_gerenciadorRota.Excluir(id))
+            {
+                TempData["mensagemErro"] = "Você não pode remover esta rota porque outras rotas dependem dela!.";
+                return RedirectToAction(nameof(Delete));
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }

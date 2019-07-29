@@ -6,16 +6,16 @@ namespace QueroTransporte.Negocio
     public interface IGerenciadorRota
     {
         // para usúários finais
-        void ValidarDados(RotaModel Rota);
+        void ValidarDados(RotaModel rotaModel);
 
         // para administradores
-        void Alterar(RotaModel Rota);
-        RotaModel Buscar(int Id);
-        void Excluir(int Id);
-        int Inserir(RotaModel Rota);
-        IEnumerable<RotaModel> ObterPorNome(string Destino);
+        void Alterar(RotaModel rotaModel);
+        RotaModel Buscar(int id);
+        bool Excluir(int id);
+        int Inserir(RotaModel rotaModel);
+        IEnumerable<RotaModel> ObterPorNome(string destino);
         IEnumerable<RotaModel> ObterTodos();
         List<RotaModel> ObterDetalhesRota();
-        RotaModel ObterDetalhesRota(int Id);
+        RotaModel ObterDetalhesRota(int id);
     }
 }

@@ -1,9 +1,6 @@
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Model
 {
@@ -18,14 +15,19 @@ namespace QueroTransporte.Model
         [Required]
         [MaxLength(30)]
         public string Destino { get; set; }
-        [Required]
+        [Required(ErrorMessage = "O Horario de saida é obrigatorio")]
         [Display(Name = "Horario partida")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "	{0:T}", ApplyFormatInEditMode = true)]
         public TimeSpan HorarioSaida { get; set; }
-        [Required]
+        [Required(ErrorMessage = "O Horario de chegada é obrigatorio")]
         [Display(Name = "Horario chegada")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "	{0:T}", ApplyFormatInEditMode = true)]
         public TimeSpan HorarioChegada { get; set; }
         [Required]
-		[Display(Name = "Dia da Semana")]
+        [MaxLength(30)]
+        [Display(Name = "Dia da Semana")]
         public string DiaSemana { get; set; }
         [Display(Name = "Rota Anterior")]
         public int? RotaId { get; set; }

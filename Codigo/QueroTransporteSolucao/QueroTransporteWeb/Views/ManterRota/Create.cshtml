@@ -8,6 +8,7 @@
 
 <h4>RotaModel</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -42,7 +43,7 @@
                 @*ViewBag.RotaList is holding all the routs values*@
                 @Html.DropDownListFor(model => model.RotaId, ViewBag.RotaList as SelectList, new
                 { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RotaId, "", new { @class = "text-danger" })
+                <span asp-validation-for="RotaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -61,6 +62,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

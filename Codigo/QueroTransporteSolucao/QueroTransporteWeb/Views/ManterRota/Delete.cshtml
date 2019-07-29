@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    ViewBag.Erro = null;
 }
 
 <h2>Delete</h2>
@@ -15,7 +16,7 @@
             @Html.DisplayNameFor(model => model.Id)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Id) 
+            @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Origem)
@@ -60,9 +61,21 @@
             @Html.DisplayFor(model => model.IsComposta)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input type="submit" id="btn" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
+
+    @if (TempData["mensagemErro"] != null)
+    {
+        <div class="field-error" id="error-div" style="color: red">
+            @TempData["mensagemErro"]
+        </div>
+    }
+
 </div>
+
+
+
+
