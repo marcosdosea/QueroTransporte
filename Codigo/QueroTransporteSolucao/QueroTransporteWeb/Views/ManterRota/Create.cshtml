@@ -43,7 +43,7 @@
                 @*ViewBag.RotaList is holding all the routs values*@
                 @Html.DropDownListFor(model => model.RotaId, ViewBag.RotaList as SelectList, new
                 { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RotaId, "", new { @class = "text-danger" })
+                <span asp-validation-for="RotaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">

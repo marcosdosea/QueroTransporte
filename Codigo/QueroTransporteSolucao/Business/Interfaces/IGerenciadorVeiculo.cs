@@ -11,5 +11,7 @@ namespace QueroTransporte.Negocio
         int Inserir(VeiculoModel veiculoModel);
         IEnumerable<VeiculoModel> ObterPorModelo(string modelo);
         IEnumerable<VeiculoModel> ObterTodos();
+        int VerificaInsercaoVeiculo(string chassi,string placa);
+        bool VerificaEdicaoExistente(string chassi, string placa, int id);
     }
 }

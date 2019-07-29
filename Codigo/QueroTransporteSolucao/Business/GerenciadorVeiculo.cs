@@ -29,9 +29,9 @@ namespace QueroTransporte.Negocio
 
             Atribuir(veiculoModel, _veiculo);
 
-
             _context.Add(_veiculo);
             _context.SaveChanges();
+
             return _veiculo.Id;
         }
 
@@ -142,6 +142,52 @@ namespace QueroTransporte.Negocio
         {
             IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo));
             return veiculos;
+        }
+
+
+        /// <summary>
+        /// Pesquisa se existe outro veiculo com o chassi ou placa passado
+        /// </summary>
+        /// <param name="chassi"></param>
+        /// <returns></returns>
+        public int VerificaInsercaoVeiculo(string chassi, string placa)
+        {
+            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi) || veiculoModel.Placa.StartsWith(placa));
+
+            return veiculos.Count();
+        }
+
+        public bool VerificaEdicaoExistente(string chassi, string placa, int id)
+        {
+            bool existe = false;
+
+            List<VeiculoModel> veiculosPlaca = GetQuery().Where(veiculoModel => veiculoModel.Placa.StartsWith(placa)).ToList();
+            List<VeiculoModel> veiculosChassi = GetQuery().Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi)).ToList();
+
+
+            if (veiculosPlaca.Count != 0 && veiculosChassi.Count != 0 && 
+                veiculosPlaca[0].Id == id && veiculosChassi[0].Id == id)
+                existe = false;
+            else
+            {
+                if (veiculosChassi.Count() == 0)
+                    existe = false;
+                else
+                {
+                    if (veiculosChassi[0].Id != id)
+                        return true;
+                }
+
+                if (veiculosPlaca.Count() == 0)
+                    existe = false;
+                else
+                {
+                    if (veiculosPlaca[0].Id != id)
+                        return true;
+                }
+            }
+
+            return existe;
         }
     }
 }

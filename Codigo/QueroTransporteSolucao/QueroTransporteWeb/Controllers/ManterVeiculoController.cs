@@ -37,8 +37,17 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Inserir(veiculoModel);
-                return RedirectToAction(nameof(Index));
+                if (_gerenciadorVeiculo.VerificaInsercaoVeiculo(veiculoModel.Chassi, veiculoModel.Placa) == 0)
+                {
+                    _gerenciadorVeiculo.Inserir(veiculoModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["mensagemErro"] = "Já existe um veículo com esse chassi ou placa na base de dados";
+                    ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
+                    return View(veiculoModel);
+                }
             }
 
             return View(veiculoModel);
@@ -59,9 +68,19 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Alterar(veiculoModel);
-                return RedirectToAction(nameof(Index));
 
+                if (!_gerenciadorVeiculo.VerificaEdicaoExistente(veiculoModel.Chassi, veiculoModel.Placa,veiculoModel.Id))
+                {
+                    _gerenciadorVeiculo.Alterar(veiculoModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["mensagemErro"] = "Já existe um veículo com esse chassi ou placa na base de dados";
+                    ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
+                    return View(veiculoModel);
+                }
+                
             }
             return View(veiculoModel);
         }
