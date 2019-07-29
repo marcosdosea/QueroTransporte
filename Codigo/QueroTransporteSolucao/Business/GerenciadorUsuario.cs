@@ -45,8 +45,7 @@ namespace QueroTransporte.Negocio
             _context.SaveChanges();
         }
 
-        public
-            UsuarioModel ObterPorCpf(string cpf)
+        public UsuarioModel ObterPorCpf(string cpf)
         {
             IQueryable<UsuarioModel> usuario = GetQuery().Where(usuarioModel => usuarioModel.Cpf.Equals(cpf));
             return usuario.ElementAtOrDefault(0);
