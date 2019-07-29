@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Persistence
 {
-    public  class BD_QUERO_TRANSPORTEContext : DbContext
+    public class BD_QUERO_TRANSPORTEContext : DbContext
     {
         public BD_QUERO_TRANSPORTEContext()
         {
@@ -30,11 +30,11 @@ namespace Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           /* if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=123456;database=BD_QUERO_TRANSPORTE");
-            }*/
+            /* if (!optionsBuilder.IsConfigured)
+             {
+ #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=123456;database=BD_QUERO_TRANSPORTE");
+             }*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -136,7 +136,7 @@ namespace Persistence
             {
                 entity.ToTable("motorista", "bd_quero_transporte");
 
-                entity.HasIndex(e => e.Usuario)
+                entity.HasIndex(e => e.IdUsuario)
                     .HasName("fk_TB_MOTORISTA_TB_USUARIO1_idx");
 
                 entity.Property(e => e.Id)
@@ -153,17 +153,17 @@ namespace Persistence
                     .HasColumnName("CNH")
                     .HasColumnType("char(12)");
 
-                entity.Property(e => e.Usuario)
-                    .HasColumnName("USUARIO")
+                entity.Property(e => e.IdUsuario)
+                    .HasColumnName("IDUSUARIO")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Validade)
                     .HasColumnName("VALIDADE")
                     .HasColumnType("date");
 
-                entity.HasOne(d => d.UsuarioNavigation)
+                entity.HasOne(d => d.IdusuarioNavigation)
                     .WithMany(p => p.Motorista)
-                    .HasForeignKey(d => d.Usuario)
+                    .HasForeignKey(d => d.IdUsuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TB_MOTORISTA_TB_USUARIO1");
             });

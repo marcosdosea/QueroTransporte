@@ -5,11 +5,11 @@ namespace QueroTransporte.Negocio
 {
     public interface IGerenciadorMotorista
     {
-        void AlterarMotorista();
-        int CadastrarMotorista(MotoristaModel motoristaModel);
-        void ConfirmarCadastro();
-        MotoristaModel ConsultarMotorista(int id);
-        void RemoverMotorista();
-        void ValidarMotorista();
+        void Alterar(MotoristaModel motoristaModel);
+        int Cadastrar(MotoristaModel motoristaModel);
+        MotoristaModel Buscar(int id);
+        void Remover(int id);
+        IEnumerable<MotoristaModel> ObterTodos();
+
     }
 }
