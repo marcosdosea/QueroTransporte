@@ -118,8 +118,8 @@ namespace QueroTransporte.Negocio
         /// <returns></returns>
         IQueryable<UsuarioModel> GetQuery()
         {
-            IQueryable<Usuario> _usuario = _context.Usuario;
-            var query = from usuario in _usuario
+            IQueryable<Usuario> Usuario = _context.Usuario;
+            var query = from usuario in Usuario
                         select new UsuarioModel
                         {
                             Id = usuario.Id,
