@@ -13,10 +13,10 @@ namespace QueroTransporte.QueroTransporteWeb
         private readonly IGerenciadorFrota   _gerenciadorFrota;
 
 
-        public ManterVeiculoController(IGerenciadorVeiculo GerenciadorVeiculo, IGerenciadorFrota GerenciadorFrota)
+        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo, IGerenciadorFrota gerenciadorFrota)
         {
-            _gerenciadorVeiculo = GerenciadorVeiculo;
-            _gerenciadorFrota = GerenciadorFrota;
+            _gerenciadorVeiculo = gerenciadorVeiculo;
+            _gerenciadorFrota = gerenciadorFrota;
         }
 
 
@@ -33,58 +33,58 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VeiculoModel Veiculo)
+        public ActionResult Create(VeiculoModel veiculoModel)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Inserir(Veiculo);
+                _gerenciadorVeiculo.Inserir(veiculoModel);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(Veiculo);
+            return View(veiculoModel);
         }
 
 
-        public IActionResult Edit(int Id)
+        public IActionResult Edit(int id)
         {
             ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
+            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(id);
             return View(veiculo);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, VeiculoModel Veiculo)
+        public IActionResult Edit(int id, VeiculoModel veiculoModel)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Alterar(Veiculo);
+                _gerenciadorVeiculo.Alterar(veiculoModel);
                 return RedirectToAction(nameof(Index));
 
             }
-            return View(Veiculo);
+            return View(veiculoModel);
         }
 
-        public IActionResult Details(int Id)
+        public IActionResult Details(int id)
         {
-            VeiculoModel Contexto = _gerenciadorVeiculo.Buscar(Id);
-            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(Contexto.IdFrota).Titulo;
-            return View(Contexto);
+            VeiculoModel veiculoModel = _gerenciadorVeiculo.Buscar(id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculoModel.IdFrota).Titulo;
+            return View(veiculoModel);
         }
 
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            VeiculoModel Contexto = _gerenciadorVeiculo.Buscar(Id);
-            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(Contexto.IdFrota).Titulo; 
-            return View(Contexto);
+            VeiculoModel veiculoModel = _gerenciadorVeiculo.Buscar(id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculoModel.IdFrota).Titulo; 
+            return View(veiculoModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int Id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-           _gerenciadorVeiculo.Excluir(Id);
+           _gerenciadorVeiculo.Excluir(id);
             return RedirectToAction(nameof(Index));
         }
     }

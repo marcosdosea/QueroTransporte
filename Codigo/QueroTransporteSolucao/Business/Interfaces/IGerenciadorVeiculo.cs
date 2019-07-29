@@ -5,11 +5,11 @@ namespace QueroTransporte.Negocio
 {
     public interface IGerenciadorVeiculo
     {
-        void Alterar(VeiculoModel Veiculo);
-        VeiculoModel Buscar(int Id);
-        void Excluir(int Id);
-        int Inserir(VeiculoModel Veiculo);
-        IEnumerable<VeiculoModel> ObterPorModelo(string Modelo);
+        void Alterar(VeiculoModel veiculoModel);
+        VeiculoModel Buscar(int id);
+        void Excluir(int id);
+        int Inserir(VeiculoModel veiculoModel);
+        IEnumerable<VeiculoModel> ObterPorModelo(string modelo);
         IEnumerable<VeiculoModel> ObterTodos();
     }
 }

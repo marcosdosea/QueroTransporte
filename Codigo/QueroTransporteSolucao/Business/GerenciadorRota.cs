@@ -24,11 +24,11 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="rotaModel"></param>
         /// <returns></returns>
-        public int Inserir(RotaModel Rota)
+        public int Inserir(RotaModel rotaModel)
         {
             Rota _rota = new Rota();
 
-            Atribuir(Rota, _rota);
+            Atribuir(rotaModel, _rota);
 
             _context.Add(_rota);
             _context.SaveChanges();
@@ -40,11 +40,11 @@ namespace QueroTransporte.Negocio
         /// Altera os dados de uma rota da base de dados
         /// </summary>
         /// <param name="rotaModel"></param>
-        public void Alterar(RotaModel Rota)
+        public void Alterar(RotaModel rotaModel)
         {
             Rota _rota = new Rota();
 
-            Atribuir(Rota, _rota);
+            Atribuir(rotaModel, _rota);
             _context.Update(_rota);
             _context.SaveChanges();
 
@@ -53,11 +53,11 @@ namespace QueroTransporte.Negocio
         /// <summary>
         /// Busca uma rota na base de dados
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public RotaModel Buscar(int Id)
+        public RotaModel Buscar(int id)
         {
-            IEnumerable<RotaModel> Rotas = GetQuery().Where(rotaModel => rotaModel.Id.Equals(Id));
+            IEnumerable<RotaModel> Rotas = GetQuery().Where(rotaModel => rotaModel.Id.Equals(id));
 
             return Rotas.ElementAtOrDefault(0);
         }
@@ -65,36 +65,42 @@ namespace QueroTransporte.Negocio
         /// <summary>
         /// Exclui uma rota na base de dados
         /// </summary>
-        /// <param name="Id"></param>
-        public void Excluir(int Id)
+        /// <param name="id"></param>
+        public bool Excluir(int id)
         {
-            var rota = _context.Rota.Find(Id);
-            _context.Rota.Remove(rota);
-            _context.SaveChanges();
+            bool removeu = false;
+            var rota = _context.Rota.Find(id);
+
+            if(ObterNumeroDeRotasDependentes(rota.Id) == 0)
+            {
+                _context.Rota.Remove(rota);
+                _context.SaveChanges();
+                removeu = true;    
+            }
+
+            return removeu; 
         }
-
-
 
         /// <summary>
         /// Atribui dados de um model para um objeto de persistencia
         /// </summary>
         /// <param name="rotaModel"></param>
         /// <param name="_rota"></param>
-        private void Atribuir(RotaModel Rota, Rota _rota)
+        private void Atribuir(RotaModel rotaModel, Rota _rota)
         {
-            _rota.Id = Rota.Id;
-            _rota.Origem = Rota.Origem;
-            _rota.Destino = Rota.Destino;
-            _rota.HorarioChegada = Rota.HorarioChegada;
-            _rota.HorarioSaida = Rota.HorarioSaida;
-            _rota.DiaSemana = Rota.DiaSemana;
+            _rota.Id = rotaModel.Id;
+            _rota.Origem = rotaModel.Origem;
+            _rota.Destino = rotaModel.Destino;
+            _rota.HorarioChegada = rotaModel.HorarioChegada;
+            _rota.HorarioSaida = rotaModel.HorarioSaida;
+            _rota.DiaSemana = rotaModel.DiaSemana;
 
-            if (Rota.IsComposta)
-                _rota.RotaId = Rota.RotaId;
+            if (rotaModel.IsComposta)
+                _rota.RotaId = rotaModel.RotaId;
             else
                 _rota.RotaId = null;
 
-            _rota.EhComposta = Rota.IsComposta;
+            _rota.EhComposta = rotaModel.IsComposta;
         }
 
 
@@ -136,9 +142,9 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        public IEnumerable<RotaModel> ObterPorNome(string Destino)
+        public IEnumerable<RotaModel> ObterPorNome(string destino)
         {
-            IEnumerable<RotaModel> rotas = GetQuery().Where(RotaModel => RotaModel.Destino.StartsWith(Destino));
+            IEnumerable<RotaModel> rotas = GetQuery().Where(RotaModel => RotaModel.Destino.StartsWith(destino));
             return rotas;
         }
 
@@ -148,43 +154,50 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <returns></returns>
         public List<RotaModel> ObterDetalhesRota() {
-            List<RotaModel> rota = ObterTodos().ToList();
+            List<RotaModel> rotas = ObterTodos().ToList();
 
-            for (int i = 0; i < rota.Count; i++)
+            for (int i = 0; i < rotas.Count; i++)
             {
-                rota[i].DetalhesRota = rota[i].Id +" | " + rota[i].Origem +" - " + rota[i].Destino;
+                rotas[i].DetalhesRota = rotas[i].Id +" | " + rotas[i].Origem +" - " + rotas[i].Destino;
             }
 
-            return rota;
+            return rotas;
         }
 
         /// <summary>
-        /// Agrupa dados importantes para identificar uma rota
+        /// Agrupa dados importantes de uma rota 
         /// </summary>
         /// <returns></returns>
-        public RotaModel ObterDetalhesRota(int Id)
+        public RotaModel ObterDetalhesRota(int id)
         {
-            List<RotaModel> rota = ObterTodos().ToList();
+            List<RotaModel> rotas = ObterTodos().ToList();
             int index = 0;
 
-            for (int i = 0; i < rota.Count; i++)
+            for (int i = 0; i < rotas.Count; i++)
             {
-                if (Id == rota[i].Id)
+                if (id == rotas[i].Id)
                 {
-                    rota[i].DetalhesRota = rota[i].Id + " | " + rota[i].Origem + " - " + rota[i].Destino;
+                    rotas[i].DetalhesRota = rotas[i].Id + " | " + rotas[i].Origem + " - " + rotas[i].Destino;
                     index = i;    
                 }    
             }
 
-            return rota[index];
+            return rotas[index];
         }
 
 
         // estes métodos serão utilizados apenas pela aplicação móvel
 
-        public void ValidarDados(RotaModel Rota)
+        public void ValidarDados(RotaModel rotaModel)
         {
             throw new NotImplementedException();
         }
+
+        public int ObterNumeroDeRotasDependentes(int id)
+        {
+            IEnumerable<RotaModel> rota = GetQuery().Where(rotaModel => rotaModel.RotaId.Equals(id)).ToList();
+
+            return rota.Count();
+        }    
     }
 }
