@@ -18,12 +18,22 @@ namespace QueroTransporteWeb.Controllers
         {
             _gerenciadorUsuario = gerenciadorUsuario;
         }
+
+        /// <summary>
+        /// método da view padrão do controlador
+        /// </summary>
+        /// <returns>Todos os usuarios para o view que lista eles</returns>
         // GET: Usuario
         public ActionResult Index()
         {
             return View(_gerenciadorUsuario.ObterTodos());
         }
 
+        /// <summary>
+        /// detalha o dados do usuario
+        /// </summary>
+        /// <param name="id">serve para buscar um usuario, para posteriormente retorna-lo na view</param>
+        /// <returns>retorna na view o usuario</returns>
         // GET: Usuario/Details/5
         public ActionResult Details(int id)
         {
@@ -31,6 +41,10 @@ namespace QueroTransporteWeb.Controllers
             return View(usuario);
         }
 
+        /// <summary>
+        /// Para assim que a funcao criar um usuario é chamada
+        /// </summary>
+        /// <returns></returns>
         // GET: Usuario/Create
         public ActionResult Create()
         {
@@ -39,6 +53,11 @@ namespace QueroTransporteWeb.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Serve para a partir de um formulario receber os dados e criar um usuario 
+        /// </summary>
+        /// <param name="usuarioModel">Usuario criado a partir do formulario</param>
+        /// <returns></returns>
         // POST: Usuario/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -52,6 +71,11 @@ namespace QueroTransporteWeb.Controllers
             return View(usuarioModel);
         }
 
+        /// <summary>
+        /// Assim que é chamada a funcao para editar um determinado usuario
+        /// </summary>
+        /// <param name="id">id do usuario selecionado para edicao</param>
+        /// <returns></returns>
         // GET: Usuario/Edit/5
         public ActionResult Edit(int id)
         {
@@ -61,6 +85,11 @@ namespace QueroTransporteWeb.Controllers
             return View(user);
         }
 
+        /// <summary>
+        /// Edita um usuario a partir do formulario 
+        /// </summary>
+        /// <param name="usuarioModel">Usuario criado a partir do formulario</param>
+        /// <returns></returns>
         // POST: Usuario/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -74,12 +103,24 @@ namespace QueroTransporteWeb.Controllers
             return View(usuarioModel);
         }
 
+        /// <summary>
+        /// ASsim que é chamada o botao deletar um usuario
+        /// </summary>
+        /// <param name="id">id do usuario selecionado para exclusao</param>
+        /// <returns></returns>
         // GET: Usuario/Delete/5
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return View();
+            UsuarioModel usuario = _gerenciadorUsuario.Buscar(id);
+            return View(usuario);
         }
 
+        /// <summary>
+        /// Serve para excluir um usuario 
+        /// </summary>
+        /// <param name="id">id do usario a ser deletado</param>
+        /// <param name="collection">Objeto da interface controller</param>
+        /// <returns></returns>
         // POST: Usuario/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

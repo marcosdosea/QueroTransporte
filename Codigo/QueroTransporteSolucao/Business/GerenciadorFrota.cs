@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 
 namespace QueroTransporte.Negocio
-{
+{ 
     public class GerenciadorFrota : IGerenciadorFrota
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;

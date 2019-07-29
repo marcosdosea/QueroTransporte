@@ -16,6 +16,10 @@ namespace QueroTransporte.Negocio
             this._context = context;
         }
 
+        /// <summary>
+        /// Altera um usuario n banco
+        /// </summary>
+        /// <param name="usuarioModel">Objeto na qual irá sobreescrever o obejeto (usuario) antigo</param>
         public void Alterar(UsuarioModel usuarioModel)
         {
             Usuario usuario = new Usuario();
@@ -24,12 +28,21 @@ namespace QueroTransporte.Negocio
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Busca um usuario no banco
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public UsuarioModel Buscar(int id)
         {
             IQueryable<UsuarioModel> usuario = GetQuery().Where(usuarioModel => usuarioModel.Id.Equals(id));
             return usuario.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Exclui um usuario do banco
+        /// </summary>
+        /// <param name="id">serve para buscar um usuario no banco para excluir</param>
         public void Excluir(int id)
         {
             var usuario = _context.Usuario.Find(id);
@@ -37,6 +50,10 @@ namespace QueroTransporte.Negocio
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Insere um usuario n banco de dados
+        /// </summary>
+        /// <param name="usuarioModel">Objeto que será adicionando no banco</param>
         public void Inserir(UsuarioModel usuarioModel)
         {
             Usuario usuario = new Usuario();
@@ -45,12 +62,21 @@ namespace QueroTransporte.Negocio
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Obter um usuário por cpf
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <returns></returns>
         public UsuarioModel ObterPorCpf(string cpf)
         {
             IQueryable<UsuarioModel> usuario = GetQuery().Where(usuarioModel => usuarioModel.Cpf.Equals(cpf));
             return usuario.ElementAtOrDefault(0);
         }
 
+        /// <summary>
+        /// Obter todos os usaurios
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<UsuarioModel> ObterTodos()
         {
             return GetQuery();
