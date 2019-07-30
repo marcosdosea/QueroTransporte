@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
 
@@ -9,10 +10,13 @@ namespace QueroTransporte.QueroTransporteWeb
     public class ManterVeiculoController : Controller
     {
         private readonly IGerenciadorVeiculo _gerenciadorVeiculo;
+        private readonly IGerenciadorFrota   _gerenciadorFrota;
 
-        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo)
+
+        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo, IGerenciadorFrota gerenciadorFrota)
         {
             _gerenciadorVeiculo = gerenciadorVeiculo;
+            _gerenciadorFrota = gerenciadorFrota;
         }
 
 
@@ -23,60 +27,83 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
+            ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VeiculoModel veiculo)
+        public ActionResult Create(VeiculoModel veiculoModel)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Inserir(veiculo);
-                return RedirectToAction(nameof(Index));
+                if (_gerenciadorVeiculo.VerificaInsercaoVeiculo(veiculoModel.Chassi, veiculoModel.Placa) == 0)
+                {
+                    _gerenciadorVeiculo.Inserir(veiculoModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["mensagemErro"] = "Já existe um veículo com esse chassi ou placa na base de dados";
+                    ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
+                    return View(veiculoModel);
+                }
             }
 
-            return View(veiculo);
+            return View(veiculoModel);
         }
 
 
-        public IActionResult Edit(int Id)
+        public IActionResult Edit(int id)
         {
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
+            ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
+            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(id);
             return View(veiculo);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, VeiculoModel veiculo)
+        public IActionResult Edit(int id, VeiculoModel veiculoModel)
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorVeiculo.Alterar(veiculo);
-                return RedirectToAction(nameof(Index));
 
+                if (!_gerenciadorVeiculo.VerificaEdicaoExistente(veiculoModel.Chassi, veiculoModel.Placa,veiculoModel.Id))
+                {
+                    _gerenciadorVeiculo.Alterar(veiculoModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["mensagemErro"] = "Já existe um veículo com esse chassi ou placa na base de dados";
+                    ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
+                    return View(veiculoModel);
+                }
+                
             }
-            return View(veiculo);
+            return View(veiculoModel);
         }
 
-        public IActionResult Details(int Id)
+        public IActionResult Details(int id)
         {
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
-            return View(veiculo);
+            VeiculoModel veiculoModel = _gerenciadorVeiculo.Buscar(id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculoModel.IdFrota).Titulo;
+            return View(veiculoModel);
         }
 
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(Id);
-            return View(veiculo);
+            VeiculoModel veiculoModel = _gerenciadorVeiculo.Buscar(id);
+            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculoModel.IdFrota).Titulo; 
+            return View(veiculoModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int Id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-           _gerenciadorVeiculo.Excluir(Id);
+           _gerenciadorVeiculo.Excluir(id);
             return RedirectToAction(nameof(Index));
         }
     }
