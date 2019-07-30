@@ -1,8 +1,13 @@
-﻿namespace QueroTransporte.Negocio
+﻿using QueroTransporte.Model;
+using System.Collections.Generic;
+
+namespace QueroTransporte.Negocio
 {
     public interface IGerenciadorRota
     {
-        void Consultar();
+        List<RotaModel> Consultar();
+        RotaModel ObterPorId(int idRota);
+        RotaModel ObterPorOrigemDestino(string origem, string destino);
         void ValidarDados();
     }
 }

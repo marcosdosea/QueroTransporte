@@ -46,7 +46,6 @@ namespace QueroTransporte.Negocio
             return _veiculo.Id;
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -84,8 +83,6 @@ namespace QueroTransporte.Negocio
             _context.SaveChanges();
         }
 
-
-
         /// <summary>
         /// 
         /// </summary>
@@ -106,7 +103,6 @@ namespace QueroTransporte.Negocio
             _veiculo.Modelo = veiculoModel.Modelo;
             _veiculo.Placa = veiculoModel.Placa;
         }
-
 
         /// <summary>
         /// 
@@ -134,7 +130,6 @@ namespace QueroTransporte.Negocio
             return query;
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -143,7 +138,6 @@ namespace QueroTransporte.Negocio
         {
             return GetQuery();
         }
-
 
         /// <summary>
         /// 
@@ -156,5 +150,21 @@ namespace QueroTransporte.Negocio
             return veiculos;
         }
 
+        public VeiculoModel ObterPorId(int idVeiculo) => _context.Veiculo.Where(v => v.Id == idVeiculo)
+                                       .Select(v => new VeiculoModel
+                                       {
+                                           Id = v.Id,
+                                           AnoFabricacao = v.AnoFabricacao,
+                                           AnoModelo = v.AnoModelo,
+                                           Capacidade = v.Capacidade,
+                                           Categoria = v.Categoria,
+                                           Chassi = v.Chassi,
+                                           Cor = v.Cor,
+                                           IdFrota = (int)v.Frota,
+                                           DataEmplacamento = v.DataEmplacamento,
+                                           Marca = v.Marca,
+                                           Modelo = v.Modelo,
+                                           Placa = v.Placa
+                                       }).FirstOrDefault();
     }
 }
