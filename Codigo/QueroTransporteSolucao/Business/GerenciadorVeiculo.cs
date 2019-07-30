@@ -35,7 +35,6 @@ namespace QueroTransporte.Negocio
             return _veiculo.Id;
         }
 
-
         /// <summary>
         /// Altera os dados de um veiculo da base de dados
         /// </summary>
@@ -72,8 +71,6 @@ namespace QueroTransporte.Negocio
             _context.SaveChanges();
         }
 
-
-
         /// <summary>
         /// Atribui dados de um objeto para outro
         /// </summary>
@@ -94,7 +91,6 @@ namespace QueroTransporte.Negocio
             _veiculo.Modelo = veiculoModel.Modelo;
             _veiculo.Placa = veiculoModel.Placa;
         }
-
 
         /// <summary>
         ///  retorna todas as rotas da base de dados
@@ -122,7 +118,6 @@ namespace QueroTransporte.Negocio
             return query;
         }
 
-
         /// <summary>
         /// Obtem todos os veiculos da base de dados
         /// </summary>
@@ -131,7 +126,6 @@ namespace QueroTransporte.Negocio
         {
             return GetQuery();
         }
-
 
         /// <summary>
         /// Pesquisa veiculos por modelo
@@ -143,7 +137,6 @@ namespace QueroTransporte.Negocio
             IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo));
             return veiculos;
         }
-
 
         /// <summary>
         /// Pesquisa se existe outro veiculo com o chassi ou placa passado
@@ -189,5 +182,22 @@ namespace QueroTransporte.Negocio
 
             return existe;
         }
+        
+        public VeiculoModel ObterPorId(int idVeiculo) => _context.Veiculo.Where(v => v.Id == idVeiculo)
+                                       .Select(v => new VeiculoModel
+                                       {
+                                           Id = v.Id,
+                                           AnoFabricacao = v.AnoFabricacao,
+                                           AnoModelo = v.AnoModelo,
+                                           Capacidade = v.Capacidade,
+                                           Categoria = v.Categoria,
+                                           Chassi = v.Chassi,
+                                           Cor = v.Cor,
+                                           IdFrota = (int)v.Frota,
+                                           DataEmplacamento = v.DataEmplacamento,
+                                           Marca = v.Marca,
+                                           Modelo = v.Modelo,
+                                           Placa = v.Placa
+                                       }).FirstOrDefault();
     }
 }

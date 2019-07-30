@@ -17,5 +17,9 @@ namespace QueroTransporte.Negocio
         IEnumerable<RotaModel> ObterTodos();
         List<RotaModel> ObterDetalhesRota();
         RotaModel ObterDetalhesRota(int id);
+      
+        List<RotaModel> Consultar();
+        RotaModel ObterPorId(int idRota);
+        RotaModel ObterPorOrigemDestino(string origem, string destino);
     }
 }

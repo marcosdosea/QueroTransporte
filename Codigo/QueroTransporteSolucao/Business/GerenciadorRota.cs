@@ -1,11 +1,8 @@
-
 using Persistence;
 using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 
 namespace QueroTransporte.Negocio
 {
@@ -184,15 +181,42 @@ namespace QueroTransporte.Negocio
 
             return rotas[index];
         }
+        
+        public List<RotaModel> Consultar() => _context.Rota
+                            .Select(r => new RotaModel
+                            {
+                                Id = r.Id,
+                                Origem = r.Origem,
+                                Destino = r.Destino
+                            }).ToList();
+
+        public RotaModel ObterPorId(int idRota) => _context.Rota.Where(r => r.Id == idRota)
+                                .Select(r => new RotaModel
+                                {
+                                    Id = r.Id,
+                                    Origem = r.Origem,
+                                    Destino = r.Destino,
+                                    DiaSemana = r.DiaSemana
+                                }).FirstOrDefault();
+
+        public RotaModel ObterPorOrigemDestino(string origem, string destino)
+            => _context.Rota.Where(r => r.Origem == origem && r.Destino == destino)
+                .Select(r => new RotaModel
+                {
+                    Id = r.Id,
+                    Origem = r.Origem,
+                    Destino = r.Destino,
+                    DiaSemana = r.DiaSemana
+                }).FirstOrDefault();
 
 
-        // estes mÈtodos ser„o utilizados apenas pela aplicaÁ„o mÛvel
+        // estes m√©todos ser√£o utilizados apenas pela aplica√ß√£o m√≥vel
 
         public void ValidarDados(RotaModel rotaModel)
         {
             throw new NotImplementedException();
         }
-
+        
         public int ObterNumeroDeRotasDependentes(int id)
         {
             IEnumerable<RotaModel> rota = GetQuery().Where(rotaModel => rotaModel.RotaId.Equals(id)).ToList();
