@@ -161,7 +161,7 @@ namespace Persistence
                     .HasColumnName("VALIDADE")
                     .HasColumnType("date");
 
-                entity.HasOne(d => d.IdusuarioNavigation)
+                entity.HasOne(d => d.UsuarioNavigation)
                     .WithMany(p => p.Motorista)
                     .HasForeignKey(d => d.IdUsuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)

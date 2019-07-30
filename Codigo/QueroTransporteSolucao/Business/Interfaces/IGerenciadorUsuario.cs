@@ -15,5 +15,6 @@ namespace QueroTransporte.Negocio
         void Validar();
         void ValidarDados();
         IEnumerable<string> GetTipos();
+        IEnumerable<UsuarioModel> ObterUsuariosMotoristas();
     }
 }

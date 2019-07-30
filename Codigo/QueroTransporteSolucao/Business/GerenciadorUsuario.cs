@@ -143,5 +143,14 @@ namespace QueroTransporte.Negocio
             return tipos;
         }
 
+        /// <summary>
+        /// Serve para retornar os usuarios que são motoristas, ou seja, o elemento 1 do Inumerable de strings
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<UsuarioModel> ObterUsuariosMotoristas()
+        {
+            IQueryable<UsuarioModel> usuarios = GetQuery().Where(usuarioModel => usuarioModel.Tipo.Equals(GetTipos().ElementAt(1)));
+            return usuarios;
+        }
     }
 }

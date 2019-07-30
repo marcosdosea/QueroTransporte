@@ -29,8 +29,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdUsuario" class="control-label"></label>
-                <input asp-for="IdUsuario" class="form-control" />
-                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                @*ViewBag.RotaList is holding all the routs values*@
+                @Html.DropDownListFor(model => model.IdUsuario, ViewBag.UsuariosMotoristas as SelectList, new
+                { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdUsuario, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

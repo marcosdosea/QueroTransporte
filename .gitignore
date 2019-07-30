@@ -192,6 +192,9 @@ PublishScripts/
 *.nuget.props
 *.nuget.targets
 
+# Files backup 
+*.bak
+
 # Microsoft Azure Build Output
 csx/
 *.build.csdef

@@ -7,24 +7,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
     public class ManterMotoristaController : Controller
     {
         private readonly IGerenciadorMotorista _gerenciadorMotorista;
-        public ManterMotoristaController(IGerenciadorMotorista gerenciadorMotorista)
+        private readonly IGerenciadorUsuario _gerenciadorUsuario;
+        public ManterMotoristaController(IGerenciadorMotorista gerenciadorMotorista, IGerenciadorUsuario gerenciadorUsuario)
         {
             _gerenciadorMotorista = gerenciadorMotorista;
+            _gerenciadorUsuario = gerenciadorUsuario;
         }
 
         public IActionResult Index()
         {
+            ViewBag.NomeUsuarios = _gerenciadorUsuario.ObterUsuariosMotoristas();
             return View(_gerenciadorMotorista.ObterTodos());
         }
 
         public IActionResult Create()
         {
+            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
             return View();
         }
 
@@ -42,6 +47,7 @@ namespace QueroTransporte.QueroTransporteWeb
         }
         public IActionResult Edit(int id)
         {
+            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
             MotoristaModel motorista = _gerenciadorMotorista.Buscar(id);
             return View(motorista);
         }
@@ -63,12 +69,14 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Details(int id)
         {
             MotoristaModel motorista = _gerenciadorMotorista.Buscar(id);
+            ViewBag.NomeUsuario = _gerenciadorUsuario.Buscar(motorista.IdUsuario).Nome;
             return View(motorista);
         }
  
         public IActionResult Delete(int id)
         {
             MotoristaModel motorista = _gerenciadorMotorista.Buscar(id);
+            ViewBag.NomeUsuario = _gerenciadorUsuario.Buscar(motorista.IdUsuario).Nome;
             return View(motorista);
         }
 

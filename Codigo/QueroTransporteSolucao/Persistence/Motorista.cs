@@ -11,6 +11,6 @@ namespace Persistence
         public string Cnh { get; set; }
         public int? IdUsuario { get; set; }
 
-        public Usuario IdusuarioNavigation { get; set; }
+        public Usuario UsuarioNavigation { get; set; }
     }
 }
