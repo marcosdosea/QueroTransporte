@@ -7,9 +7,11 @@ namespace QueroTransporte.Negocio
     {
         void Alterar(VeiculoModel veiculoModel);
         VeiculoModel Buscar(int id);
-        void Excluir(int Id);
+        void Excluir(int id);
         int Inserir(VeiculoModel veiculoModel);
-        IEnumerable<VeiculoModel> ObterPorNome(string modelo);
+        IEnumerable<VeiculoModel> ObterPorModelo(string modelo);
         IEnumerable<VeiculoModel> ObterTodos();
+        int VerificaInsercaoVeiculo(string chassi,string placa);
+        bool VerificaEdicaoExistente(string chassi, string placa, int id);
     }
 }

@@ -12,7 +12,7 @@ namespace QueroTransporte.Model
         [Required]
         [Display(Name = "Código")]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Todo veículo deve pertencer a uma frota. (CSU ainda não implementado, cadastrar frotas manualmente).")]
         [Display(Name = "Frota")]
         public int IdFrota { get; set; }
         [Required]

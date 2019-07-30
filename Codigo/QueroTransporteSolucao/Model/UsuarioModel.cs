@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,7 +25,8 @@ namespace QueroTransporte.Model
         [Required]
         public string Telefone { get; set; }
         [Required]
-        public int Tipo { get; set; }
+        public string Tipo { get; set; }
+
         // 0 = ADM, 1 = Cliente, 2 = Motorista, 3 = Gestor
     }
 }

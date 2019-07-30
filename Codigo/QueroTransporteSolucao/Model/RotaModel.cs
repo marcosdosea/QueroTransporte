@@ -1,9 +1,6 @@
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Model
 {
@@ -18,21 +15,29 @@ namespace QueroTransporte.Model
         [Required]
         [MaxLength(30)]
         public string Destino { get; set; }
-        [Required]
+        [Required(ErrorMessage = "O Horario de saida é obrigatorio")]
         [Display(Name = "Horario partida")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime HorarioSaida { get; set; }
-        [Required]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "	{0:T}", ApplyFormatInEditMode = true)]
+        public TimeSpan HorarioSaida { get; set; }
+        [Required(ErrorMessage = "O Horario de chegada é obrigatorio")]
         [Display(Name = "Horario chegada")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime HorarioChegada { get; set; }
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "	{0:T}", ApplyFormatInEditMode = true)]
+        public TimeSpan HorarioChegada { get; set; }
         [Required]
-		[Display(Name = "Dia da Semana")]
+        [MaxLength(30)]
+        [Display(Name = "Dia da Semana")]
         public string DiaSemana { get; set; }
+        [Display(Name = "Rota Anterior")]
+        public int? RotaId { get; set; }
         [Required]
 		[Display(Name = "Rota Composta")]
         public bool IsComposta { get; set; }
+
+
+        /* serve para concatenar informacoes como Origem,Destino e Id da para
+         usuário selecionar a rota correta*/
+        public string DetalhesRota { get; set; }
     }
 }
