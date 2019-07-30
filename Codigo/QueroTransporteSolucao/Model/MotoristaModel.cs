@@ -9,6 +9,8 @@ namespace QueroTransporte.Model
 {
     public class MotoristaModel
     {
+        public object id;
+
         [Required]
         [Key]
         public int Id { get; set; }

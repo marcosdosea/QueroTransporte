@@ -10,7 +10,6 @@ namespace QueroTransporte.Negocio
         void Excluir(int id);
         int Inserir(VeiculoModel veiculoModel);
         IEnumerable<VeiculoModel> ObterPorModelo(string modelo);
-        IEnumerable<VeiculoModel> ObterPorNome(string modelo);
         VeiculoModel ObterPorId(int idVeiculo);
         IEnumerable<VeiculoModel> ObterTodos();
         int VerificaInsercaoVeiculo(string chassi,string placa);

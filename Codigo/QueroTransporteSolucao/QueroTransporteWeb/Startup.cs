@@ -48,8 +48,8 @@ namespace QueroTransporteWeb
             services.AddScoped<IGerenciadorVeiculo, GerenciadorVeiculo>();
             services.AddScoped<IGerenciadorRota, GerenciadorRota>();
             services.AddTransient<IGerenciadorFrota, GerenciadorFrota>();
+            services.AddTransient<IGerenciadorMotorista, GerenciadorMotorista>();
             services.AddScoped<IGerenciadorViagem, GerenciadorViagem>();
-
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

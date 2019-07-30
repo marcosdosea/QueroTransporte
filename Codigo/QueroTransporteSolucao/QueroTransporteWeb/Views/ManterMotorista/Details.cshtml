@@ -1,0 +1,48 @@
+﻿@model QueroTransporte.Model.MotoristaModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MotoristaModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Categoria)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Validade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Validade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cnh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cnh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario) - @ViewBag.NomeUsuario
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.id }) |
+    <a asp-action="Index">Back to List</a>
+</div>
