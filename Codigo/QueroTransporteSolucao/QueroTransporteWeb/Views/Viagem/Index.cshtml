@@ -1,0 +1,60 @@
+﻿@model System.Collections.Generic.IEnumerable<QueroTransporte.Model.ViagemModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVeiculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lotacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRealizada)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdRota)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdVeiculo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lotacao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsRealizada)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

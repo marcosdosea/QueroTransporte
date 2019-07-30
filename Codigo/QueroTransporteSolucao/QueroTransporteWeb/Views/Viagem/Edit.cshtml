@@ -1,0 +1,63 @@
+﻿@model QueroTransporte.Model.ViagemModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>ViagemModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label name="OrigemRota" class="control-label">Origem</label>
+                @Html.DropDownList("Origem", ViewBag.rotaOrigem as SelectList, new
+                { @class = "form-control" })
+                <span asp-validation-for="IdRota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label name="DestinoRota" class="control-label">Destino</label>
+                @Html.DropDownList("Destino", ViewBag.rotaDestino as SelectList, new
+                { @class = "form-control" })
+                <span asp-validation-for="IdRota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdVeiculo" class="control-label"></label>
+                @Html.DropDownListFor(model => model.IdVeiculo, ViewBag.placas as SelectList, new
+                { @class = "form-control" })
+                <span asp-validation-for="IdVeiculo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preco" class="control-label"></label>
+                <input asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lotacao" class="control-label"></label>
+                <input asp-for="Lotacao" class="form-control" />
+                <span asp-validation-for="Lotacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsRealizada" /> @Html.DisplayNameFor(model => model.IsRealizada)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
