@@ -22,9 +22,9 @@ namespace Persistence
         public string Chassi { get; set; }
         public string Categoria { get; set; }
         public int Capacidade { get; set; }
-        public int Frota { get; set; }
+        public int IdFrota { get; set; }
 
-        public Frota FrotaNavigation { get; set; }
+        public Frota IdFrotaNavigation { get; set; }
         public ICollection<ConsumivelVeicular> ConsumivelVeicular { get; set; }
         public ICollection<Viagem> Viagem { get; set; }
     }

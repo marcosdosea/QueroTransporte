@@ -93,11 +93,11 @@ namespace QueroTransporte.Negocio
             _rota.DiaSemana = rotaModel.DiaSemana;
 
             if (rotaModel.IsComposta)
-                _rota.RotaId = rotaModel.RotaId;
+                _rota.IdRota = rotaModel.RotaId;
             else
-                _rota.RotaId = null;
+                _rota.IdRota = null;
 
-            _rota.EhComposta = rotaModel.IsComposta;
+            _rota.EhComposta = Convert.ToByte(rotaModel.IsComposta);
         }
 
 
@@ -117,8 +117,8 @@ namespace QueroTransporte.Negocio
                             HorarioChegada = rota.HorarioChegada,
                             HorarioSaida = rota.HorarioSaida,
                             DiaSemana = rota.DiaSemana,
-                            RotaId = (int) rota.RotaId,
-                            IsComposta = rota.EhComposta
+                            RotaId = (int) rota.IdRota,
+                            IsComposta = Convert.ToBoolean(rota.EhComposta)
             };
             return query;
         }

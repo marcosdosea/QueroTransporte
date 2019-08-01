@@ -86,7 +86,7 @@ namespace QueroTransporte.Negocio
             _veiculo.Chassi = veiculoModel.Chassi;
             _veiculo.Cor = veiculoModel.Cor;
             _veiculo.DataEmplacamento = veiculoModel.DataEmplacamento;
-            _veiculo.Frota = veiculoModel.IdFrota;
+            _veiculo.IdFrota = veiculoModel.IdFrota;
             _veiculo.Marca = veiculoModel.Marca;
             _veiculo.Modelo = veiculoModel.Modelo;
             _veiculo.Placa = veiculoModel.Placa;
@@ -109,7 +109,7 @@ namespace QueroTransporte.Negocio
                             Categoria = veiculo.Categoria,
                             Chassi = veiculo.Chassi,
                             Cor = veiculo.Cor,
-                            IdFrota = (int)veiculo.Frota,
+                            IdFrota = (int)veiculo.IdFrota,
                             DataEmplacamento = veiculo.DataEmplacamento,
                             Marca = veiculo.Marca,
                             Modelo = veiculo.Modelo,
@@ -193,7 +193,7 @@ namespace QueroTransporte.Negocio
                                            Categoria = v.Categoria,
                                            Chassi = v.Chassi,
                                            Cor = v.Cor,
-                                           IdFrota = (int)v.Frota,
+                                           IdFrota = (int)v.IdFrota,
                                            DataEmplacamento = v.DataEmplacamento,
                                            Marca = v.Marca,
                                            Modelo = v.Modelo,

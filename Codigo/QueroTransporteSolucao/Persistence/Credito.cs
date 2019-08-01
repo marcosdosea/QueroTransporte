@@ -7,8 +7,8 @@ namespace Persistence
     {
         public int Id { get; set; }
         public decimal? Saldo { get; set; }
-        public int UsuarioId { get; set; }
+        public int IdUsuario { get; set; }
 
-        public Usuario Usuario { get; set; }
+        public Usuario IdUsuarioNavigation { get; set; }
     }
 }

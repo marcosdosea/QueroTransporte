@@ -7,7 +7,7 @@ namespace Persistence
     {
         public Rota()
         {
-            InverseRotaNavigation = new HashSet<Rota>();
+            InverseIdRotaNavigation = new HashSet<Rota>();
             RotaFrota = new HashSet<RotaFrota>();
             Viagem = new HashSet<Viagem>();
         }
@@ -18,11 +18,11 @@ namespace Persistence
         public TimeSpan HorarioSaida { get; set; }
         public TimeSpan HorarioChegada { get; set; }
         public string DiaSemana { get; set; }
-        public int? RotaId { get; set; }
+        public int? IdRota { get; set; }
         public byte EhComposta { get; set; }
 
-        public Rota RotaNavigation { get; set; }
-        public ICollection<Rota> InverseRotaNavigation { get; set; }
+        public Rota IdRotaNavigation { get; set; }
+        public ICollection<Rota> InverseIdRotaNavigation { get; set; }
         public ICollection<RotaFrota> RotaFrota { get; set; }
         public ICollection<Viagem> Viagem { get; set; }
     }

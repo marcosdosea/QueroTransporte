@@ -9,8 +9,8 @@ namespace Persistence
         public double Valor { get; set; }
         public DateTime DataDespesa { get; set; }
         public string Categoria { get; set; }
-        public int Veiculo { get; set; }
+        public int IdVeiculo { get; set; }
 
-        public Veiculo VeiculoNavigation { get; set; }
+        public Veiculo IdVeiculoNavigation { get; set; }
     }
 }

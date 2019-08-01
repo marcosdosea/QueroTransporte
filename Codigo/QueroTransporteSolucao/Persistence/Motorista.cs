@@ -9,8 +9,8 @@ namespace Persistence
         public string Categoria { get; set; }
         public DateTime Validade { get; set; }
         public string Cnh { get; set; }
-        public int Idusuario { get; set; }
+        public int IdUsuario { get; set; }
 
-        public Usuario IdusuarioNavigation { get; set; }
+        public Usuario IdUsuarioNavigation { get; set; }
     }
 }

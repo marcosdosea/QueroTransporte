@@ -27,8 +27,8 @@ namespace QueroTransporte.Negocio
                         .Select(v => new ViagemModel
                         {
                             Id = v.Id,
-                            IdRota = v.Rota,
-                            IdVeiculo = v.Veiculo,
+                            IdRota = v.IdRota,
+                            IdVeiculo = v.IdVeiculo,
                             Preco = v.Preco,
                             Lotacao = v.Lotacao,
                             IsRealizada = Convert.ToBoolean(v.FoiRealizada)
@@ -38,30 +38,30 @@ namespace QueroTransporte.Negocio
                             .Select(v => new ViagemModel
                             {
                                 Id = v.Id,
-                                IdRota = v.Rota,
-                                IdVeiculo = v.Veiculo,
+                                IdRota = v.IdRota,
+                                IdVeiculo = v.IdVeiculo,
                                 Preco = v.Preco,
                                 Lotacao = v.Lotacao,
                                 IsRealizada = Convert.ToBoolean(v.FoiRealizada)
                             }).FirstOrDefault();
 
-        public List<ViagemModel> BuscarPorVeiculo(VeiculoModel veiculo) => _context.Viagem.Where(v => v.Veiculo == veiculo.Id)
+        public List<ViagemModel> BuscarPorVeiculo(VeiculoModel veiculo) => _context.Viagem.Where(v => v.IdVeiculo == veiculo.Id)
                                     .Select(v => new ViagemModel
                                     {
                                         Id = v.Id,
-                                        IdRota = v.Rota,
-                                        IdVeiculo = v.Veiculo,
+                                        IdRota = v.IdRota,
+                                        IdVeiculo = v.IdVeiculo,
                                         Preco = v.Preco,
                                         Lotacao = v.Lotacao,
                                         IsRealizada = Convert.ToBoolean(v.FoiRealizada)
                                     }).ToList();
 
-        public List<ViagemModel> BuscarPorRota(Rota rota) => _context.Viagem.Where(v => v.Veiculo == rota.Id)
+        public List<ViagemModel> BuscarPorRota(Rota rota) => _context.Viagem.Where(v => v.IdVeiculo == rota.Id)
                                     .Select(v => new ViagemModel
                                     {
                                         Id = v.Id,
-                                        IdRota = v.Rota,
-                                        IdVeiculo = v.Veiculo,
+                                        IdRota = v.IdRota,
+                                        IdVeiculo = v.IdVeiculo,
                                         Preco = v.Preco,
                                         Lotacao = v.Lotacao,
                                         IsRealizada = Convert.ToBoolean(v.FoiRealizada)
@@ -88,8 +88,8 @@ namespace QueroTransporte.Negocio
         private Viagem Atribuir(Viagem viagem, ViagemModel _viagem)
         {
             viagem.Id = _viagem.Id;
-            viagem.Rota = _viagem.IdRota;
-            viagem.Veiculo = _viagem.IdVeiculo;
+            viagem.IdRota = _viagem.IdRota;
+            viagem.IdVeiculo = _viagem.IdVeiculo;
             viagem.Preco = _viagem.Preco;
             viagem.Lotacao = _viagem.Lotacao;
             viagem.FoiRealizada = _viagem.IsRealizada ? (byte)1 : (byte)0;
