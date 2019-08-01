@@ -17,8 +17,8 @@ namespace Persistence
         public int Lotacao { get; set; }
         public byte FoiRealizada { get; set; }
 
-        public virtual Rota RotaNavigation { get; set; }
-        public virtual Veiculo VeiculoNavigation { get; set; }
-        public virtual ICollection<Solicitacao> Solicitacao { get; set; }
+        public Rota RotaNavigation { get; set; }
+        public Veiculo VeiculoNavigation { get; set; }
+        public ICollection<Solicitacao> Solicitacao { get; set; }
     }
 }

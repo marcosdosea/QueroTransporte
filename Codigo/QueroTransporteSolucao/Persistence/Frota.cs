@@ -14,9 +14,9 @@ namespace Persistence
         public int Id { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
-        public bool EhPublica { get; set; }
+        public byte EhPublica { get; set; }
 
-        public virtual ICollection<RotaFrota> RotaFrota { get; set; }
-        public virtual ICollection<Veiculo> Veiculo { get; set; }
+        public ICollection<RotaFrota> RotaFrota { get; set; }
+        public ICollection<Veiculo> Veiculo { get; set; }
     }
 }

@@ -14,6 +14,6 @@ namespace Persistence
         public DateTime Data { get; set; }
         public string Tipo { get; set; }
 
-        public virtual ICollection<Solicitacao> Solicitacao { get; set; }
+        public ICollection<Solicitacao> Solicitacao { get; set; }
     }
 }

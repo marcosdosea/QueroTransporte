@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Persistence
 {
-    public class BD_QUERO_TRANSPORTEContext : DbContext
+    public partial class BD_QUERO_TRANSPORTEContext : DbContext
     {
         public BD_QUERO_TRANSPORTEContext()
         {
@@ -30,17 +30,15 @@ namespace Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /* if (!optionsBuilder.IsConfigured)
-             {
- #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=123456;database=BD_QUERO_TRANSPORTE");
-             }*/
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=123456;database=BD_QUERO_TRANSPORTE");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<ConsumivelVeicular>(entity =>
             {
                 entity.ToTable("consumivel_veicular", "bd_quero_transporte");
@@ -50,8 +48,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Categoria)
                     .IsRequired()
@@ -89,8 +86,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Saldo)
                     .HasColumnName("SALDO")
@@ -136,7 +132,7 @@ namespace Persistence
             {
                 entity.ToTable("motorista", "bd_quero_transporte");
 
-                entity.HasIndex(e => e.IdUsuario)
+                entity.HasIndex(e => e.Idusuario)
                     .HasName("fk_TB_MOTORISTA_TB_USUARIO1_idx");
 
                 entity.Property(e => e.Id)
@@ -153,7 +149,7 @@ namespace Persistence
                     .HasColumnName("CNH")
                     .HasColumnType("char(12)");
 
-                entity.Property(e => e.IdUsuario)
+                entity.Property(e => e.Idusuario)
                     .HasColumnName("IDUSUARIO")
                     .HasColumnType("int(11)");
 
@@ -161,9 +157,9 @@ namespace Persistence
                     .HasColumnName("VALIDADE")
                     .HasColumnType("date");
 
-                entity.HasOne(d => d.UsuarioNavigation)
+                entity.HasOne(d => d.IdusuarioNavigation)
                     .WithMany(p => p.Motorista)
-                    .HasForeignKey(d => d.IdUsuario)
+                    .HasForeignKey(d => d.Idusuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TB_MOTORISTA_TB_USUARIO1");
             });
@@ -178,8 +174,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Data).HasColumnName("DATA");
 
@@ -249,7 +244,8 @@ namespace Persistence
 
                 entity.Property(e => e.Frota)
                     .HasColumnName("FROTA")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Rota)
                     .HasColumnName("ROTA")
@@ -289,8 +285,8 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Viagem)
                     .HasColumnName("VIAGEM")
@@ -338,8 +334,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("DATA")
@@ -491,6 +486,7 @@ namespace Persistence
                 entity.HasOne(d => d.FrotaNavigation)
                     .WithMany(p => p.Veiculo)
                     .HasForeignKey(d => d.Frota)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TB_VEICULO_TB_FROTA1");
             });
 
@@ -510,8 +506,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.FoiRealizada)
                     .HasColumnName("FOI_REALIZADA")

@@ -11,6 +11,6 @@ namespace Persistence
         public string Categoria { get; set; }
         public int Veiculo { get; set; }
 
-        public virtual Veiculo VeiculoNavigation { get; set; }
+        public Veiculo VeiculoNavigation { get; set; }
     }
 }

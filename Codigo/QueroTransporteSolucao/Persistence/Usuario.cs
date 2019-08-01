@@ -21,9 +21,9 @@ namespace Persistence
         public string Telefone { get; set; }
         public string Tipo { get; set; }
 
-        public virtual ICollection<Credito> Credito { get; set; }
-        public virtual ICollection<Motorista> Motorista { get; set; }
-        public virtual ICollection<Solicitacao> Solicitacao { get; set; }
-        public virtual ICollection<Transacao> Transacao { get; set; }
+        public ICollection<Credito> Credito { get; set; }
+        public ICollection<Motorista> Motorista { get; set; }
+        public ICollection<Solicitacao> Solicitacao { get; set; }
+        public ICollection<Transacao> Transacao { get; set; }
     }
 }

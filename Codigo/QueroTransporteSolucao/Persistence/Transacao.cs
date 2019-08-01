@@ -12,6 +12,6 @@ namespace Persistence
         public int Usuario { get; set; }
         public string Status { get; set; }
 
-        public virtual Usuario UsuarioNavigation { get; set; }
+        public Usuario UsuarioNavigation { get; set; }
     }
 }

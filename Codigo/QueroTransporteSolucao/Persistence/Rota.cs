@@ -19,11 +19,11 @@ namespace Persistence
         public TimeSpan HorarioChegada { get; set; }
         public string DiaSemana { get; set; }
         public int? RotaId { get; set; }
-        public bool EhComposta { get; set; }
+        public byte EhComposta { get; set; }
 
-        public virtual Rota RotaNavigation { get; set; }
-        public virtual ICollection<Rota> InverseRotaNavigation { get; set; }
-        public virtual ICollection<RotaFrota> RotaFrota { get; set; }
-        public virtual ICollection<Viagem> Viagem { get; set; }
+        public Rota RotaNavigation { get; set; }
+        public ICollection<Rota> InverseRotaNavigation { get; set; }
+        public ICollection<RotaFrota> RotaFrota { get; set; }
+        public ICollection<Viagem> Viagem { get; set; }
     }
 }

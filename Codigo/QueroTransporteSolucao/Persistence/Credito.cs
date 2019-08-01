@@ -9,6 +9,6 @@ namespace Persistence
         public decimal? Saldo { get; set; }
         public int UsuarioId { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }
