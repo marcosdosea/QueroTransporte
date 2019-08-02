@@ -44,12 +44,15 @@ namespace QueroTransporteWeb
                 options.UseMySQL(
                     Configuration.GetConnectionString("QueroTransporteConnection")));
 
-            services.AddTransient<IGerenciadorUsuario, GerenciadorUsuario>();
-            services.AddScoped<IGerenciadorVeiculo, GerenciadorVeiculo>();
-            services.AddScoped<IGerenciadorRota, GerenciadorRota>();
-            services.AddTransient<IGerenciadorFrota, GerenciadorFrota>();
-            services.AddTransient<IGerenciadorMotorista, GerenciadorMotorista>();
-            services.AddScoped<IGerenciadorViagem, GerenciadorViagem>();
+            // Gerenciadoras
+            services.AddScoped<GerenciadorFrota>();
+            services.AddScoped<GerenciadorMotorista>();
+            services.AddScoped<GerenciadorRota>();
+            services.AddScoped<GerenciadorUsuario>();
+            services.AddScoped<GerenciadorVeiculo>();
+            services.AddScoped<GerenciadorViagem>();
+
+            // Contexto padrão.
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

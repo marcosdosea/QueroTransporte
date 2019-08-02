@@ -1,4 +1,5 @@
 
+using Business;
 using Persistence;
 using QueroTransporte.Model;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorViagem : IGerenciadorViagem
+    public class GerenciadorViagem : IGerenciador<ViagemModel>
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
         public GerenciadorViagem(BD_QUERO_TRANSPORTEContext context)
@@ -16,71 +17,72 @@ namespace QueroTransporte.Negocio
             _context = context;
         }
 
-        public bool Alterar(ViagemModel viagem)
+        public bool Editar(ViagemModel viagem)
         {
-            var _viagem = new Viagem();
-            _context.Update(Atribuir(_viagem, viagem));
+            _context.Update(Atribuir(new Viagem(), viagem));
             return _context.SaveChanges() == 1 ? true : false;
         }
 
-        public List<ViagemModel> Buscar() => _context.Viagem
-                        .Select(v => new ViagemModel
-                        {
-                            Id = v.Id,
-                            IdRota = v.IdRota,
-                            IdVeiculo = v.IdVeiculo,
-                            Preco = v.Preco,
-                            Lotacao = v.Lotacao,
-                            IsRealizada = Convert.ToBoolean(v.FoiRealizada)
-                        }).ToList();
+        public List<ViagemModel> ObterTodos()
+            => _context.Viagem
+                .Select(v => new ViagemModel
+                {
+                    Id = v.Id,
+                    IdRota = v.IdRota,
+                    IdVeiculo = v.IdVeiculo,
+                    Preco = v.Preco,
+                    Lotacao = v.Lotacao,
+                    IsRealizada = Convert.ToBoolean(v.FoiRealizada)
+                }).ToList();
 
-        public ViagemModel BuscarPorId(int id) => _context.Viagem.Where(v => v.Id == id)
-                            .Select(v => new ViagemModel
-                            {
-                                Id = v.Id,
-                                IdRota = v.IdRota,
-                                IdVeiculo = v.IdVeiculo,
-                                Preco = v.Preco,
-                                Lotacao = v.Lotacao,
-                                IsRealizada = Convert.ToBoolean(v.FoiRealizada)
-                            }).FirstOrDefault();
+        public ViagemModel ObterPorId(int id)
+            => _context.Viagem
+                .Where(v => v.Id == id)
+                .Select(v => new ViagemModel
+                {
+                    Id = v.Id,
+                    IdRota = v.IdRota,
+                    IdVeiculo = v.IdVeiculo,
+                    Preco = v.Preco,
+                    Lotacao = v.Lotacao,
+                    IsRealizada = Convert.ToBoolean(v.FoiRealizada)
+                }).FirstOrDefault();
 
-        public List<ViagemModel> BuscarPorVeiculo(VeiculoModel veiculo) => _context.Viagem.Where(v => v.IdVeiculo == veiculo.Id)
-                                    .Select(v => new ViagemModel
-                                    {
-                                        Id = v.Id,
-                                        IdRota = v.IdRota,
-                                        IdVeiculo = v.IdVeiculo,
-                                        Preco = v.Preco,
-                                        Lotacao = v.Lotacao,
-                                        IsRealizada = Convert.ToBoolean(v.FoiRealizada)
-                                    }).ToList();
+        public List<ViagemModel> BuscarPorVeiculo(VeiculoModel veiculo)
+            => _context.Viagem
+                .Where(v => v.IdVeiculo == veiculo.Id)
+                .Select(v => new ViagemModel
+                {
+                    Id = v.Id,
+                    IdRota = v.IdRota,
+                    IdVeiculo = v.IdVeiculo,
+                    Preco = v.Preco,
+                    Lotacao = v.Lotacao,
+                    IsRealizada = Convert.ToBoolean(v.FoiRealizada)
+                }).ToList();
 
-        public List<ViagemModel> BuscarPorRota(Rota rota) => _context.Viagem.Where(v => v.IdVeiculo == rota.Id)
-                                    .Select(v => new ViagemModel
-                                    {
-                                        Id = v.Id,
-                                        IdRota = v.IdRota,
-                                        IdVeiculo = v.IdVeiculo,
-                                        Preco = v.Preco,
-                                        Lotacao = v.Lotacao,
-                                        IsRealizada = Convert.ToBoolean(v.FoiRealizada)
-                                    }).ToList();
+        public List<ViagemModel> BuscarPorRota(Rota rota)
+            => _context.Viagem
+                .Where(v => v.IdVeiculo == rota.Id)
+                .Select(v => new ViagemModel
+                {
+                    Id = v.Id,
+                    IdRota = v.IdRota,
+                    IdVeiculo = v.IdVeiculo,
+                    Preco = v.Preco,
+                    Lotacao = v.Lotacao,
+                    IsRealizada = Convert.ToBoolean(v.FoiRealizada)
+                }).ToList();
 
-        public bool Excluir(int id)
+        public bool Remover(int id)
         {
-            var viagem = _context.Viagem.Where(v => v.Id == id).FirstOrDefault();
-            _context.Remove(viagem);
-            if (_context.SaveChanges() == 1)
-                return true;
-            else
-                return false;
+            _context.Remove(_context.Viagem.Where(v => v.Id == id).FirstOrDefault());
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
-        public bool Inserir(ViagemModel viagem)
+        public bool Inserir(ViagemModel objeto)
         {
-            var _viagem = new Viagem();
-            _context.Add(Atribuir(_viagem, viagem));
+            _context.Add(Atribuir(new Viagem(), objeto));
             return _context.SaveChanges() == 1 ? true : false;
         }
 

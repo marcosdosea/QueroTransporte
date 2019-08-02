@@ -1,4 +1,5 @@
 
+using Business;
 using Persistence;
 using QueroTransporte.Model;
 using System;
@@ -7,8 +8,8 @@ using System.Linq;
 using System.Text;
 
 namespace QueroTransporte.Negocio
-{ 
-    public class GerenciadorFrota : IGerenciadorFrota
+{
+    public class GerenciadorFrota : IGerenciador<FrotaModel>
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
@@ -18,34 +19,20 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        ///  obtem todas as rotas da base de dados
-        /// </summary>
-        /// <returns></returns>
-        private IQueryable<FrotaModel> GetQuery()
-        {
-            IQueryable<Frota> Frota = _context.Frota;
-            var query = from frota in Frota
-                        select new FrotaModel
-                        {
-                            Id = frota.Id,
-                            Titulo = frota.Titulo,
-                            Descricao =  frota.Descricao,
-                            IsPublic = Convert.ToBoolean(frota.EhPublica)
-                        };
-            return query;
-        }
-
-
-        /// <summary>
         /// retorna todas as rotas da base de dados
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<FrotaModel> ObterTodos()
-        {
-            return GetQuery();
-        }
+        public List<FrotaModel> ObterTodos()
+            => _context.Frota
+                .Select(frota => new FrotaModel
+                {
+                    Id = frota.Id,
+                    Titulo = frota.Titulo,
+                    Descricao = frota.Descricao,
+                    IsPublic = Convert.ToBoolean(frota.EhPublica)
+                }).ToList();
 
-        public void Alterar(FrotaModel frotaModel)
+        public bool Editar(FrotaModel objeto)
         {
             throw new NotImplementedException();
         }
@@ -55,25 +42,25 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public FrotaModel Buscar(int id)
-        {
-            IEnumerable<FrotaModel> frotas = GetQuery().Where(frotaModel => frotaModel.Id.Equals(id));
-            return frotas.ElementAtOrDefault(0);
-        }
+        public FrotaModel ObterPorId(int id)
+            => _context.Frota
+                .Where(frota => frota.Id == id)
+                .Select(frota => new FrotaModel
+                {
+                    Id = frota.Id,
+                    Titulo = frota.Titulo,
+                    Descricao = frota.Descricao,
+                    IsPublic = Convert.ToBoolean(frota.EhPublica)
+                }).FirstOrDefault();
 
-        public void Excluir(int Id)
+        public bool Remover(int id)
         {
             throw new NotImplementedException();
         }
 
-        public int Inserir(FrotaModel frotaModel)
+        public bool Inserir(FrotaModel objeto)
         {
             throw new NotImplementedException();
         }
-
-        public IEnumerable<FrotaModel> ObterPorTitulo(string titulo)
-        {
-            throw new NotImplementedException();
-        }  
     }
 }

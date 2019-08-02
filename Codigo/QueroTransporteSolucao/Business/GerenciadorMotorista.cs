@@ -1,3 +1,4 @@
+using Business;
 using Persistence;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
@@ -8,14 +9,14 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorMotorista : IGerenciadorMotorista
+    public class GerenciadorMotorista : IGerenciador<MotoristaModel>
     {
 
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
         public GerenciadorMotorista(BD_QUERO_TRANSPORTEContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         /// <summary>
@@ -23,27 +24,26 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="motoristaModel"> </param>
         /// <returns> </returns>
-        public int Cadastrar(MotoristaModel motoristaModel)
+        public bool Inserir(MotoristaModel objeto)
         {
             Motorista _motorista = new Motorista();
 
-            Atribuir(motoristaModel, _motorista);
+            Atribuir(objeto, _motorista);
             _context.Add(_motorista);
-            _context.SaveChanges();
-            return _motorista.Id;
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="motoristaModel"> </param>
-        public void Alterar(MotoristaModel motoristaModel)
+        public bool Alterar(MotoristaModel objeto)
         {
             Motorista _motorista = new Motorista();
 
-            Atribuir(motoristaModel, _motorista);
+            Atribuir(objeto, _motorista);
             _context.Update(_motorista);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         private void Atribuir(MotoristaModel motoristaModel, Motorista _motorista)
@@ -55,56 +55,47 @@ namespace QueroTransporte.Negocio
             _motorista.IdUsuario = motoristaModel.IdUsuario;
         }
 
-        public MotoristaModel Buscar(int id)
+        public MotoristaModel ObterPorId(int id)
+            => _context.Motorista.Where(motorista => motorista.Id == id)
+                .Select(motorista => new MotoristaModel
+                {
+                    Id = motorista.Id,
+                    Categoria = motorista.Categoria,
+                    Validade = motorista.Validade,
+                    Cnh = motorista.Cnh,
+                    IdUsuario = (int)motorista.IdUsuario
+                }).FirstOrDefault();
+
+        public bool Remover(int id)
         {
-            IEnumerable<MotoristaModel> motoristas = GetQuery().Where(motoristaModel => motoristaModel.Id.Equals(id));
-
-            return motoristas.ElementAtOrDefault(0);
-        }
-
-        public void Remover(int Id)
-        {
-            Motorista motorista = new Motorista();
-
-            motorista = _context.Motorista.Find(Id);
-            _context.Motorista.Remove(entity: motorista);
-            _context.SaveChanges();
+            _context.Motorista.Remove(_context.Motorista.Find(id));
+            return _context.SaveChanges() == 1 ? true : false;
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="motoristaModel"></param>
-        public void AlterarMotirsta(MotoristaModel motoristaModel)
+        /// <param name="objeto"></param>
+        public bool Editar(MotoristaModel objeto)
         {
             Motorista _motorista = new Motorista();
-
-            Atribuir(motoristaModel, _motorista);
+            Atribuir(objeto, _motorista);
             _context.Update(_motorista);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
 
-        }
-
-        private IQueryable<MotoristaModel> GetQuery()
-        {
-            IQueryable<Motorista> Motorista = _context.Motorista;
-            var query = from motorista in Motorista
-                        select new MotoristaModel
-                        {
-                            Id = motorista.Id,
-                            Categoria = motorista.Categoria,
-                            Validade = motorista.Validade,
-                            Cnh = motorista.Cnh,
-                            IdUsuario = (int)motorista.IdUsuario
-                        };
-            return query;
         }
         /// <summary>
         ///  
         /// </summary>
         /// <returns></returns>
-        public IEnumerable <MotoristaModel> ObterTodos()
-        {
-            return GetQuery();
-        }
+        public List<MotoristaModel> ObterTodos()
+            => _context.Motorista
+                .Select(motorista => new MotoristaModel
+                {
+                    Id = motorista.Id,
+                    Categoria = motorista.Categoria,
+                    Validade = motorista.Validade,
+                    Cnh = motorista.Cnh,
+                    IdUsuario = (int)motorista.IdUsuario
+                }).ToList();
     }
 }
