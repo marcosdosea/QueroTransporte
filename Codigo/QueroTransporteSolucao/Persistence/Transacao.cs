@@ -9,9 +9,9 @@ namespace Persistence
         public decimal QtdCreditos { get; set; }
         public byte Deferido { get; set; }
         public DateTime Data { get; set; }
-        public int Usuario { get; set; }
+        public int IdUsuario { get; set; }
         public string Status { get; set; }
 
-        public virtual Usuario UsuarioNavigation { get; set; }
+        public Usuario IdUsuarioNavigation { get; set; }
     }
 }

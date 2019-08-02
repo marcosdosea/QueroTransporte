@@ -5,10 +5,10 @@ namespace Persistence
 {
     public partial class RotaFrota
     {
-        public int Frota { get; set; }
-        public int Rota { get; set; }
+        public int IdFrota { get; set; }
+        public int IdRota { get; set; }
 
-        public virtual Frota FrotaNavigation { get; set; }
-        public virtual Rota RotaNavigation { get; set; }
+        public Frota IdFrotaNavigation { get; set; }
+        public Rota IdRotaNavigation { get; set; }
     }
 }

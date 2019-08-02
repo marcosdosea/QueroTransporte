@@ -11,14 +11,14 @@ namespace Persistence
         }
 
         public int Id { get; set; }
-        public int Rota { get; set; }
-        public int Veiculo { get; set; }
+        public int IdRota { get; set; }
+        public int IdVeiculo { get; set; }
         public double Preco { get; set; }
         public int Lotacao { get; set; }
         public byte FoiRealizada { get; set; }
 
-        public virtual Rota RotaNavigation { get; set; }
-        public virtual Veiculo VeiculoNavigation { get; set; }
-        public virtual ICollection<Solicitacao> Solicitacao { get; set; }
+        public Rota IdRotaNavigation { get; set; }
+        public Veiculo IdVeiculoNavigation { get; set; }
+        public ICollection<Solicitacao> Solicitacao { get; set; }
     }
 }

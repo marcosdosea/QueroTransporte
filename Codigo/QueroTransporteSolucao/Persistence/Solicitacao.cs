@@ -5,15 +5,15 @@ namespace Persistence
 {
     public partial class Solicitacao
     {
-        public string Id { get; set; }
-        public int Viagem { get; set; }
-        public int Usuario { get; set; }
+        public int Id { get; set; }
+        public int IdViagem { get; set; }
+        public int IdUsuario { get; set; }
         public DateTime DataSolicitacao { get; set; }
         public byte FoiAtentida { get; set; }
-        public int PagamentoId { get; set; }
+        public int IdPagamento { get; set; }
 
-        public virtual Pagamento Pagamento { get; set; }
-        public virtual Usuario UsuarioNavigation { get; set; }
-        public virtual Viagem ViagemNavigation { get; set; }
+        public Pagamento IdPagamentoNavigation { get; set; }
+        public Usuario IdUsuarioNavigation { get; set; }
+        public Viagem IdViagemNavigation { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace QueroTransporte.Negocio
                             Id = frota.Id,
                             Titulo = frota.Titulo,
                             Descricao =  frota.Descricao,
-                            IsPublic = frota.EhPublica,
+                            IsPublic = Convert.ToBoolean(frota.EhPublica)
                         };
             return query;
         }
