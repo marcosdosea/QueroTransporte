@@ -13,10 +13,10 @@ namespace QueroTransporteWeb.Controllers
 {
     public class ViagemController : Controller
     {
-        private readonly IGerenciadorViagem _gerenciador;
-        private readonly IGerenciadorRota _gerenciadorRota;
-        private readonly IGerenciadorVeiculo _gerenciadorVeiculo;
-        public ViagemController(IGerenciadorViagem gerenciador, IGerenciadorRota gerenciadorRota, IGerenciadorVeiculo gerenciadorVeiculo)
+        private readonly GerenciadorViagem _gerenciador;
+        private readonly GerenciadorRota _gerenciadorRota;
+        private readonly GerenciadorVeiculo _gerenciadorVeiculo;
+        public ViagemController(GerenciadorViagem gerenciador, GerenciadorRota gerenciadorRota, GerenciadorVeiculo gerenciadorVeiculo)
         {
             _gerenciador = gerenciador;
             _gerenciadorRota = gerenciadorRota;
@@ -25,15 +25,15 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem
         public ActionResult Index()
         {
-            ViewBag.rotas = _gerenciadorRota.Consultar();
+            ViewBag.rotas = _gerenciadorRota.ObterTodos();
             ViewBag.placas = _gerenciadorVeiculo.ObterTodos();
-            return View(_gerenciador.Buscar());
+            return View(_gerenciador.ObterTodos());
         }
 
         // GET: ManterViagem/Details/5
         public ActionResult Details(int id)
         {
-            var viagem = _gerenciador.BuscarPorId(id);
+            var viagem = _gerenciador.ObterPorId(id);
             ViewBag.rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
             ViewBag.placa = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
             return View(viagem);
@@ -42,7 +42,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Create
         public ActionResult Create()
         {
-            var rotas = _gerenciadorRota.Consultar();
+            var rotas = _gerenciadorRota.ObterTodos();
             ViewBag.rotaOrigem = new SelectList(rotas, "Origem", "Origem");
             ViewBag.rotaDestino = new SelectList(rotas, "Destino", "Destino");
             ViewBag.placas = new SelectList(_gerenciadorVeiculo.ObterTodos(), "Id", "Placa");
@@ -88,8 +88,8 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Edit/5
         public ActionResult Edit(int id)
         {
-            var viagem = _gerenciador.BuscarPorId(id);
-            var rotas = _gerenciadorRota.Consultar();
+            var viagem = _gerenciador.ObterPorId(id);
+            var rotas = _gerenciadorRota.ObterTodos();
             ViewBag.rotaOrigem = new SelectList(rotas, "Origem", "Origem");
             ViewBag.rotaDestino = new SelectList(rotas, "Destino", "Destino");
             ViewBag.placas = new SelectList(_gerenciadorVeiculo.ObterTodos(), "Id", "Placa");
@@ -120,7 +120,7 @@ namespace QueroTransporteWeb.Controllers
                     IsRealizada = viagemViewModel.IsRealizada
                 };
 
-                if (_gerenciador.Alterar(viagem))
+                if (_gerenciador.Editar(viagem))
                     return RedirectToAction(nameof(Index));
 
                 return View();
@@ -134,7 +134,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Delete/5
         public ActionResult Delete(int id)
         {
-            var viagem = _gerenciador.BuscarPorId(id);
+            var viagem = _gerenciador.ObterPorId(id);
             ViewBag.rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
             ViewBag.placa = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
             return View(viagem);
@@ -147,7 +147,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (_gerenciador.Excluir(id))
+                if (_gerenciador.Remover(id))
                     return RedirectToAction(nameof(Index));
                 else
                     return RedirectToAction(nameof(Delete));

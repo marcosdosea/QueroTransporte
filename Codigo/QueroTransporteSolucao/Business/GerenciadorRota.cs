@@ -1,3 +1,4 @@
+using Business;
 using Persistence;
 using QueroTransporte.Model;
 using System;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorRota : IGerenciadorRota
+    public class GerenciadorRota : IGerenciador<RotaModel>
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
@@ -21,29 +22,26 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="rotaModel"></param>
         /// <returns></returns>
-        public int Inserir(RotaModel rotaModel)
+        public bool Inserir(RotaModel objeto)
         {
             Rota _rota = new Rota();
-
-            Atribuir(rotaModel, _rota);
+            Atribuir(objeto, _rota);
 
             _context.Add(_rota);
-            _context.SaveChanges();
-            return _rota.Id;
+            return _context.SaveChanges() == 1 ? true : false;
         }
-
 
         /// <summary>
         /// Altera os dados de uma rota da base de dados
         /// </summary>
         /// <param name="rotaModel"></param>
-        public void Alterar(RotaModel rotaModel)
+        public bool Editar(RotaModel objeto)
         {
             Rota _rota = new Rota();
 
-            Atribuir(rotaModel, _rota);
+            Atribuir(objeto, _rota);
             _context.Update(_rota);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
 
         }
 
@@ -52,30 +50,35 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public RotaModel Buscar(int id)
-        {
-            IEnumerable<RotaModel> Rotas = GetQuery().Where(rotaModel => rotaModel.Id.Equals(id));
-
-            return Rotas.ElementAtOrDefault(0);
-        }
+        public RotaModel ObterPorId(int id)
+            => _context.Rota
+                .Where(rota => rota.Id == id)
+                .Select(rota => new RotaModel
+                {
+                    Id = rota.Id,
+                    Origem = rota.Origem,
+                    Destino = rota.Destino,
+                    HorarioChegada = rota.HorarioChegada,
+                    HorarioSaida = rota.HorarioSaida,
+                    DiaSemana = rota.DiaSemana,
+                    RotaId = (int)rota.IdRota,
+                    IsComposta = Convert.ToBoolean(rota.EhComposta)
+                }).FirstOrDefault();
 
         /// <summary>
         /// Exclui uma rota na base de dados
         /// </summary>
         /// <param name="id"></param>
-        public bool Excluir(int id)
+        public bool Remover(int id)
         {
-            bool removeu = false;
             var rota = _context.Rota.Find(id);
-
-            if(ObterNumeroDeRotasDependentes(rota.Id) == 0)
+            if (ObterNumeroDeRotasDependentes(rota.Id) == 0)
             {
                 _context.Rota.Remove(rota);
-                _context.SaveChanges();
-                removeu = true;    
+                return _context.SaveChanges() == 1 ? true : false;
             }
 
-            return removeu; 
+            return false;
         }
 
         /// <summary>
@@ -100,38 +103,23 @@ namespace QueroTransporte.Negocio
             _rota.EhComposta = Convert.ToByte(rotaModel.IsComposta);
         }
 
-
         /// <summary>
         /// retorna todas as rotas da base de dados
         /// </summary>
         /// <returns></returns>
-        private IQueryable<RotaModel> GetQuery()
-        {
-            IQueryable<Rota> Rota = _context.Rota;
-            var query = from rota in Rota
-                        select new RotaModel
-                        {
-                            Id = rota.Id,
-                            Origem = rota.Origem,
-                            Destino = rota.Destino,
-                            HorarioChegada = rota.HorarioChegada,
-                            HorarioSaida = rota.HorarioSaida,
-                            DiaSemana = rota.DiaSemana,
-                            RotaId = (int) rota.IdRota,
-                            IsComposta = Convert.ToBoolean(rota.EhComposta)
-            };
-            return query;
-        }
-
-
-        /// <summary>
-        /// retorna todas as rotas da base de dados
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<RotaModel> ObterTodos()
-        {
-            return GetQuery();
-        }
+        public List<RotaModel> ObterTodos()
+            => _context.Rota
+                  .Select(rota => new RotaModel
+                  {
+                      Id = rota.Id,
+                      Origem = rota.Origem,
+                      Destino = rota.Destino,
+                      HorarioChegada = rota.HorarioChegada,
+                      HorarioSaida = rota.HorarioSaida,
+                      DiaSemana = rota.DiaSemana,
+                      RotaId = (int)rota.IdRota,
+                      IsComposta = Convert.ToBoolean(rota.EhComposta)
+                  }).ToList();
 
 
         /// <summary>
@@ -139,23 +127,33 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        public IEnumerable<RotaModel> ObterPorNome(string destino)
-        {
-            IEnumerable<RotaModel> rotas = GetQuery().Where(RotaModel => RotaModel.Destino.StartsWith(destino));
-            return rotas;
-        }
+        public List<RotaModel> ObterPorNome(string destino)
+            => _context.Rota
+                .Where(RotaModel => RotaModel.Destino.StartsWith(destino))
+                .Select(rota => new RotaModel
+                {
+                    Id = rota.Id,
+                    Origem = rota.Origem,
+                    Destino = rota.Destino,
+                    HorarioChegada = rota.HorarioChegada,
+                    HorarioSaida = rota.HorarioSaida,
+                    DiaSemana = rota.DiaSemana,
+                    RotaId = (int)rota.IdRota,
+                    IsComposta = Convert.ToBoolean(rota.EhComposta)
+                }).ToList();
 
 
         /// <summary>
         /// Agrupa dados importantes para identificar cada rota
         /// </summary>
         /// <returns></returns>
-        public List<RotaModel> ObterDetalhesRota() {
-            List<RotaModel> rotas = ObterTodos().ToList();
+        public List<RotaModel> ObterDetalhesRota()
+        {
+            List<RotaModel> rotas = ObterTodos();
 
             for (int i = 0; i < rotas.Count; i++)
             {
-                rotas[i].DetalhesRota = rotas[i].Id +" | " + rotas[i].Origem +" - " + rotas[i].Destino;
+                rotas[i].DetalhesRota = rotas[i].Id + " | " + rotas[i].Origem + " - " + rotas[i].Destino;
             }
 
             return rotas;
@@ -167,7 +165,7 @@ namespace QueroTransporte.Negocio
         /// <returns></returns>
         public RotaModel ObterDetalhesRota(int id)
         {
-            List<RotaModel> rotas = ObterTodos().ToList();
+            List<RotaModel> rotas = ObterTodos();
             int index = 0;
 
             for (int i = 0; i < rotas.Count; i++)
@@ -175,29 +173,12 @@ namespace QueroTransporte.Negocio
                 if (id == rotas[i].Id)
                 {
                     rotas[i].DetalhesRota = rotas[i].Id + " | " + rotas[i].Origem + " - " + rotas[i].Destino;
-                    index = i;    
-                }    
+                    index = i;
+                }
             }
 
             return rotas[index];
         }
-        
-        public List<RotaModel> Consultar() => _context.Rota
-                            .Select(r => new RotaModel
-                            {
-                                Id = r.Id,
-                                Origem = r.Origem,
-                                Destino = r.Destino
-                            }).ToList();
-
-        public RotaModel ObterPorId(int idRota) => _context.Rota.Where(r => r.Id == idRota)
-                                .Select(r => new RotaModel
-                                {
-                                    Id = r.Id,
-                                    Origem = r.Origem,
-                                    Destino = r.Destino,
-                                    DiaSemana = r.DiaSemana
-                                }).FirstOrDefault();
 
         public RotaModel ObterPorOrigemDestino(string origem, string destino)
             => _context.Rota.Where(r => r.Origem == origem && r.Destino == destino)
@@ -211,17 +192,19 @@ namespace QueroTransporte.Negocio
 
 
         // estes métodos serão utilizados apenas pela aplicação móvel
-
-        public void ValidarDados(RotaModel rotaModel)
-        {
-            throw new NotImplementedException();
-        }
-        
         public int ObterNumeroDeRotasDependentes(int id)
-        {
-            IEnumerable<RotaModel> rota = GetQuery().Where(rotaModel => rotaModel.RotaId.Equals(id)).ToList();
-
-            return rota.Count();
-        }    
+            => _context.Rota
+                .Where(rotaModel => rotaModel.IdRota == id)
+                .Select(rota => new RotaModel
+                {
+                    Id = rota.Id,
+                    Origem = rota.Origem,
+                    Destino = rota.Destino,
+                    HorarioChegada = rota.HorarioChegada,
+                    HorarioSaida = rota.HorarioSaida,
+                    DiaSemana = rota.DiaSemana,
+                    RotaId = (int)rota.IdRota,
+                    IsComposta = Convert.ToBoolean(rota.EhComposta)
+                }).ToList().Count();
     }
 }

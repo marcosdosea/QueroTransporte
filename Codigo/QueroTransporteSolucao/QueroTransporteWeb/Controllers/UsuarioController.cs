@@ -12,9 +12,9 @@ namespace QueroTransporteWeb.Controllers
 {
     public class UsuarioController : Controller
     {
-        private readonly IGerenciadorUsuario _gerenciadorUsuario;
+        private readonly GerenciadorUsuario _gerenciadorUsuario;
 
-        public UsuarioController(IGerenciadorUsuario gerenciadorUsuario)
+        public UsuarioController(GerenciadorUsuario gerenciadorUsuario)
         {
             _gerenciadorUsuario = gerenciadorUsuario;
         }
@@ -24,10 +24,7 @@ namespace QueroTransporteWeb.Controllers
         /// </summary>
         /// <returns>Todos os usuarios para o view que lista eles</returns>
         // GET: Usuario
-        public ActionResult Index()
-        {
-            return View(_gerenciadorUsuario.ObterTodos());
-        }
+        public ActionResult Index() => View(_gerenciadorUsuario.ObterTodos());
 
         /// <summary>
         /// detalha o dados do usuario
@@ -35,11 +32,7 @@ namespace QueroTransporteWeb.Controllers
         /// <param name="id">serve para buscar um usuario, para posteriormente retorna-lo na view</param>
         /// <returns>retorna na view o usuario</returns>
         // GET: Usuario/Details/5
-        public ActionResult Details(int id)
-        {
-            UsuarioModel usuario = _gerenciadorUsuario.Buscar(id);
-            return View(usuario);
-        }
+        public ActionResult Details(int id) => View(_gerenciadorUsuario.ObterPorId(id));
 
         /// <summary>
         /// Para assim que a funcao criar um usuario é chamada
@@ -48,7 +41,6 @@ namespace QueroTransporteWeb.Controllers
         // GET: Usuario/Create
         public ActionResult Create()
         {
-            UsuarioModel user = new UsuarioModel();
             ViewBag.Tipos = new SelectList(_gerenciadorUsuario.GetTipos(), "string");
             return View();
         }
@@ -65,8 +57,8 @@ namespace QueroTransporteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorUsuario.Inserir(usuarioModel);
-                return RedirectToAction(nameof(Index));
+                if (_gerenciadorUsuario.Inserir(usuarioModel))
+                    return RedirectToAction(nameof(Index));
             }
             return View(usuarioModel);
         }
@@ -80,7 +72,7 @@ namespace QueroTransporteWeb.Controllers
         public ActionResult Edit(int id)
         {
             UsuarioModel user = new UsuarioModel();
-            user = _gerenciadorUsuario.Buscar(id);
+            user = _gerenciadorUsuario.ObterPorId(id);
             ViewBag.Tipos = new SelectList(_gerenciadorUsuario.GetTipos(), "string");
             return View(user);
         }
@@ -97,8 +89,8 @@ namespace QueroTransporteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorUsuario.Alterar(usuarioModel);
-                return RedirectToAction(nameof(Index));
+                if (_gerenciadorUsuario.Editar(usuarioModel))
+                    return RedirectToAction(nameof(Index));
             }
             return View(usuarioModel);
         }
@@ -109,11 +101,7 @@ namespace QueroTransporteWeb.Controllers
         /// <param name="id">id do usuario selecionado para exclusao</param>
         /// <returns></returns>
         // GET: Usuario/Delete/5
-        public ActionResult Delete(int id)
-        {
-            UsuarioModel usuario = _gerenciadorUsuario.Buscar(id);
-            return View(usuario);
-        }
+        public ActionResult Delete(int id) => View(_gerenciadorUsuario.ObterPorId(id));
 
         /// <summary>
         /// Serve para excluir um usuario 
@@ -126,7 +114,7 @@ namespace QueroTransporteWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            _gerenciadorUsuario.Excluir(id);
+            _gerenciadorUsuario.Remover(id);
             return RedirectToAction(nameof(Index));
         }
     }

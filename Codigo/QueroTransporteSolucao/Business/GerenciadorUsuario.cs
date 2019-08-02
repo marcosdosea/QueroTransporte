@@ -1,4 +1,5 @@
 
+using Business;
 using Persistence;
 using QueroTransporte.Model;
 using System;
@@ -8,24 +9,24 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorUsuario : IGerenciadorUsuario
+    public class GerenciadorUsuario : IGerenciador<UsuarioModel>
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
         public GerenciadorUsuario(BD_QUERO_TRANSPORTEContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         /// <summary>
         /// Altera um usuario n banco
         /// </summary>
-        /// <param name="usuarioModel">Objeto na qual irá sobreescrever o obejeto (usuario) antigo</param>
-        public void Alterar(UsuarioModel usuarioModel)
+        /// <param name="objeto">Objeto na qual irá sobreescrever o objeto (usuario) antigo</param>
+        public bool Editar(UsuarioModel objeto)
         {
             Usuario usuario = new Usuario();
-            Atribuir(usuarioModel, usuario);
+            Atribuir(objeto, usuario);
             _context.Update(usuario);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         /// <summary>
@@ -33,33 +34,41 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public UsuarioModel Buscar(int id)
-        {
-            IQueryable<UsuarioModel> usuario = GetQuery().Where(usuarioModel => usuarioModel.Id.Equals(id));
-            return usuario.FirstOrDefault();
-        }
+        public UsuarioModel ObterPorId(int id)
+            => _context.Usuario
+                .Where(u => u.Id == id)
+                .Select(usuario => new UsuarioModel
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Cpf = usuario.Cpf,
+                    Email = usuario.Email,
+                    Senha = usuario.Senha,
+                    Telefone = usuario.Telefone,
+                    Tipo = usuario.Tipo
+                }).FirstOrDefault();
 
         /// <summary>
         /// Exclui um usuario do banco
         /// </summary>
         /// <param name="id">serve para buscar um usuario no banco para excluir</param>
-        public void Excluir(int id)
+        public bool Remover(int id)
         {
             var usuario = _context.Usuario.Find(id);
             _context.Remove(usuario);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         /// <summary>
         /// Insere um usuario n banco de dados
         /// </summary>
-        /// <param name="usuarioModel">Objeto que será adicionando no banco</param>
-        public void Inserir(UsuarioModel usuarioModel)
+        /// <param name="objeto">Objeto que será adicionando no banco</param>
+        public bool Inserir(UsuarioModel objeto)
         {
             Usuario usuario = new Usuario();
-            Atribuir(usuarioModel, usuario);
+            Atribuir(objeto, usuario);
             _context.Add(usuario);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         /// <summary>
@@ -68,33 +77,35 @@ namespace QueroTransporte.Negocio
         /// <param name="cpf"></param>
         /// <returns></returns>
         public UsuarioModel ObterPorCpf(string cpf)
-        {
-            IQueryable<UsuarioModel> usuario = GetQuery().Where(usuarioModel => usuarioModel.Cpf.Equals(cpf));
-            return usuario.ElementAtOrDefault(0);
-        }
+            => _context.Usuario
+                .Where(usuarioModel => usuarioModel.Cpf.Equals(cpf))
+                .Select(usuario => new UsuarioModel
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Cpf = usuario.Cpf,
+                    Email = usuario.Email,
+                    Senha = usuario.Senha,
+                    Telefone = usuario.Telefone,
+                    Tipo = usuario.Tipo
+                }).FirstOrDefault();
 
         /// <summary>
         /// Obter todos os usaurios
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UsuarioModel> ObterTodos()
-        {
-            return GetQuery();
-        }
-        public void Autenticar()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Validar()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ValidarDados()
-        {
-            throw new NotImplementedException();
-        }
+        public List<UsuarioModel> ObterTodos()
+            => _context.Usuario
+                .Select(usuario => new UsuarioModel
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Cpf = usuario.Cpf,
+                    Email = usuario.Email,
+                    Senha = usuario.Senha,
+                    Telefone = usuario.Telefone,
+                    Tipo = usuario.Tipo
+                }).ToList();
 
         /// <summary>
         /// Obetivo é reaproveitar o código, pois é utilizado em alterar e inserir
@@ -113,44 +124,27 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// Ajuda nas consultas e deixa módularizado
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<UsuarioModel> GetQuery()
-        {
-            IQueryable<Usuario> Usuario = _context.Usuario;
-            var query = from usuario in Usuario
-                        select new UsuarioModel
-                        {
-                            Id = usuario.Id,
-                            Nome = usuario.Nome,
-                            Cpf = usuario.Cpf,
-                            Email = usuario.Email,
-                            Senha = usuario.Senha,
-                            Telefone = usuario.Telefone,
-                            Tipo = usuario.Tipo
-                        };
-            return query;
-        }
-
-        /// <summary>
         /// O motivo é de fixar na lista de opcoes dos tipos na view, selectList
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetTipos()
-        {
-            IEnumerable <string> tipos = new string[] {"Cliente", "Motorista", "ADMIN", "Gestor" };
-            return tipos;
-        }
+        public IEnumerable<string> GetTipos() => new string[] { "Cliente", "Motorista", "ADMIN", "Gestor" };
 
         /// <summary>
         /// Serve para retornar os usuarios que são motoristas, ou seja, o elemento 1 do Inumerable de strings
         /// </summary>
         /// <returns></returns>
         public IEnumerable<UsuarioModel> ObterUsuariosMotoristas()
-        {
-            IQueryable<UsuarioModel> usuarios = GetQuery().Where(usuarioModel => usuarioModel.Tipo.Equals(GetTipos().ElementAt(1)));
-            return usuarios;
-        }
+            => _context.Usuario
+                .Where(usuarioModel => usuarioModel.Tipo.Equals(GetTipos().ElementAt(1)))
+                .Select(usuario => new UsuarioModel
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Cpf = usuario.Cpf,
+                    Email = usuario.Email,
+                    Senha = usuario.Senha,
+                    Telefone = usuario.Telefone,
+                    Tipo = usuario.Tipo
+                });
     }
 }

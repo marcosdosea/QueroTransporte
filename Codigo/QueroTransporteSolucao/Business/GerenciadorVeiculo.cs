@@ -1,4 +1,5 @@
- 
+
+using Business;
 using Persistence;
 using QueroTransporte.Model;
 using System;
@@ -8,9 +9,8 @@ using System.Text;
 
 namespace QueroTransporte.Negocio
 {
-    public class GerenciadorVeiculo : IGerenciadorVeiculo
+    public class GerenciadorVeiculo : IGerenciador<VeiculoModel>
     {
-
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
         public GerenciadorVeiculo(BD_QUERO_TRANSPORTEContext context)
@@ -21,54 +21,40 @@ namespace QueroTransporte.Negocio
         /// <summary>
         /// Inseri um veiculo na base de dados
         /// </summary>
-        /// <param name="veiculoModel"></param>
+        /// <param name="objeto"></param>
         /// <returns></returns>
-        public int Inserir(VeiculoModel veiculoModel)
+        public bool Inserir(VeiculoModel objeto)
         {
             Veiculo _veiculo = new Veiculo();
 
-            Atribuir(veiculoModel, _veiculo);
-
+            Atribuir(objeto, _veiculo);
             _context.Add(_veiculo);
-            _context.SaveChanges();
-
-            return _veiculo.Id;
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         /// <summary>
         /// Altera os dados de um veiculo da base de dados
         /// </summary>
         /// <param name="veiculoModel"></param>
-        public void Alterar(VeiculoModel veiculoModel)
+        public bool Editar(VeiculoModel objeto)
         {
             Veiculo _veiculo = new Veiculo();
 
-            Atribuir(veiculoModel, _veiculo);
+            Atribuir(objeto, _veiculo);
             _context.Update(_veiculo);
-            _context.SaveChanges();
-
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
-        /// <summary>
-        /// Busca um veiculo na base de dados
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public VeiculoModel Buscar(int id)
-        {
-            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Id.Equals(id));
-            return veiculos.ElementAtOrDefault(0);
-        }
 
         /// <summary>
         /// Exclui um veiculo na base de dados
         /// </summary>
         /// <param name="id"></param>
-        public void Excluir(int id)
+        public bool Remover(int id)
         {
             var veiculo = _context.Veiculo.Find(id);
             _context.Veiculo.Remove(veiculo);
-            _context.SaveChanges();
+            return _context.SaveChanges() == 1 ? true : false;
         }
 
         /// <summary>
@@ -93,39 +79,26 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        ///  retorna todas as rotas da base de dados
-        /// </summary>
-        /// <returns></returns>
-        private IQueryable<VeiculoModel> GetQuery()
-        {
-            IQueryable<Veiculo> Veiculo = _context.Veiculo;
-            var query = from veiculo in Veiculo
-                        select new VeiculoModel
-                        {
-                            Id = veiculo.Id,
-                            AnoFabricacao = veiculo.AnoFabricacao,
-                            AnoModelo = veiculo.AnoModelo,
-                            Capacidade = veiculo.Capacidade,
-                            Categoria = veiculo.Categoria,
-                            Chassi = veiculo.Chassi,
-                            Cor = veiculo.Cor,
-                            IdFrota = (int)veiculo.IdFrota,
-                            DataEmplacamento = veiculo.DataEmplacamento,
-                            Marca = veiculo.Marca,
-                            Modelo = veiculo.Modelo,
-                            Placa = veiculo.Placa
-                        };
-            return query;
-        }
-
-        /// <summary>
         /// Obtem todos os veiculos da base de dados
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<VeiculoModel> ObterTodos()
-        {
-            return GetQuery();
-        }
+        public List<VeiculoModel> ObterTodos()
+            => _context.Veiculo
+                .Select(veiculo => new VeiculoModel
+                {
+                    Id = veiculo.Id,
+                    AnoFabricacao = veiculo.AnoFabricacao,
+                    AnoModelo = veiculo.AnoModelo,
+                    Capacidade = veiculo.Capacidade,
+                    Categoria = veiculo.Categoria,
+                    Chassi = veiculo.Chassi,
+                    Cor = veiculo.Cor,
+                    IdFrota = (int)veiculo.IdFrota,
+                    DataEmplacamento = veiculo.DataEmplacamento,
+                    Marca = veiculo.Marca,
+                    Modelo = veiculo.Modelo,
+                    Placa = veiculo.Placa
+                }).ToList();
 
         /// <summary>
         /// Pesquisa veiculos por modelo
@@ -133,10 +106,23 @@ namespace QueroTransporte.Negocio
         /// <param name="modelo"></param>
         /// <returns></returns>
         public IEnumerable<VeiculoModel> ObterPorModelo(string modelo)
-        {
-            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo));
-            return veiculos;
-        }
+            => _context.Veiculo
+                .Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo))
+                .Select(veiculo => new VeiculoModel
+                {
+                    Id = veiculo.Id,
+                    AnoFabricacao = veiculo.AnoFabricacao,
+                    AnoModelo = veiculo.AnoModelo,
+                    Capacidade = veiculo.Capacidade,
+                    Categoria = veiculo.Categoria,
+                    Chassi = veiculo.Chassi,
+                    Cor = veiculo.Cor,
+                    IdFrota = (int)veiculo.IdFrota,
+                    DataEmplacamento = veiculo.DataEmplacamento,
+                    Marca = veiculo.Marca,
+                    Modelo = veiculo.Modelo,
+                    Placa = veiculo.Placa
+                });
 
         /// <summary>
         /// Pesquisa se existe outro veiculo com o chassi ou placa passado
@@ -144,21 +130,33 @@ namespace QueroTransporte.Negocio
         /// <param name="chassi"></param>
         /// <returns></returns>
         public int VerificaInsercaoVeiculo(string chassi, string placa)
-        {
-            IEnumerable<VeiculoModel> veiculos = GetQuery().Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi) || veiculoModel.Placa.StartsWith(placa));
-
-            return veiculos.Count();
-        }
+            => _context.Veiculo
+                .Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi) || veiculoModel.Placa.StartsWith(placa))
+                .Select(veiculo => new VeiculoModel
+                {
+                    Id = veiculo.Id,
+                    AnoFabricacao = veiculo.AnoFabricacao,
+                    AnoModelo = veiculo.AnoModelo,
+                    Capacidade = veiculo.Capacidade,
+                    Categoria = veiculo.Categoria,
+                    Chassi = veiculo.Chassi,
+                    Cor = veiculo.Cor,
+                    IdFrota = (int)veiculo.IdFrota,
+                    DataEmplacamento = veiculo.DataEmplacamento,
+                    Marca = veiculo.Marca,
+                    Modelo = veiculo.Modelo,
+                    Placa = veiculo.Placa
+                }).ToList().Count();
 
         public bool VerificaEdicaoExistente(string chassi, string placa, int id)
         {
             bool existe = false;
 
-            List<VeiculoModel> veiculosPlaca = GetQuery().Where(veiculoModel => veiculoModel.Placa.StartsWith(placa)).ToList();
-            List<VeiculoModel> veiculosChassi = GetQuery().Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi)).ToList();
+            List<VeiculoModel> veiculosPlaca = ObterTodos().Where(veiculoModel => veiculoModel.Placa.StartsWith(placa)).ToList();
+            List<VeiculoModel> veiculosChassi = ObterTodos().Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi)).ToList();
 
 
-            if (veiculosPlaca.Count != 0 && veiculosChassi.Count != 0 && 
+            if (veiculosPlaca.Count != 0 && veiculosChassi.Count != 0 &&
                 veiculosPlaca[0].Id == id && veiculosChassi[0].Id == id)
                 existe = false;
             else
@@ -182,22 +180,23 @@ namespace QueroTransporte.Negocio
 
             return existe;
         }
-        
-        public VeiculoModel ObterPorId(int idVeiculo) => _context.Veiculo.Where(v => v.Id == idVeiculo)
-                                       .Select(v => new VeiculoModel
-                                       {
-                                           Id = v.Id,
-                                           AnoFabricacao = v.AnoFabricacao,
-                                           AnoModelo = v.AnoModelo,
-                                           Capacidade = v.Capacidade,
-                                           Categoria = v.Categoria,
-                                           Chassi = v.Chassi,
-                                           Cor = v.Cor,
-                                           IdFrota = (int)v.IdFrota,
-                                           DataEmplacamento = v.DataEmplacamento,
-                                           Marca = v.Marca,
-                                           Modelo = v.Modelo,
-                                           Placa = v.Placa
-                                       }).FirstOrDefault();
+
+        public VeiculoModel ObterPorId(int idVeiculo)
+            => _context.Veiculo.Where(v => v.Id == idVeiculo)
+                .Select(v => new VeiculoModel
+                {
+                    Id = v.Id,
+                    AnoFabricacao = v.AnoFabricacao,
+                    AnoModelo = v.AnoModelo,
+                    Capacidade = v.Capacidade,
+                    Categoria = v.Categoria,
+                    Chassi = v.Chassi,
+                    Cor = v.Cor,
+                    IdFrota = (int)v.IdFrota,
+                    DataEmplacamento = v.DataEmplacamento,
+                    Marca = v.Marca,
+                    Modelo = v.Modelo,
+                    Placa = v.Placa
+                }).FirstOrDefault();
     }
 }

@@ -9,21 +9,18 @@ namespace QueroTransporte.QueroTransporteWeb
 {
     public class ManterVeiculoController : Controller
     {
-        private readonly IGerenciadorVeiculo _gerenciadorVeiculo;
-        private readonly IGerenciadorFrota   _gerenciadorFrota;
+        private readonly GerenciadorVeiculo _gerenciadorVeiculo;
+        private readonly GerenciadorFrota _gerenciadorFrota;
 
 
-        public ManterVeiculoController(IGerenciadorVeiculo gerenciadorVeiculo, IGerenciadorFrota gerenciadorFrota)
+        public ManterVeiculoController(GerenciadorVeiculo gerenciadorVeiculo, GerenciadorFrota gerenciadorFrota)
         {
             _gerenciadorVeiculo = gerenciadorVeiculo;
             _gerenciadorFrota = gerenciadorFrota;
         }
 
 
-        public IActionResult Index()
-        {
-            return View(_gerenciadorVeiculo.ObterTodos());
-        }
+        public IActionResult Index() => View(_gerenciadorVeiculo.ObterTodos());
 
         public IActionResult Create()
         {
@@ -39,8 +36,8 @@ namespace QueroTransporte.QueroTransporteWeb
             {
                 if (_gerenciadorVeiculo.VerificaInsercaoVeiculo(veiculoModel.Chassi, veiculoModel.Placa) == 0)
                 {
-                    _gerenciadorVeiculo.Inserir(veiculoModel);
-                    return RedirectToAction(nameof(Index));
+                    if (_gerenciadorVeiculo.Inserir(veiculoModel))
+                        return RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -57,7 +54,7 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Edit(int id)
         {
             ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
-            VeiculoModel veiculo = _gerenciadorVeiculo.Buscar(id);
+            VeiculoModel veiculo = _gerenciadorVeiculo.ObterPorId(id);
             return View(veiculo);
         }
 
@@ -68,11 +65,10 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-
-                if (!_gerenciadorVeiculo.VerificaEdicaoExistente(veiculoModel.Chassi, veiculoModel.Placa,veiculoModel.Id))
+                if (!_gerenciadorVeiculo.VerificaEdicaoExistente(veiculoModel.Chassi, veiculoModel.Placa, veiculoModel.Id))
                 {
-                    _gerenciadorVeiculo.Alterar(veiculoModel);
-                    return RedirectToAction(nameof(Index));
+                    if (_gerenciadorVeiculo.Editar(veiculoModel))
+                        return RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -80,22 +76,21 @@ namespace QueroTransporte.QueroTransporteWeb
                     ViewBag.Frotas = new SelectList(_gerenciadorFrota.ObterTodos(), "Id", "Titulo");
                     return View(veiculoModel);
                 }
-                
             }
             return View(veiculoModel);
         }
 
         public IActionResult Details(int id)
         {
-            VeiculoModel veiculoModel = _gerenciadorVeiculo.Buscar(id);
-            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculoModel.IdFrota).Titulo;
+            VeiculoModel veiculoModel = _gerenciadorVeiculo.ObterPorId(id);
+            ViewBag.TituloFrota = _gerenciadorFrota.ObterPorId(veiculoModel.IdFrota).Titulo;
             return View(veiculoModel);
         }
 
         public IActionResult Delete(int id)
         {
-            VeiculoModel veiculoModel = _gerenciadorVeiculo.Buscar(id);
-            ViewBag.TituloFrota = _gerenciadorFrota.Buscar(veiculoModel.IdFrota).Titulo; 
+            VeiculoModel veiculoModel = _gerenciadorVeiculo.ObterPorId(id);
+            ViewBag.TituloFrota = _gerenciadorFrota.ObterPorId(veiculoModel.IdFrota).Titulo;
             return View(veiculoModel);
         }
 
@@ -103,8 +98,10 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-           _gerenciadorVeiculo.Excluir(id);
-            return RedirectToAction(nameof(Index));
+            if (_gerenciadorVeiculo.Remover(id))
+                return RedirectToAction(nameof(Index));
+
+            return View(_gerenciadorVeiculo.ObterPorId(id));
         }
     }
 }

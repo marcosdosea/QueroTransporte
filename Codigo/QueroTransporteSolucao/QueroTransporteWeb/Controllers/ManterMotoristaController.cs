@@ -13,9 +13,9 @@ namespace QueroTransporte.QueroTransporteWeb
 {
     public class ManterMotoristaController : Controller
     {
-        private readonly IGerenciadorMotorista _gerenciadorMotorista;
-        private readonly IGerenciadorUsuario _gerenciadorUsuario;
-        public ManterMotoristaController(IGerenciadorMotorista gerenciadorMotorista, IGerenciadorUsuario gerenciadorUsuario)
+        private readonly GerenciadorMotorista _gerenciadorMotorista;
+        private readonly GerenciadorUsuario _gerenciadorUsuario;
+        public ManterMotoristaController(GerenciadorMotorista gerenciadorMotorista, GerenciadorUsuario gerenciadorUsuario)
         {
             _gerenciadorMotorista = gerenciadorMotorista;
             _gerenciadorUsuario = gerenciadorUsuario;
@@ -39,8 +39,8 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorMotorista.Cadastrar(motorista);
-                return RedirectToAction(nameof(Index));
+                if (_gerenciadorMotorista.Inserir(motorista))
+                    return RedirectToAction(nameof(Index));
             }
 
             return View(motorista);
@@ -48,7 +48,7 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Edit(int id)
         {
             ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
-            MotoristaModel motorista = _gerenciadorMotorista.Buscar(id);
+            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
             return View(motorista);
         }
 
@@ -58,8 +58,8 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                _gerenciadorMotorista.Alterar(motorista);
-                return RedirectToAction(nameof(Index));
+                if (_gerenciadorMotorista.Alterar(motorista))
+                    return RedirectToAction(nameof(Index));
 
             }
             return View(motorista);
@@ -68,15 +68,15 @@ namespace QueroTransporte.QueroTransporteWeb
         // GET: Usuario/Details/5
         public IActionResult Details(int id)
         {
-            MotoristaModel motorista = _gerenciadorMotorista.Buscar(id);
-            ViewBag.NomeUsuario = _gerenciadorUsuario.Buscar(motorista.IdUsuario).Nome;
+            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
+            ViewBag.NomeUsuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }
- 
+
         public IActionResult Delete(int id)
         {
-            MotoristaModel motorista = _gerenciadorMotorista.Buscar(id);
-            ViewBag.NomeUsuario = _gerenciadorUsuario.Buscar(motorista.IdUsuario).Nome;
+            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
+            ViewBag.NomeUsuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }
 
@@ -84,8 +84,10 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            _gerenciadorMotorista.Remover(id);
-            return RedirectToAction(nameof(Index));
+            if (_gerenciadorMotorista.Remover(id))
+                return RedirectToAction(nameof(Index));
+
+            return View(_gerenciadorMotorista.ObterPorId(id));
         }
     }
 }
