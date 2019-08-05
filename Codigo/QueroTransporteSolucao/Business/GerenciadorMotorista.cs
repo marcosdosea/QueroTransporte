@@ -95,7 +95,8 @@ namespace QueroTransporte.Negocio
                     Categoria = motorista.Categoria,
                     Validade = motorista.Validade,
                     Cnh = motorista.Cnh,
-                    IdUsuario = (int)motorista.IdUsuario
+                    IdUsuario = (int)motorista.IdUsuario,
+                    Nome = motorista.IdUsuarioNavigation.Nome
                 }).ToList();
     }
 }
