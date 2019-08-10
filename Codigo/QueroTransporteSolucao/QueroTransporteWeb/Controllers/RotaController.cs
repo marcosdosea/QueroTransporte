@@ -7,11 +7,11 @@ using QueroTransporte.Negocio;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
-    public class ManterRotaController : Controller
+    public class RotaController : Controller
     {
         private readonly GerenciadorRota _gerenciadorRota;
 
-        public ManterRotaController(GerenciadorRota gerenciadorRota)
+        public RotaController(GerenciadorRota gerenciadorRota)
         {
             _gerenciadorRota = gerenciadorRota;
         }

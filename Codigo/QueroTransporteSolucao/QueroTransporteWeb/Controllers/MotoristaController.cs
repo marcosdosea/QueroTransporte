@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
-    public class ManterMotoristaController : Controller
+    public class MotoristaController : Controller
     {
         private readonly GerenciadorMotorista _gerenciadorMotorista;
         private readonly GerenciadorUsuario _gerenciadorUsuario;
-        public ManterMotoristaController(GerenciadorMotorista gerenciadorMotorista, GerenciadorUsuario gerenciadorUsuario)
+        public MotoristaController(GerenciadorMotorista gerenciadorMotorista, GerenciadorUsuario gerenciadorUsuario)
         {
             _gerenciadorMotorista = gerenciadorMotorista;
             _gerenciadorUsuario = gerenciadorUsuario;

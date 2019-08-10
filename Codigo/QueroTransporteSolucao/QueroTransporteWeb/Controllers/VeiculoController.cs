@@ -7,13 +7,13 @@ using QueroTransporte.Negocio;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
-    public class ManterVeiculoController : Controller
+    public class VeiculoController : Controller
     {
         private readonly GerenciadorVeiculo _gerenciadorVeiculo;
         private readonly GerenciadorFrota _gerenciadorFrota;
 
 
-        public ManterVeiculoController(GerenciadorVeiculo gerenciadorVeiculo, GerenciadorFrota gerenciadorFrota)
+        public VeiculoController(GerenciadorVeiculo gerenciadorVeiculo, GerenciadorFrota gerenciadorFrota)
         {
             _gerenciadorVeiculo = gerenciadorVeiculo;
             _gerenciadorFrota = gerenciadorFrota;
