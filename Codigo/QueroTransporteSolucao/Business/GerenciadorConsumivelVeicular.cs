@@ -91,7 +91,6 @@ namespace Business
         => _context.ConsumivelVeicular.Where(v => v.Id == idConsumivel)
         .Select(v => new ConsumivelVeicularModel
         {
-
             Id = v.Id,
             IdVeiculo = v.IdVeiculo,
             Valor = v.Valor,
