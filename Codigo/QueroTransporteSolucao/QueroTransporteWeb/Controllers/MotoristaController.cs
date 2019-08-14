@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Model.ViewModel;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
@@ -23,8 +24,18 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Index()
         {
-            ViewBag.NomeUsuarios = _gerenciadorUsuario.ObterUsuariosMotoristas();
-            return View(_gerenciadorMotorista.ObterTodos());
+            var listViewModel = new List<MotoristaUsuarioViewModel>();
+            foreach (var motorista in _gerenciadorMotorista.ObterTodos())
+            {
+                var usuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario);
+
+                listViewModel.Add(new MotoristaUsuarioViewModel()
+                {
+                    Motorista = motorista,
+                    Usuario = usuario
+                });
+            }
+            return View(listViewModel);
         }
 
         public IActionResult Create()
@@ -41,15 +52,17 @@ namespace QueroTransporte.QueroTransporteWeb
             {
                 if (_gerenciadorMotorista.Inserir(motorista))
                     return RedirectToAction(nameof(Index));
+
+                // TODO: Retornar uma mensagem ao usuario, caso tente cadastrar um motorista a um usuario já cadastrado.
+                // Tipo: Motorista X = Usuario X => Motorista Y = Motorista X ... Isso quebra o banco e retorna o erro p a aplicação.
             }
 
             return View(motorista);
         }
         public IActionResult Edit(int id)
         {
-            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
-            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
-            return View(motorista);
+            var motorista = _gerenciadorMotorista.ObterPorId(id);
+            return View(new MotoristaUsuarioViewModel { Motorista = motorista, Usuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario) });
         }
 
         [HttpPost]

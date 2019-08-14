@@ -4,47 +4,61 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<h4>MotoristaModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
-                <span asp-validation-for="Categoria" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Validade" class="control-label"></label>
-                <input asp-for="Validade" class="form-control" />
-                <span asp-validation-for="Validade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cnh" class="control-label"></label>
-                <input asp-for="Cnh" class="form-control" />
-                <span asp-validation-for="Cnh" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                @*ViewBag.RotaList is holding all the routs values*@
+<div class="x_title">
+    <h2>Cadastro Motorista </h2>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <form class="form-horizontal form-label-left" asp-action="Create" asp-controller="Motorista" novalidate>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                Motorista <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
                 @Html.DropDownListFor(model => model.IdUsuario, ViewBag.UsuariosMotoristas as SelectList, new
                 { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdUsuario, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                Categoria CNH <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" asp-for="Categoria" id="Categoria" required="required" data-inputmask="'mask' : '(99) 9 9999-9999'" class="form-control col-md-7 col-xs-12">
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                Validade CNH <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" asp-for="Validade" id="Validade" required="required" data-inputmask="'mask': '99/99/9999'" class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                Numero CNH <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" asp-for="Cnh" id="Cnh" required="required" data-inputmask="'mask' : '***-***-***-**'" class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="ln_solid"></div>
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+                <button id="send" type="submit" class="btn btn-success">Cadastrar Motorista</button>
+                <a href="@Url.Action("Index", "Motorista")" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- validator -->
+    <script src="~/template/vendors/validator/validator.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="~/template/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 }

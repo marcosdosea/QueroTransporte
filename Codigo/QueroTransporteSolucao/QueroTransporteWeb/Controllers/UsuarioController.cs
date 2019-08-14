@@ -22,9 +22,9 @@ namespace QueroTransporteWeb.Controllers
         /// <summary>
         /// método da view padrão do controlador
         /// </summary>
-        /// <returns>Todos os usuarios para o view que lista eles</returns>
+        /// <returns>Todos os usuarios que não são motoristas para o view que lista eles</returns>
         // GET: Usuario
-        public ActionResult Index() => View(_gerenciadorUsuario.ObterTodos());
+        public ActionResult Index() => View(_gerenciadorUsuario.ObterTodos().Where(u => u.Tipo != "MOTORISTA"));
 
         /// <summary>
         /// detalha o dados do usuario
@@ -104,7 +104,7 @@ namespace QueroTransporteWeb.Controllers
         public ActionResult Delete(int id) => View(_gerenciadorUsuario.ObterPorId(id));
 
         /// <summary>
-        /// Serve para excluir um usuario 
+        /// Serve para excluir um usuario
         /// </summary>
         /// <param name="id">id do usario a ser deletado</param>
         /// <param name="collection">Objeto da interface controller</param>

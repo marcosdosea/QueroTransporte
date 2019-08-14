@@ -19,6 +19,7 @@ namespace QueroTransporte.Model
         public string Categoria { get; set; }
         [Required]
         [Display(Name = "Validade CNH")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Validade { get; set; }
         [Required]
         [MaxLength(12)]

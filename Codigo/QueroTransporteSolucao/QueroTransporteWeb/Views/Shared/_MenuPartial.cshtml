@@ -3,78 +3,49 @@
     ViewData["Title"] = "_MenuPartial";
 }
 
-<nav class="col-md-2 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Home">
-                    <span data-feather="home"></span>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Motorista">
-                    <span data-feather="file"></span>
-                    Motoristas
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Rota">
-                    <span data-feather="shopping-cart"></span>
-                    Rotas
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Viagem">
-                    <span data-feather="users"></span>
-                    Viagens
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Veiculo">
-                    <span data-feather="bar-chart-2"></span>
-                    Veiculos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integrations
-                </a>
-            </li>
-        </ul>
+<div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a asp-controller="Home" asp-action="Index" class="site_title"><i class="fa fa-car"></i> <span>Quero Transporte</span></a>
+        </div>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Saved reports</span>
-            <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-            </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Current month
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Last quarter
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Social engagement
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Year-end sale
-                </a>
-            </li>
-        </ul>
+        <div class="clearfix"></div>
+
+        <!-- menu profile quick info -->
+        <div class="profile clearfix">
+            <div class="profile_pic">
+                <img src="https://instagram.faju8-1.fna.fbcdn.net/vp/bd2fab5b7961c32747d7ac0ebee2823d/5DD6066A/t51.2885-15/e35/64268963_620399681782719_5372864629773112534_n.jpg?_nc_ht=instagram.faju8-1.fna.fbcdn.net" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+                <span>Bem Vindo,</span>
+                <h2>Gabriel Santana</h2>
+            </div>
+        </div>
+        <!-- /menu profile quick info -->
+
+        <br>
+
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                    <li class="">
+                        <a asp-controller="Home" asp-action="Index"><i class="fa fa-bar-chart"></i> Dashboard </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Motorista" asp-action="Index"><i class="fa fa-edit"></i> Motoristas </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Veiculo" asp-action="Index"><i class="fa fa-car"></i> Veiculos </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Usuario" asp-action="Index"><i class="fa fa-user"></i> Usuarios </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /sidebar menu -->
     </div>
-</nav>
+</div>
