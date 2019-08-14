@@ -69,13 +69,13 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Details(int id)
         {
             MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
-            ViewBag.NomeUsuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
+            motorista.Nome = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }
 
         public IActionResult Delete(int id)
         {
-            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
+            MotoristaModel  motorista = _gerenciadorMotorista.ObterPorId(id);
             ViewBag.NomeUsuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }
