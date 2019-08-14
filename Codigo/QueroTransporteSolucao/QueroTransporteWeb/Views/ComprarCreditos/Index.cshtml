@@ -1,75 +1,125 @@
-﻿@model IEnumerable<Model.ViewModel.CreditoViagemViewModel>
+﻿@model QueroTransporte.Model.CreditoViagemModel
 
 @{
     ViewData["Title"] = "Index1";
 }
 
-<h2>Index1</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<div style="display: inline-block;">
+    <h2>Index</h2>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+</div>
+
+<div style=" float: right;display: inline-block; margin-top: 2%">
+    <div style="color: #0094ff; font-size: 15pt">Carrinho</div>
+    <div id="totalCreditos" value="0" style="font-size: 13pt;">Creditos 0</div>
+    <div id="totalValor" value="0" style="font-size: 13pt;">Valor R$ 0</div>
+</div>
+
 <table class="table">
-
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in (ViewBag.Creditos as IEnumerable<Model.ViewModel.CreditoViagemViewModel>))
         {
+            <tr>
+                <td>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(modelItem => item.Id)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(modelItem => item.Titulo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(modelItem => item.Valor)
+                        </dt>
+                        <dd>
+                            R$ @Html.DisplayFor(modelItem => item.Valor)
+                        </dd>
+                    </dl>
+                </td>
+                <td>
+                    <input type="button" onclick="addCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Adicionar" class="btn btn-primary" />
+                    <input type="button" onclick="removeCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Remover" class="btn btn-danger" />
+
+                </td>
+            </tr>
+        }
         <tr>
             <td>
-                <dl class="dl-horizontal">
+                <dl class="dl-horizontal" style="margin-left: 5%">
                     <dt>
-                        @Html.DisplayNameFor(modelItem => item.Id)
+                        Outros Valores
                     </dt>
                     <dd>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(modelItem => item.Titulo)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(modelItem => item.Titulo)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(modelItem => item.Valor)
-                    </dt>
-                    <dd>
-                        R$ @Html.DisplayFor(modelItem => item.Valor)
+                        <input type="number" id="tentacles" name="tentacles"
+                               min="15" max="100" class="form-control" style="width: 20%" value="0">
                     </dd>
                 </dl>
             </td>
             <td>
-                <div id="paypal-button-container" style="width: 15%; height: 10%"></div>
+                <input type="button" onclick="addCredito(parseInt($('#tentacles').val()))" value="Adicionar" class="btn btn-primary" />
+                <input type="button" onclick="removeCredito(parseInt($('#tentacles').val()))" value="Remover" class="btn btn-danger" />
             </td>
-
         </tr>
-        }
     </tbody>
 </table>
 
+<div style=" float: right; margin-top: 2%">
+    <div id="paypal-button-container" style="width: 15%; height: 10%;"></div>
+</div>
+
+
+<div class="row" style="visibility: hidden">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="ComprarCreditos" name="form1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" id="pessoa" class="form-control" value="1" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Saldo" class="control-label"></label>
+                <input asp-for="Saldo" id="saldo" class="form-control" value="0.0" />
+                <span asp-validation-for="Saldo" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
 <script>
+    let qtdCreditos = 0;
+
     paypal.Buttons({
         createOrder: function (data, actions) {
             // Set up the transaction
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '0.01'
-                    },
-                    name: {
-                        value: 'Creditos de 10'
-                    },
-                    quantity: {
-                        value: '1'
+                        value: qtdCreditos
                     }
                 }]
             });
         },
+
         onApprove: function (data, actions) {
             // Capture the funds from the transaction
             return actions.order.capture().then(function (details) {
                 // Show a success message to your buyer
                 alert('Transaction completed by ' + details.payer.name.given_name);
+                inputAutomatico();
+
 
                 return fetch('/paypal-transaction-complete', {
                     method: 'post',
@@ -82,6 +132,38 @@
                 });
 
             });
+
         }
     }).render('#paypal-button-container');
+
+    function addCredito(value) {
+        qtdCreditos += value;
+        $(document).ready(function () {
+            $("#totalCreditos").text('Creditos ' + qtdCreditos);
+            $("#totalValor").text('Valor R$ ' + qtdCreditos);
+            $('#saldo').value = qtdCreditos;
+
+        });
+    }
+
+    function removeCredito(value) {
+        if (qtdCreditos - value >= 0) {
+            qtdCreditos = qtdCreditos - value;
+        } else {
+            qtdCreditos = 0;
+        }
+
+        $("#totalCreditos").text('Creditos ' + qtdCreditos);
+        $("#totalValor").text('Valor R$ ' + qtdCreditos);
+    }
+
+    function inputAutomatico() {
+        document.getElementById('pessoa').value = 1;
+        document.getElementById('saldo').value = qtdCreditos;
+        document.forms["form1"].submit();
+    }
+
+
+
 </script>
+

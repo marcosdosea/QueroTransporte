@@ -4,37 +4,42 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
+using QueroTransporte.Model;
 
 namespace QueroTransporteWeb.Controllers
 {
     public class ComprarCreditosController : Controller
-    {
-        List<CreditoViagemViewModel> creditoViagem;
-
-       
-
+    {  
         public IActionResult Index()
         {
-            addListaCreditos();
-            return View(creditoViagem);
+            ViewBag.Creditos = addListaCreditos();
+            return View();
         }
 
-        public IActionResult Comprar(int id)
+        [HttpPost]
+        public IActionResult Index(CreditoViagemModel cv)
         {
-            addListaCreditos();
-            return View(creditoViagem[id-1]);
+            
+            ViewBag.Creditos = addListaCreditos();
+            if (ModelState.IsValid)
+            {
+                 return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
 
         /// <summary>
         /// Metodo adiciona valores de creditos para comprar(esses dados devem vir do banco)
         /// </summary>
-        public void addListaCreditos()
+        public List<CreditoViagemViewModel> addListaCreditos()
         {
-            creditoViagem = new List<CreditoViagemViewModel>();
+            List<CreditoViagemViewModel> creditoViagem = new List<CreditoViagemViewModel>();
 
             creditoViagem.Add(new CreditoViagemViewModel(1, "5 Creditos Para Viagem", 5.00));
             creditoViagem.Add(new CreditoViagemViewModel(2, "10 Creditos Para Viagem", 10.00));
             creditoViagem.Add(new CreditoViagemViewModel(3, "15 Creditos Para Viagem", 15.00));
+
+            return creditoViagem;
         }
     }
 }

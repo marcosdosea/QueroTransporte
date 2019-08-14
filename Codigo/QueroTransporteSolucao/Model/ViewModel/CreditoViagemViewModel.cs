@@ -13,10 +13,16 @@ namespace Model.ViewModel
 
         public double Valor { get; set; }
 
-        public CreditoViagemViewModel(int id, string titulo,double valor) {
+        public CreditoViagemViewModel(int id, string titulo,double valor)
+        {
             Id = id;
             Titulo = titulo;
             Valor = valor;
         }
+        public CreditoViagemViewModel()
+        {
+
+        }
+
     }
 }
