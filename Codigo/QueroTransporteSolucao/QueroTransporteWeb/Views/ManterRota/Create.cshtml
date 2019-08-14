@@ -71,13 +71,12 @@
 <script src="/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#ListElements').hide();
         $('#checkRota').change(function () {
             if (this.checked) {
-                $('#ListElements').show();
+                $('#ListElements').hide();                
             }
             else {
-                $('#ListElements').hide();
+                $('#ListElements').show();
             }
         });
     });
