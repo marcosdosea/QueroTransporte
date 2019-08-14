@@ -73,6 +73,19 @@
     </tbody>
 </table>
 
+@if (TempData["mensagemErro"] != null)
+{
+    <div class="field-error" id="error-div" style="color: red">
+        @TempData["mensagemErro"]
+    </div>
+}
+else if(TempData["mensagemSucesso"] != null)
+{
+    <div class="success" style="color: green">
+        @TempData["mensagemSucesso"]
+    </div>
+}
+
 <div style=" float: right; margin-top: 2%">
     <div id="paypal-button-container" style="width: 15%; height: 10%;"></div>
 </div>
@@ -84,13 +97,18 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" id="pessoa" class="form-control" value="1" />
+                <input asp-for="Id" class="form-control"  value="0" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Saldo" class="control-label"></label>
                 <input asp-for="Saldo" id="saldo" class="form-control" value="0.0" />
                 <span asp-validation-for="Saldo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUsuario" class="control-label"></label>
+                <input asp-for="IdUsuario" id="pessoa" class="form-control" value="1" />
+                <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
         </form>
     </div>
@@ -117,9 +135,7 @@
             // Capture the funds from the transaction
             return actions.order.capture().then(function (details) {
                 // Show a success message to your buyer
-                alert('Transaction completed by ' + details.payer.name.given_name);
                 inputAutomatico();
-
 
                 return fetch('/paypal-transaction-complete', {
                     method: 'post',
@@ -158,12 +174,10 @@
     }
 
     function inputAutomatico() {
+        // id da pessoa logada na sessão
         document.getElementById('pessoa').value = 1;
-        document.getElementById('saldo').value = qtdCreditos;
+        document.getElementById('saldo').value = parseFloat(qtdCreditos);
         document.forms["form1"].submit();
     }
-
-
-
 </script>
 
