@@ -9,16 +9,32 @@ namespace QueroTransporteWeb.Controllers
 {
     public class ComprarCreditosController : Controller
     {
+        List<CreditoViagemViewModel> creditoViagem;
+
+       
+
         public IActionResult Index()
         {
-            var cv =  new List<CreditoViagemViewModel>();
+            addListaCreditos();
+            return View(creditoViagem);
+        }
 
-            cv.Add(new CreditoViagemViewModel(1,"Creditos de 5", 5.00));
-            cv.Add(new CreditoViagemViewModel(2, "Creditos de 10", 10.00));
-            cv.Add(new CreditoViagemViewModel(3, "Creditos de 15", 15.00));
+        public IActionResult Comprar(int id)
+        {
+            addListaCreditos();
+            return View(creditoViagem[id-1]);
+        }
 
-            
-            return View(cv);
+        /// <summary>
+        /// Metodo adiciona valores de creditos para comprar(esses dados devem vir do banco)
+        /// </summary>
+        public void addListaCreditos()
+        {
+            creditoViagem = new List<CreditoViagemViewModel>();
+
+            creditoViagem.Add(new CreditoViagemViewModel(1, "5 Creditos Para Viagem", 5.00));
+            creditoViagem.Add(new CreditoViagemViewModel(2, "10 Creditos Para Viagem", 10.00));
+            creditoViagem.Add(new CreditoViagemViewModel(3, "15 Creditos Para Viagem", 15.00));
         }
     }
 }

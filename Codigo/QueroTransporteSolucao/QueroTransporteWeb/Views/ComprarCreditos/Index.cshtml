@@ -1,59 +1,87 @@
 ﻿@model IEnumerable<Model.ViewModel.CreditoViagemViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index1";
 }
 
-<h2>Index</h2>
+<h2>Index1</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Titulo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    R$ @Html.DisplayFor(modelItem => item.Valor)
-                </td>
-                <td>
-                    <input type="submit" value="+" class="btn btn-default" />
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Id)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Titulo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Valor)
+                    </dt>
+                    <dd>
+                        R$ @Html.DisplayFor(modelItem => item.Valor)
+                    </dd>
+                </dl>
+            </td>
+            <td>
+                <div id="paypal-button-container" style="width: 15%; height: 10%"></div>
+            </td>
+
+        </tr>
         }
     </tbody>
-    <tr>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
-                Total: 0.0
-        </td>
-    </tr>
 </table>
 
+<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+<script>
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            // Set up the transaction
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '0.01'
+                    },
+                    name: {
+                        value: 'Creditos de 10'
+                    },
+                    quantity: {
+                        value: '1'
+                    }
+                }]
+            });
+        },
+        onApprove: function (data, actions) {
+            // Capture the funds from the transaction
+            return actions.order.capture().then(function (details) {
+                // Show a success message to your buyer
+                alert('Transaction completed by ' + details.payer.name.given_name);
 
+                return fetch('/paypal-transaction-complete', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        orderID: data.orderID
+                    })
+                });
+
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
