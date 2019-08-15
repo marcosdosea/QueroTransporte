@@ -1,0 +1,48 @@
+﻿@model Model.ViewModel.ViagemPassagemViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>ViagemPassagemViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdViagemPassagem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdViagemPassagem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Origem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Origem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Destino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Destino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EhCredito)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EhCredito)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
