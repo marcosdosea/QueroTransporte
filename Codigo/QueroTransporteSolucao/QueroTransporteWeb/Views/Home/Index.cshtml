@@ -2,29 +2,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-    </ol>
-    <center>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="~/images/banner1.jpg" alt="ASP.NET" class="img-responsive" />
-            </div>
-            <div class="item">
-                <img src="~/images/banner2.png" alt="Microsoft Azure" class="img-responsive" />
-            </div>
-        </div>
-    </center>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+<div class="row tile_count">
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Total de usuarios</span>
+        <div class="count">2500</div>
+        <span class="count_bottom"><i class="fa fa-sort-asc"></i><i class="green">4% </i> da ultima semana</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Tempo entre viagens</span>
+        <div class="count">123.50Hrs</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> da ultima semana</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Total de veiculos</span>
+        <div class="count green">2,500</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> da ultima semana</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Pagamentos a dinheiro</span>
+        <div class="count red">4,567</div>
+        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> da ultima semana</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Pagamentos por cartão</span>
+        <div class="count">2,315</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> da ultima semana</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Pagamentos por créditos</span>
+        <div class="count">7,325</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> da ultima semana</span>
+    </div>
 </div>
 
-
+<!--
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        Só jogar o conteudo nessa estrutura aqui!!
+    </div>
+</div>
+-->

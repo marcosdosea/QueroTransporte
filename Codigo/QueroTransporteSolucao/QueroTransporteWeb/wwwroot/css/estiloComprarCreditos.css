@@ -1,0 +1,55 @@
+﻿.div-carrinho {
+    margin-top: 1%;
+    float: right;
+    display: inline-block;
+}
+
+
+.div-descricao {
+    display: inline-block;
+}
+
+.div-titulo {
+    color: #0094ff;
+    font-size: 15pt;
+}
+
+.div-itens-carrinho {
+    font-size: 13pt;
+} 
+
+#alinha-botoes {
+    vertical-align: middle;
+}
+
+#alinha-botoes2 {
+    margin-top: 2%;
+}
+
+#btn-remove-credito {
+    float: right;
+    margin-left: 2%;
+}
+
+#btn-adiciona-credito {
+    float: right;
+}
+
+#add-outros-valores {
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+#error-div {
+    color: red;
+    font-size: 28px;
+}
+
+#sucess-div {
+    color: green;
+    font-size: 28px;
+}
+
+#tentacles {
+    width: 20%;
+}

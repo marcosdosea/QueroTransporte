@@ -23,5 +23,6 @@ namespace QueroTransporte.Model
         public DateTime DataSolicitacao { get; set; }
         [Required]
         public bool IsAtendida { get; set; }
+        public int IdPagamento { get; set; }
     }
 }

@@ -46,6 +46,11 @@ namespace QueroTransporte.Negocio
             return _context.SaveChanges() == 1 ? true : false;
         }
 
+        /// <summary>
+        /// Faz o cast entre o model e a entidade
+        /// </summary>
+        /// <param name="motoristaModel"></param>
+        /// <param name="_motorista"></param>
         private void Atribuir(MotoristaModel motoristaModel, Motorista _motorista)
         {
             _motorista.Id = motoristaModel.Id;
@@ -55,6 +60,11 @@ namespace QueroTransporte.Negocio
             _motorista.IdUsuario = motoristaModel.IdUsuario;
         }
 
+        /// <summary>
+        /// Busca motorista da base de dados por id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public MotoristaModel ObterPorId(int id)
             => _context.Motorista.Where(motorista => motorista.Id == id)
                 .Select(motorista => new MotoristaModel
@@ -66,13 +76,18 @@ namespace QueroTransporte.Negocio
                     IdUsuario = (int)motorista.IdUsuario
                 }).FirstOrDefault();
 
+        /// <summary>
+        /// Remove um motorista da base de dados
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Remover(int id)
         {
             _context.Motorista.Remove(_context.Motorista.Find(id));
             return _context.SaveChanges() == 1 ? true : false;
         }
         /// <summary>
-        /// 
+        /// Altera os dados de um motorista da base de dados
         /// </summary>
         /// <param name="objeto"></param>
         public bool Editar(MotoristaModel objeto)
@@ -84,7 +99,7 @@ namespace QueroTransporte.Negocio
 
         }
         /// <summary>
-        ///  
+        ///  Busca todos os motoristas da base de dados
         /// </summary>
         /// <returns></returns>
         public List<MotoristaModel> ObterTodos()

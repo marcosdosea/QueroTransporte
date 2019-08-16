@@ -1,0 +1,179 @@
+﻿@model QueroTransporte.Model.CreditoViagemModel
+
+@{
+    ViewData["Title"] = "Comprar Créditos";
+}
+
+ 
+
+<div class="div-descricao" >
+    <h1>Comprar créditos</h1>
+    <p>
+        Compre seus créditos de viagem para pagar suas passagens!
+    </p>
+</div>
+
+<div Class="div-carrinho" >
+    <div class="div-titulo">Carrinho</div>
+    <div class="div-itens-carrinho" id="totalCreditos" value="0" >Creditos 0</div>
+    <div class="div-itens-carrinho" id="totalValor" value="0" >Valor R$ 0</div>
+</div>
+
+<table class="table" style="margin-top: 1%">
+    <tbody>
+        @foreach (var item in (ViewBag.Creditos as IEnumerable<Model.ViewModel.CreditoViagemViewModel>))
+        {
+            <tr>
+                <td>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(modelItem => item.Titulo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(modelItem => item.Valor)
+                        </dt>
+                        <dd>
+                            R$ @Html.DisplayFor(modelItem => item.Valor)
+                        </dd>
+                    </dl>
+                </td>
+                <td id="alinha-botoes" >
+                    <input id="btn-remove-credito" type="button" onclick="removeCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Remover" class="btn btn-danger" />
+                    <input id="btn-adiciona-credito"  type="button" onclick="addCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Adicionar" class="btn btn-primary" />
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                <dl class="dl-horizontal" id="add-outros-valores">
+                    <dt>
+                        Outros Valores
+                    </dt>
+                    <dd>
+                        <input type="number" id="tentacles" name="tentacles"
+                               min="15" max="100" class="form-control"  value="0">
+                    </dd>
+                </dl>
+            </td>
+            <td>
+                <div id="alinha-botoes2">
+                    <input type="button" id="btn-remove-credito" onclick="removeCredito(parseInt($('#tentacles').val()))" value="Remover" class="btn btn-danger" />
+                    <input type="button"  id="btn-adiciona-credito" onclick="addCredito(parseInt($('#tentacles').val()))" value="Adicionar" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@if (TempData["mensagemErro"] != null)
+{
+    <div class="field-error" id="error-div" >
+        @TempData["mensagemErro"]
+    </div>
+}
+else if (TempData["mensagemSucesso"] != null)
+{
+    <div class="success" id="cucess-div" >
+        @TempData["mensagemSucesso"]
+    </div>
+}
+
+<div id="btn-adiciona-credito">
+    <div id="paypal-button-container"></div>
+</div>
+
+
+<div class="row" style="visibility: hidden">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="ComprarCreditos" name="form1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" value="0" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Saldo" class="control-label"></label>
+                <input asp-for="Saldo" id="saldo" class="form-control" value="0.0" />
+                <span asp-validation-for="Saldo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUsuario" class="control-label"></label>
+                <input asp-for="IdUsuario" id="pessoa" class="form-control" value="1" />
+                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL&merchant-id=CMY4AQXZEJFZA"></script>
+<script>
+    let qtdCreditos = 0;
+
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            // Set up the transaction
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: qtdCreditos
+                    }
+                }]
+            });
+        },
+
+        onApprove: function (data, actions) {
+            // Capture the funds from the transaction
+            return actions.order.capture().then(function (details) {
+                // Show a success message to your buyer
+                inputAutomatico();
+
+                return fetch('/paypal-transaction-complete', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        orderID: data.orderID
+                    })
+                });
+
+            });
+
+        }
+    }).render('#paypal-button-container');
+
+    function addCredito(value) {
+        qtdCreditos += value;
+        $(document).ready(function () {
+            $("#totalCreditos").text('Creditos ' + qtdCreditos);
+            $("#totalValor").text('Valor R$ ' + qtdCreditos);
+            $('#saldo').value = qtdCreditos;
+
+        });
+    }
+
+    function removeCredito(value) {
+        if (qtdCreditos - value >= 0) {
+            qtdCreditos = qtdCreditos - value;
+        } else {
+            qtdCreditos = 0;
+        }
+
+        $("#totalCreditos").text('Creditos ' + qtdCreditos);
+        $("#totalValor").text('Valor R$ ' + qtdCreditos);
+    }
+
+    function inputAutomatico() {
+        // id da pessoa logada na sessão
+        document.getElementById('pessoa').value = 1;
+        document.getElementById('saldo').value = parseFloat(qtdCreditos);
+        document.forms["form1"].submit();
+    }
+</script>
+
+
