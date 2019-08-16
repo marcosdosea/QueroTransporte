@@ -1,0 +1,140 @@
+﻿@model IEnumerable<Model.ViewModel.ViagemRotaViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Solicitações de Viagem</h2>
+<div class="clearfix"></div>
+<p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Solicitar Viagem</button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Placa Veiculo</th>
+            <th>Hora Saida</th>
+            <th>Hora Chegada</th>
+            <th>Data Viagem</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() != 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rota.Origem)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rota.Destino)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rota.HorarioSaida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rota.HorarioChegada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rota.DiaSemana)
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-xs">Entrei no veiculo</button>
+                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Solicitacao", new { id = item.Viagem.Id })">Cancelar Solicitação</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form asp-controller="Solicitacao" asp-action="PreCreate">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="modelInfoRota">Para onde quer ir?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label name="Origem" class="control-label">Origem</label>
+                        @Html.DropDownList("Origem", ViewBag.rotaOrigem as SelectList, new
+                        { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label name="Destino" class="control-label">Destino</label>
+                        @Html.DropDownList("Destino", ViewBag.rotaDestino as SelectList, new
+                        { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Dia da Semana</label>
+                        <select class="form-control" name="diaSemana">
+                            <option value="Segunda">Segunda-Feira</option>
+                            <option value="Terca">Terça-Feira</option>
+                            <option value="Quarta">Quarta-Feira</option>
+                            <option value="Quinta">Quinta-Feira</option>
+                            <option value="Sexta">Sexta-Feira</option>
+                            <option value="Sabado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success">Verificar Opções</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Evitar duplicação de dados com o mesmo nome!!
+            var options = $("#Origem option");
+
+            let flags = []
+            let output = []
+            let l = options.length
+            let i;
+
+            for (i = 0; i < l; i++) {
+                if (flags[options[i].value]) continue;
+                flags[options[i].value] = true;
+                output.push(options[i]);
+            }
+
+            $("#Origem").html(output);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var options = $("#Destino option");
+
+            let flags = []
+            let output = []
+            let l = options.length
+            let i;
+
+            for (i = 0; i < l; i++) {
+                if (flags[options[i].value]) continue;
+                flags[options[i].value] = true;
+                output.push(options[i]);
+            }
+
+            $("#Destino").html(output);
+        });
+    </script>
+}

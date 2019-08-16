@@ -74,6 +74,19 @@ namespace QueroTransporte.Negocio
                     IsRealizada = Convert.ToBoolean(v.FoiRealizada)
                 }).ToList();
 
+        public ViagemModel BuscarPorRota(int idRota)
+            => _context.Viagem
+                .Where(v => v.IdRota == idRota)
+                .Select(v => new ViagemModel
+                {
+                    Id = v.Id,
+                    IdRota = v.IdRota,
+                    IdVeiculo = v.IdVeiculo,
+                    Preco = v.Preco,
+                    Lotacao = v.Lotacao,
+                    IsRealizada = Convert.ToBoolean(v.FoiRealizada)
+                }).FirstOrDefault();
+
         public bool Remover(int id)
         {
             _context.Remove(_context.Viagem.Where(v => v.Id == id).FirstOrDefault());

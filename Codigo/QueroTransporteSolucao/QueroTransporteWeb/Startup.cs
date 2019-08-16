@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using QueroTransporte.Negocio;
+using Business;
 
 namespace QueroTransporteWeb
 {
@@ -51,6 +52,8 @@ namespace QueroTransporteWeb
             services.AddScoped<GerenciadorUsuario>();
             services.AddScoped<GerenciadorVeiculo>();
             services.AddScoped<GerenciadorViagem>();
+            services.AddScoped<GerenciadorFrota>();
+            services.AddScoped<GerenciadorSolicitacao>();
 
             // Contexto padrão.
             services.AddDefaultIdentity<IdentityUser>()

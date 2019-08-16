@@ -30,21 +30,26 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                    <li class="">
+                    <li>
                         <a asp-controller="Home" asp-action="Index"><i class="fa fa-bar-chart"></i> Dashboard </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a asp-controller="Motorista" asp-action="Index"><i class="fa fa-edit"></i> Motoristas </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a asp-controller="Veiculo" asp-action="Index"><i class="fa fa-car"></i> Veiculos </a>
                     </li>
-                    <li class="">
+                    <li>
+                        <a asp-controller="Frota" asp-action="Index"><i class="fa fa-car"></i> Frotas </a>
+                    </li>
+                    <li>
                         <a asp-controller="Usuario" asp-action="Index"><i class="fa fa-user"></i> Usuarios </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Solicitacao", new { id = 1 })"><i class="fa fa-car"></i> Solicitar Viagem </a>
                     </li>
                 </ul>
             </div>
-
         </div>
         <!-- /sidebar menu -->
     </div>

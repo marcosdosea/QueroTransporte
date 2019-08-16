@@ -18,12 +18,12 @@ namespace QueroTransporte.Model
         [Required(ErrorMessage = "O Horario de saida é obrigatorio")]
         [Display(Name = "Horario partida")]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "	{0:T}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:T}", ApplyFormatInEditMode = true)]
         public TimeSpan HorarioSaida { get; set; }
         [Required(ErrorMessage = "O Horario de chegada é obrigatorio")]
         [Display(Name = "Horario chegada")]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "	{0:T}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:T}", ApplyFormatInEditMode = true)]
         public TimeSpan HorarioChegada { get; set; }
         [Required]
         [MaxLength(30)]
