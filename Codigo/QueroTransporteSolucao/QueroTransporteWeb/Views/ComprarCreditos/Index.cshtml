@@ -1,37 +1,29 @@
 ﻿@model QueroTransporte.Model.CreditoViagemModel
 
 @{
-    ViewData["Title"] = "Index1";
+    ViewData["Title"] = "Comprar Créditos";
 }
 
-
-
 <div style="display: inline-block;">
-    <h2>Index</h2>
+    <h2>Comprar créditos</h2>
     <p>
-        <a asp-action="Create">Create New</a>
+        Compre seus créditos de viagem para pagar suas passagens!
     </p>
 </div>
 
-<div style=" float: right;display: inline-block; margin-top: 2%">
+<div style=" float: right;display: inline-block;">
     <div style="color: #0094ff; font-size: 15pt">Carrinho</div>
     <div id="totalCreditos" value="0" style="font-size: 13pt;">Creditos 0</div>
     <div id="totalValor" value="0" style="font-size: 13pt;">Valor R$ 0</div>
 </div>
 
-<table class="table">
+<table class="table" style="margin-top: 1%">
     <tbody>
         @foreach (var item in (ViewBag.Creditos as IEnumerable<Model.ViewModel.CreditoViagemViewModel>))
         {
             <tr>
                 <td>
                     <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(modelItem => item.Id)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </dd>
                         <dt>
                             @Html.DisplayNameFor(modelItem => item.Titulo)
                         </dt>
@@ -46,16 +38,15 @@
                         </dd>
                     </dl>
                 </td>
-                <td>
-                    <input type="button" onclick="addCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Adicionar" class="btn btn-primary" />
-                    <input type="button" onclick="removeCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Remover" class="btn btn-danger" />
-
+                <td style="vertical-align: middle;">
+                    <input style="float: right;margin-left: 2%" type="button" onclick="removeCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Remover" class="btn btn-danger" />
+                    <input style="float: right" type="button" onclick="addCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Adicionar" class="btn btn-primary" />
                 </td>
             </tr>
         }
         <tr>
             <td>
-                <dl class="dl-horizontal" style="margin-left: 5%">
+                <dl class="dl-horizontal" style="margin-left: 5%;margin-top: 2%">
                     <dt>
                         Outros Valores
                     </dt>
@@ -66,8 +57,10 @@
                 </dl>
             </td>
             <td>
-                <input type="button" onclick="addCredito(parseInt($('#tentacles').val()))" value="Adicionar" class="btn btn-primary" />
-                <input type="button" onclick="removeCredito(parseInt($('#tentacles').val()))" value="Remover" class="btn btn-danger" />
+                <div style="margin-top: 2.5%">
+                    <input type="button" style="float: right;margin-left: 2%" onclick="removeCredito(parseInt($('#tentacles').val()))" value="Remover" class="btn btn-danger" />
+                    <input type="button" style="float: right" onclick="addCredito(parseInt($('#tentacles').val()))" value="Adicionar" class="btn btn-primary" />
+                </div>
             </td>
         </tr>
     </tbody>
@@ -79,15 +72,15 @@
         @TempData["mensagemErro"]
     </div>
 }
-else if(TempData["mensagemSucesso"] != null)
+else if (TempData["mensagemSucesso"] != null)
 {
     <div class="success" style="color: green">
         @TempData["mensagemSucesso"]
     </div>
 }
 
-<div style=" float: right; margin-top: 2%">
-    <div id="paypal-button-container" style="width: 15%; height: 10%;"></div>
+<div style=" float: right;">
+    <div id="paypal-button-container"></div>
 </div>
 
 
@@ -97,7 +90,7 @@ else if(TempData["mensagemSucesso"] != null)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control"  value="0" />
+                <input asp-for="Id" class="form-control" value="0" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -115,7 +108,7 @@ else if(TempData["mensagemSucesso"] != null)
 </div>
 
 
-<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL&merchant-id=CMY4AQXZEJFZA"></script>
 <script>
     let qtdCreditos = 0;
 

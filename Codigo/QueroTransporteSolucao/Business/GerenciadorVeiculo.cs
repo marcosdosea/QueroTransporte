@@ -147,7 +147,13 @@ namespace QueroTransporte.Negocio
                     Modelo = veiculo.Modelo,
                     Placa = veiculo.Placa
                 }).ToList().Count();
-
+        /// <summary>
+        /// Valida campos de placa e chasse na insercao ou alteracao de um novo veiculo na base de dados
+        /// </summary>
+        /// <param name="chassi"></param>
+        /// <param name="placa"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool VerificaEdicaoExistente(string chassi, string placa, int id)
         {
             bool existe = false;

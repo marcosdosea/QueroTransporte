@@ -19,6 +19,11 @@ namespace Business
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insere uma nova solicitação de viagem na base de dados
+        /// </summary>
+        /// <param name="objeto"></param>
+        /// <returns></returns>
         public bool Inserir(SolicitacaoVeiculoModel objeto)
         {
             _context.Add(ModelToEntity(objeto, new Solicitacao { FoiAtentida = Convert.ToByte(false) }));
@@ -30,6 +35,11 @@ namespace Business
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Remove uma solicitacao de veiculo da base de dados
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Remover(int id)
         {
             var solicitacao = _context.Solicitacao.Where(s => s.Id == id).FirstOrDefault();
@@ -37,8 +47,10 @@ namespace Business
             return _context.SaveChanges() == 1 ? true : false;
         }
 
-        // =================== METODOS DE OBTENÇÃO DE DADOS ===================
-        // Metodo utilizado por administradores, para ver todas as solicitações...
+        /// <summary>
+        /// Obtem todas as solicitacoes de viagem
+        /// </summary>
+        /// <returns></returns>
         public List<SolicitacaoVeiculoModel> ObterTodos()
             => _context
                 .Solicitacao
@@ -52,6 +64,11 @@ namespace Business
                     IdPagamento = s.IdPagamento
                 }).ToList();
 
+        /// <summary>
+        /// Obtem todas as solicitacoes pendentes de um usuario
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
         public List<SolicitacaoVeiculoModel> ObterSolicitacoesAbertasPorUsuario(int idUsuario)
             => _context
                 .Solicitacao
@@ -66,6 +83,13 @@ namespace Business
                     IdPagamento = s.IdPagamento
                 }).ToList();
 
+        /// <summary>
+        /// Obtem uma solicitacao viagem especifica de um usuario
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <param name="idViagem"></param>
+        /// <param name="isAtendida"></param>
+        /// <returns></returns>
         public SolicitacaoVeiculoModel ObterPorViagemUsuario(int idUsuario, int idViagem, int isAtendida = 0)
             => _context
                 .Solicitacao
@@ -80,7 +104,12 @@ namespace Business
                     IdPagamento = s.IdPagamento
                 }).FirstOrDefault();
 
-        // Auxs
+        /// <summary>
+        /// Faz o cast do model para a entidade
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         private static Solicitacao ModelToEntity(SolicitacaoVeiculoModel model, Solicitacao entity)
         {
             entity.Id = model.Id;
