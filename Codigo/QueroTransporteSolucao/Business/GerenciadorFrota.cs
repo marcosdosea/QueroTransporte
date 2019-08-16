@@ -58,9 +58,31 @@ namespace QueroTransporte.Negocio
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insere uma frota na base de dados
+        /// </summary>
+        /// <param name="objeto"></param>
+        /// <returns></returns>
         public bool Inserir(FrotaModel objeto)
         {
-            throw new NotImplementedException();
+            _context.Add(ModelToPersistence(objeto, new Frota()));
+            return _context.SaveChanges() == 1 ? true : false;
+        }
+
+        /// <summary>
+        /// Faz o cast entre um model e uma entidade
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        private static Frota ModelToPersistence(FrotaModel model, Frota entity)
+        {
+            entity.Id = model.Id;
+            entity.Descricao = model.Descricao;
+            entity.Titulo = model.Titulo;
+            entity.EhPublica = Convert.ToByte(model.IsPublic);
+
+            return entity;
         }
     }
 }

@@ -96,9 +96,9 @@ namespace QueroTransporte.Negocio
             _rota.DiaSemana = rotaModel.DiaSemana;
 
             if (rotaModel.IsComposta)
-                _rota.IdRota = rotaModel.RotaId;
-            else
                 _rota.IdRota = null;
+            else
+                _rota.IdRota = rotaModel.RotaId;
 
             _rota.EhComposta = Convert.ToByte(rotaModel.IsComposta);
         }
@@ -144,7 +144,7 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// Agrupa dados importantes para identificar cada rota
+        /// Agrupa dados importantes para identificar cada uma das rotas
         /// </summary>
         /// <returns></returns>
         public List<RotaModel> ObterDetalhesRota()
@@ -160,7 +160,7 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// Agrupa dados importantes de uma rota 
+        /// Agrupa dados importantes de uma rota especifica
         /// </summary>
         /// <returns></returns>
         public RotaModel ObterDetalhesRota(int id)
@@ -180,8 +180,16 @@ namespace QueroTransporte.Negocio
             return rotas[index];
         }
 
+
+        /// <summary>
+        /// Pesquisa uma rota por origem e destino
+        /// </summary>
+        /// <param name="origem"></param>
+        /// <param name="destino"></param>
+        /// <returns></returns>
         public RotaModel ObterPorOrigemDestino(string origem, string destino)
-            => _context.Rota.Where(r => r.Origem == origem && r.Destino == destino)
+            => _context.Rota
+                .Where(r => r.Origem == origem && r.Destino == destino)
                 .Select(r => new RotaModel
                 {
                     Id = r.Id,
@@ -190,8 +198,33 @@ namespace QueroTransporte.Negocio
                     DiaSemana = r.DiaSemana
                 }).FirstOrDefault();
 
+        /// <summary>
+        /// Pesquisa uma rota por oriegm, destino e dia da semana
+        /// </summary>
+        /// <param name="origem"></param>
+        /// <param name="destino"></param>
+        /// <param name="diaSemana"></param>
+        /// <returns></returns>
+        public List<RotaModel> ObterPorOrigemDestino(string origem, string destino, string diaSemana)
+            => _context.Rota
+                .Where(r => r.Origem == origem && r.Destino == destino && r.DiaSemana.Equals(diaSemana))
+                .Select(r => new RotaModel
+                {
+                    Id = r.Id,
+                    Origem = r.Origem,
+                    Destino = r.Destino,
+                    HorarioSaida = r.HorarioSaida,
+                    HorarioChegada = r.HorarioChegada,
+                    DiaSemana = r.DiaSemana,
+                    IsComposta = Convert.ToBoolean(r.EhComposta)
+                }).ToList();
 
-        // estes métodos serão utilizados apenas pela aplicação móvel
+
+        /// <summary>
+        /// Obtem a quantidade de rotas simples atreladas a uma composta
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int ObterNumeroDeRotasDependentes(int id)
             => _context.Rota
                 .Where(rotaModel => rotaModel.IdRota == id)

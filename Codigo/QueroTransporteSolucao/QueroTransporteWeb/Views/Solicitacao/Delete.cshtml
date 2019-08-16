@@ -1,0 +1,70 @@
+﻿@model Model.ViewModel.ViagemRotaViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="x_title">
+    <h2>Cancelar Solicitação </h2>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <form class="form-horizontal form-label-left" asp-action="Delete" asp-controller="Solicitacao">
+        <div class="item form-group">
+            <input type="hidden" id="id" value="@ViewBag.solicitacao.Id" />
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Origem
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" value="@Html.DisplayFor(model => model.Rota.Origem)" disabled class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Destino
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" value="@Html.DisplayFor(model => model.Rota.Destino)" disabled class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Placa Veículo
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" value="@Html.DisplayFor(model => model.Veiculo.Placa)" disabled required="required" class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Hora Saída
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" value="@Html.DisplayFor(model => model.Rota.HorarioSaida)" disabled class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Hora Chegada
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" value="@Html.DisplayFor(model => model.Rota.HorarioChegada)" disabled class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Dia Viagem
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" value="@Html.DisplayFor(model => model.Rota.DiaSemana)" disabled class="form-control col-md-7 col-xs-12">
+            </div>
+        </div>
+        <div class="ln_solid"></div>
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+                <button id="send" type="submit" class="btn btn-danger">Cancelar Solicitação</button>
+                <a href="@Url.Action("Index", "Solicitacao", new { id = 1 })" class="btn btn-primary">Voltar</a>
+            </div>
+        </div>
+    </form>
+</div>
