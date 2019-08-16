@@ -1,101 +1,86 @@
-﻿using Business;
-using Persistence;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-namespace Business
+using QueroTransporte.Negocio;
+using Business;
+
+namespace QueroTransporte.QueroTransporteWeb
 {
-    public class GerenciadorConsumivelVeicular :IGerenciador<ConsumivelVeicularModel>
+    public class ManterConsumivelVeicularController : Controller
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
-        public GerenciadorConsumivelVeicular(BD_QUERO_TRANSPORTEContext context)
-        {
-            this._context = context;
-        }
-        /// <summary>
-        /// Insere um consumível veicular na base de dados
-        /// </summary>
-        /// <param name="consumivelveicularModel"></param>
-        /// <returns></returns>
-        public bool Inserir(ConsumivelVeicularModel objeto)
-        {
-            ConsumivelVeicular _consumivel = new ConsumivelVeicular();
+        private readonly GerenciadorConsumivelVeicular _gerenciadorConsumivelVeicular;
+        private readonly GerenciadorVeiculo _gerenciadorVeiculo;
 
-            Atribuir(objeto, _consumivel);
-            _context.Add(_consumivel);
-            return _context.SaveChanges() == 1 ? true : false;
+        public ManterConsumivelVeicularController(GerenciadorConsumivelVeicular gerenciadorConsumivelVeicular, GerenciadorVeiculo gerenciadorVeiculo)
+        {
+            _gerenciadorConsumivelVeicular = gerenciadorConsumivelVeicular;
+            _gerenciadorVeiculo = gerenciadorVeiculo;
         }
 
-        /// <summary>
-        /// Altera os dados de um veículo na base de dados.
-        /// </summary>
-        /// <param name="consumivelveicularModel"></param>
-        /// <returns></returns>
-        public bool Editar(ConsumivelVeicularModel objeto)
+        public IActionResult Index()
         {
-            ConsumivelVeicular _consumivel = new ConsumivelVeicular();
-
-            Atribuir(objeto, _consumivel);
-            _context.Update(_consumivel);
-            return _context.SaveChanges() == 1 ? true : false;
+            ViewBag.Consumiveis = _gerenciadorConsumivelVeicular.ObterTodos();
+            return View(_gerenciadorConsumivelVeicular.ObterTodos());
         }
 
-        /// <summary>
-        /// Remove consumível veicular da base dados
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool Remover(int id)
+        public IActionResult Create()
         {
-            var consumivel = _context.ConsumivelVeicular.Find(id);
-            _context.ConsumivelVeicular.Remove(consumivel);
-            return _context.SaveChanges() == 1 ? true : false;
+            ViewBag.Consumiveis = new SelectList(_gerenciadorConsumivelVeicular.ObterTodos(), "Id");
+            return View();
         }
 
-        /// <summary>
-        /// Atribue dados de um objeto para o outro
-        /// </summary>
-        /// <param name="consumivelveicularModel"></param>
-        /// <param name="_consumivel"></param>
-        private void Atribuir (ConsumivelVeicularModel consumivelveicularModel, ConsumivelVeicular _consumivel)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ConsumivelVeicularModel consumivelveicularModel)
         {
-            _consumivel.Id = consumivelveicularModel.Id;
-            _consumivel.IdVeiculo = consumivelveicularModel.IdVeiculo;
-            _consumivel.Valor = consumivelveicularModel.Valor;
-            _consumivel.DataDespesa = consumivelveicularModel.DataDespesa;
-            _consumivel.Categoria = consumivelveicularModel.Categoria;
+            if (ModelState.IsValid)
+            {
+                if(_gerenciadorConsumivelVeicular.Inserir(consumivelveicularModel))
+                    return RedirectToAction(nameof(Index));
+            }
+            return View(consumivelveicularModel);
         }
 
-        /// <summary>
-        /// Obtém todos os consumíveis veiculares da base de dados
-        /// </summary>
-        /// <returns></returns>
-        public List<ConsumivelVeicularModel> ObterTodos()
-             => _context.ConsumivelVeicular
-                .Select(consumivel => new ConsumivelVeicularModel
-                {
-                    Id = consumivel.Id,
-                    IdVeiculo = consumivel.IdVeiculo,
-                    Valor = consumivel.Valor,
-                    DataDespesa = consumivel.DataDespesa,
-                    Categoria = consumivel.Categoria
-                }).ToList();
-
-        /// <summary>
-        /// Pesquisa consumíveis veiculares por id
-        /// </summary>
-        /// <param name="idConsumivel"></param>
-        /// <returns></returns>
-        public ConsumivelVeicularModel ObterPorId(int idConsumivel)
-        => _context.ConsumivelVeicular.Where(v => v.Id == idConsumivel)
-        .Select(v => new ConsumivelVeicularModel
+        public IActionResult Edit(int id)
         {
-            Id = v.Id,
-            IdVeiculo = v.IdVeiculo,
-            Valor = v.Valor,
-            DataDespesa = v.DataDespesa,
-            Categoria = v.Categoria
-        }).FirstOrDefault();
+
+            ConsumivelVeicularModel consumivel = _gerenciadorConsumivelVeicular.ObterPorId(id);
+            return View(consumivel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, ConsumivelVeicularModel consumivelveicularModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_gerenciadorConsumivelVeicular.Editar(consumivelveicularModel))
+                    return RedirectToAction(nameof(Index));
+            }
+            return View(consumivelveicularModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            ConsumivelVeicularModel consumivelveicularModel = _gerenciadorConsumivelVeicular.ObterPorId(id);
+            return View(consumivelveicularModel);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            ConsumivelVeicularModel consumivel = _gerenciadorConsumivelVeicular.ObterPorId(id);
+            return View(consumivel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, IFormCollection collection)
+        {
+            if (_gerenciadorConsumivelVeicular.Remover(id))
+                return RedirectToAction(nameof(Index));
+
+            return View(_gerenciadorConsumivelVeicular.ObterPorId(id));
+        }
     }
 }
