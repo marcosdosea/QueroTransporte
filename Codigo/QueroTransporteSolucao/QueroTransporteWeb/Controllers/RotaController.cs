@@ -16,18 +16,31 @@ namespace QueroTransporte.QueroTransporteWeb
             _gerenciadorRota = gerenciadorRota;
         }
 
+        /// <summary>
+        /// Mostra na tela todas as rotas cadastradas na base de dados
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View(_gerenciadorRota.ObterTodos());
         }
 
 
+        /// <summary>
+        /// Mostra tela para criacao de novas rotas
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             return View();
         }
 
+        /// <summary>
+        /// Recebe objeto com nova rota a ser inserida na base de dados
+        /// </summary>
+        /// <param name="rotaModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(RotaModel rotaModel)
@@ -41,7 +54,11 @@ namespace QueroTransporte.QueroTransporteWeb
             return View(rotaModel);
         }
 
-
+        /// <summary>
+        /// Edita uma rota existente na base de dados
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Edit(int id)
         {
             ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
@@ -51,6 +68,12 @@ namespace QueroTransporte.QueroTransporteWeb
 
         }
 
+        /// <summary>
+        /// Edita uma rota existente na base de dados
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rotaModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, RotaModel rotaModel)
@@ -63,6 +86,11 @@ namespace QueroTransporte.QueroTransporteWeb
             return View(rotaModel);
         }
 
+        /// <summary>
+        /// Mostra detalhes de uma rota
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Details(int id)
         {
             RotaModel rotaModel = _gerenciadorRota.ObterPorId(id);
@@ -75,6 +103,11 @@ namespace QueroTransporte.QueroTransporteWeb
             return View(rotaModel);
         }
 
+        /// <summary>
+        /// Mostra rota a ser excluida
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int id)
         {
             RotaModel rotaModel = _gerenciadorRota.ObterPorId(id);
@@ -87,6 +120,12 @@ namespace QueroTransporte.QueroTransporteWeb
             return View(rotaModel);
         }
 
+        /// <summary>
+        /// Recebe rota a ser excluida
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)

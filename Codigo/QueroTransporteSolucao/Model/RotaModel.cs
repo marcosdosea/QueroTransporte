@@ -29,7 +29,7 @@ namespace QueroTransporte.Model
         [MaxLength(30)]
         [Display(Name = "Dia da Semana")]
         public string DiaSemana { get; set; }
-        [Display(Name = "Rota Anterior")]
+        [Display(Name = "Rota Mãe")]
         public int? RotaId { get; set; }
         [Required]
 		[Display(Name = "Rota Composta")]

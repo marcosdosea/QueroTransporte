@@ -13,6 +13,8 @@ namespace QueroTransporte.Model
         [Key]
         public int Id { get; set; }
         [Required]
-        public double Saldo { get; set; }
+        public decimal Saldo { get; set; }
+        [Required]
+        public int IdUsuario { get; set; }
     }
 }

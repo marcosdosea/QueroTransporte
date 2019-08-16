@@ -96,9 +96,9 @@ namespace QueroTransporte.Negocio
             _rota.DiaSemana = rotaModel.DiaSemana;
 
             if (rotaModel.IsComposta)
-                _rota.IdRota = rotaModel.RotaId;
-            else
                 _rota.IdRota = null;
+            else
+                _rota.IdRota = rotaModel.RotaId;
 
             _rota.EhComposta = Convert.ToByte(rotaModel.IsComposta);
         }
@@ -144,7 +144,7 @@ namespace QueroTransporte.Negocio
 
 
         /// <summary>
-        /// Agrupa dados importantes para identificar cada rota
+        /// Agrupa dados importantes para identificar cada uma das rotas
         /// </summary>
         /// <returns></returns>
         public List<RotaModel> ObterDetalhesRota()
@@ -160,7 +160,7 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// Agrupa dados importantes de uma rota 
+        /// Agrupa dados importantes de uma rota especifica
         /// </summary>
         /// <returns></returns>
         public RotaModel ObterDetalhesRota(int id)

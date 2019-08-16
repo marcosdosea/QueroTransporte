@@ -27,5 +27,7 @@ namespace QueroTransporte.Model
         public string Cnh { get; set; }
         [Required]
         public int IdUsuario { get; set; }
+        [MaxLength(50)]
+        public string Nome { get; set; }
     }
 }
