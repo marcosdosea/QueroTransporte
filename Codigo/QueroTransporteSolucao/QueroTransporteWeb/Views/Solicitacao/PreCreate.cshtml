@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Model.ViewModel.ViagemRotaViewModel>
+
+@{
+    ViewData["Title"] = "PreCreate";
+}
+
+<h2>PreCreate</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Veiculo</th>
+            <th>Hora Saida</th>
+            <th>Hora Chegada</th>
+            <th>Preço</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rota.Origem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rota.Destino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.Placa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rota.HorarioSaida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rota.HorarioChegada)
+                </td>
+                <td>
+                    R$:@Html.DisplayFor(modelItem => item.Viagem.Preco)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="@Url.Action("Create", "Solicitacao", new { id = item.Viagem.Id })">Solicitar Viagem</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

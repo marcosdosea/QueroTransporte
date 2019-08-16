@@ -53,6 +53,8 @@ namespace QueroTransporteWeb
             services.AddScoped<GerenciadorVeiculo>();
             services.AddScoped<GerenciadorViagem>();
             services.AddScoped<GerenciadorComprarCredito>();
+            services.AddScoped<GerenciadorFrota>();
+            services.AddScoped<GerenciadorSolicitacao>();
 
             // Contexto padrão.
             services.AddDefaultIdentity<IdentityUser>()

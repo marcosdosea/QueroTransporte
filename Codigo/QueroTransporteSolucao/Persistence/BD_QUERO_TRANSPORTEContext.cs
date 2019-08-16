@@ -29,7 +29,8 @@ namespace Persistence
         public virtual DbSet<Viagem> Viagem { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        { }
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -259,8 +260,6 @@ namespace Persistence
 
             modelBuilder.Entity<Solicitacao>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.IdPagamento });
-
                 entity.ToTable("solicitacao", "bd_quero_transporte");
 
                 entity.HasIndex(e => e.Id)
@@ -278,11 +277,6 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.IdPagamento)
-                    .HasColumnName("ID_PAGAMENTO")
                     .HasColumnType("int(10) unsigned");
 
                 entity.Property(e => e.DataSolicitacao).HasColumnName("DATA_SOLICITACAO");
@@ -290,6 +284,10 @@ namespace Persistence
                 entity.Property(e => e.FoiAtentida)
                     .HasColumnName("FOI_ATENTIDA")
                     .HasColumnType("tinyint(1)");
+
+                entity.Property(e => e.IdPagamento)
+                    .HasColumnName("ID_PAGAMENTO")
+                    .HasColumnType("int(10) unsigned");
 
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("ID_USUARIO")

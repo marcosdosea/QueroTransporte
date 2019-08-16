@@ -181,7 +181,8 @@ namespace QueroTransporte.Negocio
         }
 
         public RotaModel ObterPorOrigemDestino(string origem, string destino)
-            => _context.Rota.Where(r => r.Origem == origem && r.Destino == destino)
+            => _context.Rota
+                .Where(r => r.Origem == origem && r.Destino == destino)
                 .Select(r => new RotaModel
                 {
                     Id = r.Id,
@@ -189,6 +190,20 @@ namespace QueroTransporte.Negocio
                     Destino = r.Destino,
                     DiaSemana = r.DiaSemana
                 }).FirstOrDefault();
+
+        public List<RotaModel> ObterPorOrigemDestino(string origem, string destino, string diaSemana)
+            => _context.Rota
+                .Where(r => r.Origem == origem && r.Destino == destino && r.DiaSemana.Equals(diaSemana))
+                .Select(r => new RotaModel
+                {
+                    Id = r.Id,
+                    Origem = r.Origem,
+                    Destino = r.Destino,
+                    HorarioSaida = r.HorarioSaida,
+                    HorarioChegada = r.HorarioChegada,
+                    DiaSemana = r.DiaSemana,
+                    IsComposta = Convert.ToBoolean(r.EhComposta)
+                }).ToList();
 
 
         // estes métodos serão utilizados apenas pela aplicação móvel
