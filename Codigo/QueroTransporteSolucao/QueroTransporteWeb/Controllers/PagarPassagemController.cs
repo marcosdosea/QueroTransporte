@@ -16,12 +16,15 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorViagem _gerenciadorViagem;
         private readonly GerenciadorRota _gerenciadorRota;
         private readonly GerenciadorComprarCredito _gerenciadorCredito;
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, GerenciadorComprarCredito gerenciadorCredito)
+        private readonly GerenciadorPagamento _gerenciadorPagamento;
+        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, 
+                                       GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento)
         {
             _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
             _gerenciadorViagem = gerenciadorViagem;
             _gerenciadorRota = gerenciadorRota;
             _gerenciadorCredito = gerenciadorCredito;
+            _gerenciadorPagamento = gerenciadorPagamento;
         }
 
         public IActionResult Index()
@@ -43,10 +46,36 @@ namespace QueroTransporteWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(bool ehCredito)
+        public IActionResult Index(ViagemPassagemViewModel vP)
         {
+            if (ModelState.IsValid)
+            {
+                var pagamento = new PagamentoPassagemModel();
+                 pagamento.Data = DateTime.Now;
+                if (vP.EhCredito)
+                {
+                    pagamento.Tipo = 2;
+                    var creditosRestantes = (vP.Creditos.Saldo - (decimal) vP.Viagem.Preco);
+                    vP.Creditos.Saldo = creditosRestantes;
+                    _gerenciadorCredito.Editar(vP.Creditos);
+                }
+                else
+                    pagamento.Tipo = 1;
 
-            return View();
+                if (_gerenciadorPagamento.Inserir(pagamento))
+                {
+                    TempData["mensagemSucesso"] = "Pagamento com crédito com sucesso.";
+                                        return RedirectToAction(nameof(Index));
+
+                }
+                else
+                {
+                    TempData["mensagemErro"] = "Houve um erro no pagamento, tente novamente";
+                    return RedirectToAction("Index", "HomeController");
+                }
+                  
+            }
+                return View();
         }
     }
 }

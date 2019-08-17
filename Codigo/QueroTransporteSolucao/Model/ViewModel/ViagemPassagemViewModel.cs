@@ -12,5 +12,6 @@ namespace Model.ViewModel
         public ViagemModel Viagem { get; set; }
         public SolicitacaoVeiculoModel Solicitacao { get; set; }
         public CreditoViagemModel Creditos { get; set; }
+        public bool EhCredito { get; set; }
     }
 }
