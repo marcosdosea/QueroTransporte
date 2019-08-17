@@ -34,13 +34,20 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Create(ConsumivelVeicularModel consumivelveicularModel)
         {
-            _gerenciadorConsumivelVeicular.Inserir(consumivelveicularModel);
+            if (ModelState.IsValid)
+            {
+                if (_gerenciadorVeiculo.ObterPorId(consumivelveicularModel.IdVeiculo) != null)
+                {
+                    if (_gerenciadorConsumivelVeicular.Inserir(consumivelveicularModel))
+                        return RedirectToAction(nameof(Index));
+                }  
+            }
             return View(consumivelveicularModel);
         }
 
         public IActionResult Edit(int id)
         {
-            ViewBag.Consumiveis = new SelectList(_gerenciadorConsumivelVeicular.ObterTodos(), "Id");
+
             ConsumivelVeicularModel consumivel = _gerenciadorConsumivelVeicular.ObterPorId(id);
             return View(consumivel);
         }
@@ -49,7 +56,11 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, ConsumivelVeicularModel consumivelveicularModel)
         {
-            _gerenciadorConsumivelVeicular.Editar(consumivelveicularModel);
+            if (ModelState.IsValid)
+            {
+                if (_gerenciadorConsumivelVeicular.Editar(consumivelveicularModel))
+                    return RedirectToAction(nameof(Index));
+            }
             return View(consumivelveicularModel);
         }
 
