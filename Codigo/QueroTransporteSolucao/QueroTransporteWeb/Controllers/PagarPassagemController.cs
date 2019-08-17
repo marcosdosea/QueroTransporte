@@ -27,6 +27,10 @@ namespace QueroTransporteWeb.Controllers
             _gerenciadorPagamento = gerenciadorPagamento;
         }
 
+        /// <summary>
+        /// mostra as informacoes sobre a passagem
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             //Id usuario session
@@ -44,6 +48,11 @@ namespace QueroTransporteWeb.Controllers
             return View(viagemPassagem);
         }
 
+        /// <summary>
+        /// Pega os dados do pagamento e insere
+        /// </summary>
+        /// <param name="vP"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(ViagemPassagemViewModel vP)
