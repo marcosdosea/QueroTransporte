@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +52,7 @@ namespace QueroTransporteWeb
             services.AddScoped<GerenciadorUsuario>();
             services.AddScoped<GerenciadorVeiculo>();
             services.AddScoped<GerenciadorViagem>();
+            services.AddScoped<GerenciadorConsumivelVeicular>();
             services.AddScoped<GerenciadorComprarCredito>();
             services.AddScoped<GerenciadorFrota>();
             services.AddScoped<GerenciadorSolicitacao>();
