@@ -1,0 +1,78 @@
+﻿@model Model.ViewModel.ViagemPassagemViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="div-descricao">
+    <h1>Pagar Passagem</h1>
+    <p>
+        Pague sua passagem com seus créditos!
+    </p>
+</div>
+
+<div Class="div-carrinho">
+    <div class="div-titulo">Seus créditos</div>
+    <div class="div-itens-carrinho" id="totalCreditos" value="@Html.DisplayFor(model => model.Creditos.Saldo)">
+        Saldo R$ @Html.DisplayFor(model => model.Creditos.Saldo)
+    </div>
+</div>
+<table class="table" style="margin-top: 1%">
+    <tbody>
+        <tr>
+            <td>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Rota.Origem)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Rota.Origem)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Rota.Destino)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Rota.Destino)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Viagem.Preco)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Viagem.Preco)
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@if (TempData["mensagemErro"] != null)
+{
+    <div class="field-error" id="error-div">
+        @TempData["mensagemErro"]
+    </div>
+}
+else if (TempData["mensagemSucesso"] != null)
+{
+    <div class="success" id="cucess-div">
+        @TempData["mensagemSucesso"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="PagarPassagem" name="form">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label><input asp-for="EhCredito" type="checkbox" id="Eh_Credito" /> Pagamento com créditos</label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Confirmar" class="btn btn-primary btn-xs" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

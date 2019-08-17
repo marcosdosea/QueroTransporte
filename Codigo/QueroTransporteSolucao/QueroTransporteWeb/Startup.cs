@@ -56,7 +56,8 @@ namespace QueroTransporteWeb
             services.AddScoped<GerenciadorComprarCredito>();
             services.AddScoped<GerenciadorFrota>();
             services.AddScoped<GerenciadorSolicitacao>();
-
+            services.AddScoped<GerenciadorPagarPassagem>();
+            services.AddScoped<GerenciadorPagamento>();
             // Contexto padrão.
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
