@@ -3,37 +3,66 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h2>Index</h2>
-
-<div>
-    <h4>ViagemPassagemViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdViagemPassagem)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdViagemPassagem)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Origem)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Origem)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Destino)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Destino)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-    </dl>
+<div class="div-descricao">
+    <h1>Pagar Passagem</h1>
+    <p>
+        Pague sua passagem com seus créditos!
+    </p>
 </div>
+
+<div Class="div-carrinho">
+    <div class="div-titulo">Seus créditos</div>
+    <div class="div-itens-carrinho" id="totalCreditos" value="@Html.DisplayFor(model => model.Creditos.Saldo)">
+        Saldo R$ @Html.DisplayFor(model => model.Creditos.Saldo)
+    </div>
+</div>
+<table class="table" style="margin-top: 1%">
+    <tbody>
+        <tr>
+            <td>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Rota.Origem)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Rota.Origem)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Rota.Destino)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Rota.Destino)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Viagem.Preco)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Viagem.Preco)
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row" style="visibility: hidden">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="ComprarCreditos" name="form1">
+            <div class="col-md-2">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="Eh_Credito" /> Pagamento com créditos
+                    <]label>
+                </div>
+            </div>
+                <div class="form-group">
+                    <input type="submit" value="Confirmar" class="btn btn-primary btn-xs" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 

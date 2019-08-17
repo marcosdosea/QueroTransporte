@@ -18,7 +18,7 @@ namespace Business
 
         public SolicitacaoVeiculoModel ObterViagemPorUsuarioData(int idUsuario, DateTime data) =>
             _context.Solicitacao
-            .Where(sol => sol.IdUsuario == idUsuario && sol.DataSolicitacao.Equals(data) && sol.FoiAtentida == 1 && sol.IdPagamento == 0)
+            .Where(sol => sol.IdUsuario == idUsuario && sol.FoiAtentida == 1 && sol.IdPagamento == 1) // aqui é so teste
             .Select(sol => new SolicitacaoVeiculoModel
             {
                 Id = sol.Id,

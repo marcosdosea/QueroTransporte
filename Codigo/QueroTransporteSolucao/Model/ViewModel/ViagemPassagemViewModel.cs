@@ -11,5 +11,6 @@ namespace Model.ViewModel
         public RotaModel Rota { get; set; }
         public ViagemModel Viagem { get; set; }
         public SolicitacaoVeiculoModel Solicitacao { get; set; }
+        public CreditoViagemModel Creditos { get; set; }
     }
 }

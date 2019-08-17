@@ -15,29 +15,37 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorPagarPassagem _gerenciadorPagarPassagem;
         private readonly GerenciadorViagem _gerenciadorViagem;
         private readonly GerenciadorRota _gerenciadorRota;
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota)
+        private readonly GerenciadorComprarCredito _gerenciadorCredito;
+        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, GerenciadorComprarCredito gerenciadorCredito)
         {
             _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
             _gerenciadorViagem = gerenciadorViagem;
             _gerenciadorRota = gerenciadorRota;
+            _gerenciadorCredito = gerenciadorCredito;
         }
+
         public IActionResult Index()
         {
             //Id usuario session
             var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(1, DateTime.Now);
             var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
             var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
+            var creditos = _gerenciadorCredito.ObterPorId(solicitacao.IdUsuario);
             var viagemPassagem = new ViagemPassagemViewModel
             {
                 Viagem = viagem,
                 Solicitacao = solicitacao,
-                Rota = rota
+                Rota = rota,
+                Creditos = creditos
             };
-            return View();
+            return View(viagemPassagem);
         }
 
-        public IActionResult Index(ViagemPassagemViewModel passagemView)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(bool ehCredito)
         {
+
             return View();
         }
     }
