@@ -1,17 +1,16 @@
 
-using Microsoft.AspNetCore.Mvc;
-using QueroTransporte.Negocio;
-using QueroTransporte.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
+using QueroTransporte.Model;
+using QueroTransporte.Negocio;
+using System.Collections.Generic;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
+    [Authorize]
     public class MotoristaController : Controller
     {
         private readonly GerenciadorMotorista _gerenciadorMotorista;
@@ -88,7 +87,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Delete(int id)
         {
-            MotoristaModel  motorista = _gerenciadorMotorista.ObterPorId(id);
+            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
             ViewBag.NomeUsuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }

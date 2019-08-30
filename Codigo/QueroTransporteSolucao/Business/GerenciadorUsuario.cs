@@ -2,10 +2,8 @@
 using Business;
 using Persistence;
 using QueroTransporte.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Negocio
 {
@@ -146,5 +144,19 @@ namespace QueroTransporte.Negocio
                     Telefone = usuario.Telefone,
                     Tipo = usuario.Tipo
                 });
+
+        public UsuarioModel ObterPorLoginSenha(string cpf, string senha)
+            => _context.Usuario
+                .Where(u => u.Cpf.Equals(cpf) && u.Senha.Equals(senha))
+                .Select(usuario => new UsuarioModel
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Cpf = usuario.Cpf,
+                    Email = usuario.Email,
+                    Senha = usuario.Senha,
+                    Telefone = usuario.Telefone,
+                    Tipo = usuario.Tipo
+                }).FirstOrDefault();
     }
 }

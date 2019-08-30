@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Model.ViewModel
+﻿namespace Model.ViewModel
 {
     public class CreditoViagemViewModel
     {
@@ -13,7 +9,7 @@ namespace Model.ViewModel
 
         public double Valor { get; set; }
 
-        public CreditoViagemViewModel(int id, string titulo,double valor)
+        public CreditoViagemViewModel(int id, string titulo, double valor)
         {
             Id = id;
             Titulo = titulo;

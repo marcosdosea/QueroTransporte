@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,42 +22,53 @@
     <!-- Custom Theme Style -->
     <link href="~/template/build/css/custom.min.css" rel="stylesheet">
 </head>
-<body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
-            <partial name="_MenuPartial" />
-            <partial name="_TopBarPartial" />
-            <div class="right_col" role="main">
-                <div class="row">
-                    <div class="x_panel">
-                        @RenderBody()
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <body class="login">
+        @RenderBody()
+        @RenderSection("Scripts", required: false)
+    </body>
+}
+else
+{
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <partial name="_MenuPartial" />
+                <partial name="_TopBarPartial" />
+                <div class="right_col" role="main">
+                    <div class="row">
+                        <div class="x_panel">
+                            @RenderBody()
+                        </div>
                     </div>
                 </div>
             </div>
+            <footer>
+                <div class="pull-right">
+                    Quero Transporte 2019
+                </div>
+                <div class="clearfix"></div>
+            </footer>
         </div>
-        <footer>
-            <div class="pull-right">
-                Quero Transporte 2019
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-    </div>
 
 
-    <!-- jQuery -->
-    <script src="~/template/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/template/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/template/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="~/template/vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="~/template/vendors/iCheck/icheck.min.js"></script>
+        <!-- jQuery -->
+        <script src="~/template/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="~/template/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="~/template/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="~/template/vendors/nprogress/nprogress.js"></script>
+        <!-- iCheck -->
+        <script src="~/template/vendors/iCheck/icheck.min.js"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script src="~/template/build/js/custom.min.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="~/template/build/js/custom.min.js"></script>
 
-    @RenderSection("Scripts", required: false)
-</body>
+        @RenderSection("Scripts", required: false)
+    </body>
+}
 </html>

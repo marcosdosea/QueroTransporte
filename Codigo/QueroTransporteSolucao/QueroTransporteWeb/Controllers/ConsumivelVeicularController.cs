@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Business;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
-using Business;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
-    public class ManterConsumivelVeicularController : Controller
+    [Authorize]
+    public class ConsumivelVeicularController : Controller
     {
         private readonly GerenciadorConsumivelVeicular _gerenciadorConsumivelVeicular;
         private readonly GerenciadorVeiculo _gerenciadorVeiculo;
 
-        public ManterConsumivelVeicularController(GerenciadorConsumivelVeicular gerenciadorConsumivelVeicular, GerenciadorVeiculo gerenciadorVeiculo)
+        public ConsumivelVeicularController(GerenciadorConsumivelVeicular gerenciadorConsumivelVeicular, GerenciadorVeiculo gerenciadorVeiculo)
         {
             _gerenciadorConsumivelVeicular = gerenciadorConsumivelVeicular;
             _gerenciadorVeiculo = gerenciadorVeiculo;
@@ -40,7 +42,7 @@ namespace QueroTransporte.QueroTransporteWeb
                 {
                     if (_gerenciadorConsumivelVeicular.Inserir(consumivelveicularModel))
                         return RedirectToAction(nameof(Index));
-                }  
+                }
             }
             return View(consumivelveicularModel);
         }

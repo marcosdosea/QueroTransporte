@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QueroTransporte.Model;
 using Model.ViewModel;
+using QueroTransporte.Model;
 using QueroTransporte.Negocio;
-using Business;
+using System;
 
 namespace QueroTransporteWeb.Controllers
 {
+    [Authorize]
     public class PagarPassagemController : Controller
     {
         private readonly GerenciadorPagarPassagem _gerenciadorPagarPassagem;
@@ -17,7 +16,7 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorRota _gerenciadorRota;
         private readonly GerenciadorComprarCredito _gerenciadorCredito;
         private readonly GerenciadorPagamento _gerenciadorPagamento;
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, 
+        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota,
                                        GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento)
         {
             _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
@@ -60,11 +59,11 @@ namespace QueroTransporteWeb.Controllers
             if (ModelState.IsValid)
             {
                 var pagamento = new PagamentoPassagemModel();
-                 pagamento.Data = DateTime.Now;
+                pagamento.Data = DateTime.Now;
                 if (vP.EhCredito)
                 {
                     pagamento.Tipo = 2;
-                    var creditosRestantes = (vP.Creditos.Saldo - (decimal) vP.Viagem.Preco);
+                    var creditosRestantes = (vP.Creditos.Saldo - (decimal)vP.Viagem.Preco);
                     vP.Creditos.Saldo = creditosRestantes;
                     _gerenciadorCredito.Editar(vP.Creditos);
                 }
@@ -74,7 +73,7 @@ namespace QueroTransporteWeb.Controllers
                 if (_gerenciadorPagamento.Inserir(pagamento))
                 {
                     TempData["mensagemSucesso"] = "Pagamento com crédito com sucesso.";
-                                        return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
 
                 }
                 else
@@ -82,9 +81,9 @@ namespace QueroTransporteWeb.Controllers
                     TempData["mensagemErro"] = "Houve um erro no pagamento, tente novamente";
                     return RedirectToAction("Index", "HomeController");
                 }
-                  
+
             }
-                return View();
+            return View();
         }
     }
 }

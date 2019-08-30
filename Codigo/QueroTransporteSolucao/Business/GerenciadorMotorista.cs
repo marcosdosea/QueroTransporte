@@ -1,11 +1,8 @@
 using Business;
 using Persistence;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Negocio
 {
@@ -73,7 +70,7 @@ namespace QueroTransporte.Negocio
                     Categoria = motorista.Categoria,
                     Validade = motorista.Validade,
                     Cnh = motorista.Cnh,
-                    IdUsuario = (int)motorista.IdUsuario
+                    IdUsuario = motorista.IdUsuario
                 }).FirstOrDefault();
 
         /// <summary>
@@ -110,7 +107,7 @@ namespace QueroTransporte.Negocio
                     Categoria = motorista.Categoria,
                     Validade = motorista.Validade,
                     Cnh = motorista.Cnh,
-                    IdUsuario = (int)motorista.IdUsuario,
+                    IdUsuario = motorista.IdUsuario,
                     Nome = motorista.IdUsuarioNavigation.Nome
                 }).ToList();
     }

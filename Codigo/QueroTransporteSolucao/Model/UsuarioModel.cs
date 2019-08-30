@@ -1,10 +1,4 @@
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Model
 {
@@ -14,7 +8,7 @@ namespace QueroTransporte.Model
         [Key]
         public int Id { get; set; }
         [Required]
-        [MaxLength(11), MinLength(11)]
+        [MaxLength(15), MinLength(11)]
         public string Cpf { get; set; }
         [Required]
         public string Nome { get; set; }

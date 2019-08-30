@@ -1,0 +1,118 @@
+﻿@model QueroTransporte.Model.UsuarioModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<div>
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form class="form-horizontal form-label-left" asp-action="Autenticar" asp-controller="Login">
+                    <h1>Entrar no Sistema</h1>
+                    <div class="item form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-12" for="email">
+                            CPF:
+                        </label>
+                        <div class="col-md-10 col-sm-6 col-xs-12">
+                            <input asp-for="Cpf" id="login" class="form-control" data-inputmask="'mask' : '***.***.***-**'" placeholder="Insira seu CPF" required="required" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-12" for="email">
+                            Senha:<span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-6 col-xs-12">
+                            <input asp-for="Senha" type="password" id="senha" class="form-control" placeholder="Insira seu senha" required="required" />
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                        <button class="btn btn-warning">Esqueceu sua senha?</button>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <p class="change_link">
+                            Não possui cadastro?
+                            <a href="@Url.Action("CriarUser","Login")" class="to_register" data-toggle="modal" data-target=".bs-example-modal-sm"> Criar Conta </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                        <br />
+
+                        <!-- Div erro -->
+                        <div class="alert alert-danger alert-dismissible fade in" id="divErro" role="alert">
+                            Credenciais incorretas!
+                        </div>
+
+                        <div>
+                            <h1><i class="fa fa-car"></i> QueroTransporte!</h1>
+                            <p>©2019 Todos os direitos reservados. <br />Privacidade e Termos</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form asp-action="CriarUser" asp-controller="Login">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="modelInfoRota">Cadastro Rápido</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="Cpf" class="control-label"></label>
+                        <input asp-for="Cpf" data-inputmask="'mask' : '***.***.***-**'" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nome" class="control-label"></label>
+                        <input asp-for="Nome" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Senha" class="control-label"></label>
+                        <input asp-for="Senha" type="password" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Telefone" class="control-label"></label>
+                        <input asp-for="Telefone" class="form-control" required />
+                        <input type="hidden" asp-for="Tipo" value="CLIENTE" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success">Cadastrar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="~/template/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/template/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="~/template/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="~/template/build/js/custom.min.js"></script>
+
+    <script>
+        let div = document.getElementById("divErro");
+        window.location.href.includes("msg=erro") ? div.hidden = false : div.hidden = true;
+    </script>
+}
