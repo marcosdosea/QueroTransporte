@@ -4,19 +4,19 @@
     ViewData["Title"] = "Comprar Créditos";
 }
 
- 
 
-<div class="div-descricao" >
+
+<div class="div-descricao">
     <h1>Comprar créditos</h1>
     <p>
         Compre seus créditos de viagem para pagar suas passagens!
     </p>
 </div>
 
-<div Class="div-carrinho" >
+<div Class="div-carrinho">
     <div class="div-titulo">Carrinho</div>
-    <div class="div-itens-carrinho" id="totalCreditos" value="0" >Creditos 0</div>
-    <div class="div-itens-carrinho" id="totalValor" value="0" >Valor R$ 0</div>
+    <div class="div-itens-carrinho" id="totalCreditos" value="0">Creditos 0</div>
+    <div class="div-itens-carrinho" id="totalValor" value="0">Valor R$ 0</div>
 </div>
 
 <table class="table" style="margin-top: 1%">
@@ -40,9 +40,9 @@
                         </dd>
                     </dl>
                 </td>
-                <td id="alinha-botoes" >
+                <td id="alinha-botoes">
                     <input id="btn-remove-credito" type="button" onclick="removeCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Remover" class="btn btn-danger" />
-                    <input id="btn-adiciona-credito"  type="button" onclick="addCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Adicionar" class="btn btn-primary" />
+                    <input id="btn-adiciona-credito" type="button" onclick="addCredito(@Html.DisplayFor(modelItem => item.Valor))" value="Adicionar" class="btn btn-primary" />
                 </td>
             </tr>
         }
@@ -54,14 +54,14 @@
                     </dt>
                     <dd>
                         <input type="number" id="tentacles" name="tentacles"
-                               min="15" max="100" class="form-control"  value="0">
+                               min="15" max="100" class="form-control" value="0">
                     </dd>
                 </dl>
             </td>
             <td>
                 <div id="alinha-botoes2">
                     <input type="button" id="btn-remove-credito" onclick="removeCredito(parseInt($('#tentacles').val()))" value="Remover" class="btn btn-danger" />
-                    <input type="button"  id="btn-adiciona-credito" onclick="addCredito(parseInt($('#tentacles').val()))" value="Adicionar" class="btn btn-primary" />
+                    <input type="button" id="btn-adiciona-credito" onclick="addCredito(parseInt($('#tentacles').val()))" value="Adicionar" class="btn btn-primary" />
                 </div>
             </td>
         </tr>
@@ -70,16 +70,25 @@
 
 @if (TempData["mensagemErro"] != null)
 {
-    <div class="field-error" id="error-div" >
+    <div class="field-error" id="error-div">
         @TempData["mensagemErro"]
     </div>
 }
 else if (TempData["mensagemSucesso"] != null)
 {
-    <div class="success" id="cucess-div" >
+    <div class="success" id="cucess-div">
         @TempData["mensagemSucesso"]
     </div>
 }
+
+@if (TempData["mensagemErroTransacao"] != null)
+{
+    <div class="field-error" id="error-div">
+        @TempData["mensagemErroTransacao"]
+    </div>
+}
+
+
 
 <div id="btn-adiciona-credito">
     <div id="paypal-button-container"></div>

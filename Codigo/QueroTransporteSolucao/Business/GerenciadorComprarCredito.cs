@@ -3,7 +3,6 @@ using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Business
 {
@@ -35,8 +34,6 @@ namespace Business
                 return Editar(objeto);
             }
         }
-		
-		
 
         /// <summary>
         /// Atualiza saldo de creditos de viagem comprados por um usuário
