@@ -1,10 +1,8 @@
-﻿using Model.ViewModel;
-using Persistence;
+﻿using Persistence;
 using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Business
 {
@@ -32,7 +30,7 @@ namespace Business
                 DataSolicitacao = sol.DataSolicitacao,
                 IsAtendida = Convert.ToBoolean(sol.FoiAtentida)
             }).FirstOrDefault();
-               
+
 
         public bool Editar(GerenciadorPagarPassagem objeto)
         {

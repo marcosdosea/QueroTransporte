@@ -1,12 +1,10 @@
-﻿using Business;
-using Persistence;
+﻿using Persistence;
 using QueroTransporte.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace Business
 {
-    public class GerenciadorConsumivelVeicular :IGerenciador<ConsumivelVeicularModel>
+    public class GerenciadorConsumivelVeicular : IGerenciador<ConsumivelVeicularModel>
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
         public GerenciadorConsumivelVeicular(BD_QUERO_TRANSPORTEContext context)
@@ -58,7 +56,7 @@ namespace Business
         /// </summary>
         /// <param name="consumivelveicularModel"></param>
         /// <param name="_consumivel"></param>
-        private void Atribuir (ConsumivelVeicularModel consumivelveicularModel, ConsumivelVeicular _consumivel)
+        private void Atribuir(ConsumivelVeicularModel consumivelveicularModel, ConsumivelVeicular _consumivel)
         {
             _consumivel.Id = consumivelveicularModel.Id;
             _consumivel.IdVeiculo = consumivelveicularModel.IdVeiculo;

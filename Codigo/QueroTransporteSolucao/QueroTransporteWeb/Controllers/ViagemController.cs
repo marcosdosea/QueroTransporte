@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using System.Collections.Generic;
 
 namespace QueroTransporteWeb.Controllers
 {
+    [Authorize]
     public class ViagemController : Controller
     {
         private readonly GerenciadorViagem _gerenciador;

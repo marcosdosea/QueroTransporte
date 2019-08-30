@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +8,7 @@ using QueroTransporte.Negocio;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
+    [Authorize(Roles = "ADMIN")]
     public class VeiculoController : Controller
     {
         private readonly GerenciadorVeiculo _gerenciadorVeiculo;

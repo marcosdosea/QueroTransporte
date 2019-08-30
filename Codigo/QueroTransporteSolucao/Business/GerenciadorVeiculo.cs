@@ -2,10 +2,8 @@
 using Business;
 using Persistence;
 using QueroTransporte.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Negocio
 {
@@ -93,7 +91,7 @@ namespace QueroTransporte.Negocio
                     Categoria = veiculo.Categoria,
                     Chassi = veiculo.Chassi,
                     Cor = veiculo.Cor,
-                    IdFrota = (int)veiculo.IdFrota,
+                    IdFrota = veiculo.IdFrota,
                     DataEmplacamento = veiculo.DataEmplacamento,
                     Marca = veiculo.Marca,
                     Modelo = veiculo.Modelo,
@@ -117,7 +115,7 @@ namespace QueroTransporte.Negocio
                     Categoria = veiculo.Categoria,
                     Chassi = veiculo.Chassi,
                     Cor = veiculo.Cor,
-                    IdFrota = (int)veiculo.IdFrota,
+                    IdFrota = veiculo.IdFrota,
                     DataEmplacamento = veiculo.DataEmplacamento,
                     Marca = veiculo.Marca,
                     Modelo = veiculo.Modelo,
@@ -141,7 +139,7 @@ namespace QueroTransporte.Negocio
                     Categoria = veiculo.Categoria,
                     Chassi = veiculo.Chassi,
                     Cor = veiculo.Cor,
-                    IdFrota = (int)veiculo.IdFrota,
+                    IdFrota = veiculo.IdFrota,
                     DataEmplacamento = veiculo.DataEmplacamento,
                     Marca = veiculo.Marca,
                     Modelo = veiculo.Modelo,
@@ -198,7 +196,7 @@ namespace QueroTransporte.Negocio
                     Categoria = v.Categoria,
                     Chassi = v.Chassi,
                     Cor = v.Cor,
-                    IdFrota = (int)v.IdFrota,
+                    IdFrota = v.IdFrota,
                     DataEmplacamento = v.DataEmplacamento,
                     Marca = v.Marca,
                     Modelo = v.Modelo,

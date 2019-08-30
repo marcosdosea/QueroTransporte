@@ -32,7 +32,7 @@ namespace QueroTransporte.Model
         [Display(Name = "Rota Mãe")]
         public int? RotaId { get; set; }
         [Required]
-		[Display(Name = "Rota Composta")]
+        [Display(Name = "Rota Composta")]
         public bool IsComposta { get; set; }
 
 

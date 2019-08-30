@@ -1,9 +1,4 @@
-
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace QueroTransporte.Model
 {
@@ -17,7 +12,7 @@ namespace QueroTransporte.Model
         [MaxLength(400)]
         public string Descricao { get; set; }
         [Required]
-		[Display(Name = "Rota Publica")]
+        [Display(Name = "Rota Publica")]
         public bool IsPublic { get; set; }
     }
 }
