@@ -13,7 +13,6 @@ namespace QueroTransporteWeb.Controllers
     {
 
         private readonly GerenciadorTransacao _gerenciadorTransacao;
-        private int TamanhoLista = 0; 
 
         public HistoricoDeTransacoesController(GerenciadorTransacao gerenciadorTransacao)
         {
@@ -23,13 +22,11 @@ namespace QueroTransporteWeb.Controllers
         public IActionResult Index()
         {
 
-            TamanhoLista = TamanhoLista + 2;
-            return View(_gerenciadorTransacao.ObterTodos(1).Take(TamanhoLista));
+            return View(_gerenciadorTransacao.ObterTodos(1));
         }
 
         public IActionResult Details(int id)
         {
-            TamanhoLista = TamanhoLista + 2;
             TransacaoModel transacao = _gerenciadorTransacao.ObterPorId(id);
             return View(transacao);
         }
