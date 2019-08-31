@@ -83,7 +83,7 @@ namespace QueroTransporteWeb.Controllers
             tm.Data = DateTime.Now;
             tm.Deferido = deferido;
             tm.IdUsuario = cv.IdUsuario;
-            tm.QtdCreditos = (double) cv.Saldo;
+            tm.QtdCreditos = Convert.ToDouble(cv.Saldo);
             if (deferido)
                 tm.Status = "Aprovado";
             else

@@ -9,14 +9,19 @@ namespace QueroTransporte.Model
 {
     public class TransacaoModel
     {
+
+        [Display(Name = "Codigo")]
         [Required]
         [Key]
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Saldo de Créditos")]
+        [Display(Name = "Creditos")]
         public double QtdCreditos { get; set; }
         [Required]
-        [Display(Name = "Status Pagamento")]
+        [Display(Name = "Valor")]
+        public double Valor { get; set; }
+        [Required]
+        [Display(Name = "Deferido")]
         public bool Deferido { get; set; }
         [Required]
         [Display(Name = "Data Pagamento")]

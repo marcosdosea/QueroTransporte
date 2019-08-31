@@ -27,7 +27,9 @@ namespace Business
                 {
                     Id = transacao.Id,
                     IdUsuario = transacao.IdUsuario,
-                    QtdCreditos = (double)transacao.QtdCreditos,
+                    QtdCreditos = Convert.ToDouble(transacao.QtdCreditos),
+                    Valor = Convert.ToDouble(transacao.QtdCreditos),
+                    Deferido = Convert.ToBoolean(transacao.Deferido),
                     Status = transacao.Status,
                     Data = transacao.Data
                 }).FirstOrDefault();
@@ -40,11 +42,14 @@ namespace Business
         public List<TransacaoModel> ObterTodos(int idUsuario)
             => _context.Transacao
                 .Where(tm => tm.IdUsuario == idUsuario)
+                .OrderByDescending(tm => tm.Data) 
                 .Select(transacao => new TransacaoModel
                 {
                     Id = transacao.Id,
                     IdUsuario = transacao.IdUsuario,
-                    QtdCreditos = (double) transacao.QtdCreditos,
+                    QtdCreditos = Convert.ToDouble(transacao.QtdCreditos),
+                    Valor = Convert.ToDouble(transacao.QtdCreditos),
+                    Deferido = Convert.ToBoolean(transacao.Deferido),
                     Status = transacao.Status,
                     Data = transacao.Data
                 }).ToList();
@@ -71,12 +76,9 @@ namespace Business
         private void Atribuir(Transacao transacao, TransacaoModel objeto)
         {
             transacao.IdUsuario = objeto.IdUsuario;
-            transacao.QtdCreditos = (decimal) objeto.QtdCreditos;
+            transacao.QtdCreditos = Convert.ToDecimal(objeto.QtdCreditos);
             transacao.Status = objeto.Status;
-            if (objeto.Deferido)
-                transacao.Deferido = 1;
-            else
-                transacao.Deferido = 0;
+            transacao.Deferido = Convert.ToByte(objeto.Deferido);
             transacao.Data = objeto.Data;
         }
 
