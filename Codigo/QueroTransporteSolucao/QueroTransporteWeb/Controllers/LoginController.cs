@@ -28,12 +28,10 @@ namespace QueroTransporteWeb.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Autenticar(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                //var x = Criptografia.GerarHashSenha(model.Senha);
                 var user = _gerenciadoraUsuario.ObterPorLoginSenha(MethodsUtils.RemoverCaracteresEspeciais(model.Cpf), Criptografia.GerarHashSenha(model.Senha));
                 if (user != null)
                 {
