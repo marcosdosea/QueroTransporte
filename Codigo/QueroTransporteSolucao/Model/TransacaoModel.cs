@@ -16,10 +16,10 @@ namespace QueroTransporte.Model
         public int Id { get; set; }
         [Required]
         [Display(Name = "Creditos")]
-        public double QtdCreditos { get; set; }
+        public decimal QtdCreditos { get; set; }
         [Required]
         [Display(Name = "Valor")]
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
         [Required]
         [Display(Name = "Deferido")]
         public bool Deferido { get; set; }
@@ -33,5 +33,7 @@ namespace QueroTransporte.Model
         [MaxLength(45)]
         public string Status { get; set; }
         // 0 = Cancelado, 1 = Pendente, 2 = Aprovado
+        [Required]
+        public string Tipo { get; set; }
     }
 }

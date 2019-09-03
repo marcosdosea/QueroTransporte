@@ -21,7 +21,6 @@ namespace QueroTransporteWeb.Controllers
 
         public IActionResult Index()
         {
-
             return View(_gerenciadorTransacao.ObterTodos(1));
         }
 

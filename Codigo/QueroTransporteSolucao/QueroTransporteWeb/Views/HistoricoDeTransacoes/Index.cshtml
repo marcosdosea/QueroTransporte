@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.Valor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th></th>
         </tr>
@@ -36,10 +36,10 @@
                     @Html.DisplayFor(modelItem => item.QtdCreditos)
                 </td>
                 <td>
-                    R$ @Html.DisplayFor(modelItem => item.QtdCreditos)
+                    R$ @Html.DisplayFor(modelItem => item.Valor)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Status)
+                    @Html.DisplayFor(modelItem => item.Tipo)
                 </td>
                 <td>
                     @Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })

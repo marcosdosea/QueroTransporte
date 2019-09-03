@@ -27,11 +27,12 @@ namespace Business
                 {
                     Id = transacao.Id,
                     IdUsuario = transacao.IdUsuario,
-                    QtdCreditos = Convert.ToDouble(transacao.QtdCreditos),
-                    Valor = Convert.ToDouble(transacao.QtdCreditos),
-                    Deferido = Convert.ToBoolean(transacao.Deferido),
+                    QtdCreditos = transacao.QtdCreditos,
+                    Valor = transacao.Valor,
+                    Deferido = transacao.Deferido,
                     Status = transacao.Status,
-                    Data = transacao.Data
+                    Data = transacao.Data,
+                    Tipo = transacao.Tipo
                 }).FirstOrDefault();
 
 
@@ -47,11 +48,12 @@ namespace Business
                 {
                     Id = transacao.Id,
                     IdUsuario = transacao.IdUsuario,
-                    QtdCreditos = Convert.ToDouble(transacao.QtdCreditos),
-                    Valor = Convert.ToDouble(transacao.QtdCreditos),
-                    Deferido = Convert.ToBoolean(transacao.Deferido),
+                    QtdCreditos = transacao.QtdCreditos,
+                    Valor = transacao.Valor,
+                    Deferido = transacao.Deferido,
                     Status = transacao.Status,
-                    Data = transacao.Data
+                    Data = transacao.Data,
+                    Tipo = transacao.Tipo
                 }).ToList();
 
         /// <summary>
@@ -76,10 +78,12 @@ namespace Business
         private void Atribuir(Transacao transacao, TransacaoModel objeto)
         {
             transacao.IdUsuario = objeto.IdUsuario;
-            transacao.QtdCreditos = Convert.ToDecimal(objeto.QtdCreditos);
+            transacao.QtdCreditos = objeto.QtdCreditos;
+            transacao.Valor = objeto.Valor;
             transacao.Status = objeto.Status;
-            transacao.Deferido = Convert.ToByte(objeto.Deferido);
+            transacao.Deferido = objeto.Deferido;
             transacao.Data = objeto.Data;
+            transacao.Tipo = objeto.Tipo;
         }
 
         /// <summary>

@@ -63,9 +63,7 @@ namespace QueroTransporteWeb.Controllers
                         deferido = false;    
                     }
 
-                    if (_gerenciadorTransacao.Inserir(addTransacao(cv, deferido)))
-                           TempData["mensagemSucessoTransacao"] = "";
-                    else
+                    if (!_gerenciadorTransacao.Inserir(addTransacao(cv, deferido)))
                            TempData["mensagemErroTransacao"] = "Houve um problema ao gravar a transacao";
                 }
                 else
@@ -83,11 +81,13 @@ namespace QueroTransporteWeb.Controllers
             tm.Data = DateTime.Now;
             tm.Deferido = deferido;
             tm.IdUsuario = cv.IdUsuario;
-            tm.QtdCreditos = Convert.ToDouble(cv.Saldo);
+            tm.QtdCreditos = cv.Saldo;
+            tm.Valor = cv.Saldo;
             if (deferido)
                 tm.Status = "Aprovado";
             else
                 tm.Status = "Cancelada";
+            tm.Tipo = "COMPRA DE CREDITOS";
 
             return tm;
         }
