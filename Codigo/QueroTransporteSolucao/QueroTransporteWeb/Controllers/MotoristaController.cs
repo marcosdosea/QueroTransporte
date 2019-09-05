@@ -70,7 +70,7 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (_gerenciadorMotorista.Alterar(motorista))
+                if (_gerenciadorMotorista.Editar(motorista))
                     return RedirectToAction(nameof(Index));
 
             }

@@ -31,19 +31,6 @@ namespace QueroTransporte.Negocio
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="motoristaModel"> </param>
-        public bool Alterar(MotoristaModel objeto)
-        {
-            Motorista _motorista = new Motorista();
-
-            Atribuir(objeto, _motorista);
-            _context.Update(_motorista);
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
         /// Faz o cast entre o model e a entidade
         /// </summary>
         /// <param name="motoristaModel"></param>
