@@ -1,5 +1,3 @@
-using System;
-
 namespace QueroTransporteWeb.Models
 {
     public class ErrorViewModel

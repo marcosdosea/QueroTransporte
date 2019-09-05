@@ -1,4 +1,4 @@
-﻿using Persistence;
+using Persistence;
 using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace Business
         /// <param name="objeto"></param>
         /// <returns></returns>
         public bool Inserir(CreditoViagemModel objeto)
-        {          
+        {
             if (ObterPorId(objeto.IdUsuario) == null)
             {
                 Credito _credito = new Credito();
@@ -59,7 +59,7 @@ namespace Business
         private void Atribuir(Credito credito, CreditoViagemModel objeto)
         {
             credito.Id = objeto.Id;
-            credito.Saldo =  objeto.Saldo;
+            credito.Saldo = objeto.Saldo;
             credito.IdUsuario = objeto.IdUsuario;
         }
 

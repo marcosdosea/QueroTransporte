@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using System.Linq;
 
 namespace QueroTransporteWeb.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         private readonly GerenciadorUsuario _gerenciadorUsuario;
@@ -24,7 +23,7 @@ namespace QueroTransporteWeb.Controllers
         /// </summary>
         /// <returns>Todos os usuarios que não são motoristas para o view que lista eles</returns>
         // GET: Usuario
-        public ActionResult Index() => View(_gerenciadorUsuario.ObterTodos().Where(u => u.Tipo != "MOTORISTA"));
+        public ActionResult Index() => View(_gerenciadorUsuario.ObterTodos().Where(u => !u.Tipo.Equals("MOTORISTA")));
 
         /// <summary>
         /// detalha o dados do usuario

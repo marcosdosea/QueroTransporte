@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business;
+﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using System.Collections.Generic;
 
 namespace QueroTransporteWeb.Controllers
 {
+    [Authorize]
     public class ComprarCreditosController : Controller
     {
 
