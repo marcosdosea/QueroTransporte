@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using System;
 using System.Collections.Generic;
 
 namespace QueroTransporteWeb.Controllers
@@ -74,7 +75,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
 
-        public TransacaoModel addTransacao(CreditoViagemModel cv,bool deferido)
+        private TransacaoModel addTransacao(CreditoViagemModel cv,bool deferido)
         {
             TransacaoModel tm = new TransacaoModel();
             tm.Data = DateTime.Now;
@@ -94,7 +95,7 @@ namespace QueroTransporteWeb.Controllers
         /// <summary>
         /// Metodo que adiciona valores de creditos para comprar(esses dados devem vir do banco)
         /// </summary>
-        public List<CreditoViagemViewModel> addListaCreditos()
+        private List<CreditoViagemViewModel> addListaCreditos()
         {
             List<CreditoViagemViewModel> creditoViagem = new List<CreditoViagemViewModel>();
 

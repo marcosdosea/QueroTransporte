@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Persistence
 {
@@ -28,6 +30,7 @@ namespace Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -346,6 +349,15 @@ namespace Persistence
                     .HasMaxLength(45)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Tipo)
+                    .IsRequired()
+                    .HasColumnName("TIPO")
+                    .HasColumnType("enum('PAGAMENTO DE PASSAGEM','COMPRA DE CREDITOS')");
+
+                entity.Property(e => e.Valor)
+                    .HasColumnName("VALOR")
+                    .HasColumnType("decimal(10,2)");
+
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Transacao)
                     .HasForeignKey(d => d.IdUsuario)
@@ -386,7 +398,7 @@ namespace Persistence
                 entity.Property(e => e.Senha)
                     .IsRequired()
                     .HasColumnName("SENHA")
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Telefone)

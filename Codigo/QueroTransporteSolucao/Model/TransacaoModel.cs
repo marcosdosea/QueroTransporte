@@ -16,7 +16,7 @@ namespace QueroTransporte.Model
         public decimal QtdCreditos { get; set; }
         [Required]
         [Display(Name = "Valor")]
-        public decimal Valor { get; set; }
+        public decimal? Valor { get; set; }
         [Required]
         [Display(Name = "Deferido")]
         public bool Deferido { get; set; }

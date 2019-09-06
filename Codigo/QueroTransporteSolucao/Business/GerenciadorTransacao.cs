@@ -29,7 +29,7 @@ namespace Business
                     IdUsuario = transacao.IdUsuario,
                     QtdCreditos = transacao.QtdCreditos,
                     Valor = transacao.Valor,
-                    Deferido = transacao.Deferido,
+                    Deferido = Convert.ToBoolean(transacao.Deferido),
                     Status = transacao.Status,
                     Data = transacao.Data,
                     Tipo = transacao.Tipo
@@ -50,7 +50,7 @@ namespace Business
                     IdUsuario = transacao.IdUsuario,
                     QtdCreditos = transacao.QtdCreditos,
                     Valor = transacao.Valor,
-                    Deferido = transacao.Deferido,
+                    Deferido = Convert.ToBoolean(transacao.Deferido),
                     Status = transacao.Status,
                     Data = transacao.Data,
                     Tipo = transacao.Tipo
@@ -81,7 +81,7 @@ namespace Business
             transacao.QtdCreditos = objeto.QtdCreditos;
             transacao.Valor = objeto.Valor;
             transacao.Status = objeto.Status;
-            transacao.Deferido = objeto.Deferido;
+            transacao.Deferido = Convert.ToByte(objeto.Deferido);
             transacao.Data = objeto.Data;
             transacao.Tipo = objeto.Tipo;
         }
