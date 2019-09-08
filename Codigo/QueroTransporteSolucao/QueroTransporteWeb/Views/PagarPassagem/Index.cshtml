@@ -58,6 +58,13 @@ else if (TempData["mensagemSucesso"] != null)
     </div>
 }
 
+@if (TempData["mensagemErroTransacao"] != null)
+{
+    <div class="field-error" id="error-div">
+        @TempData["mensagemErroTransacao"]
+    </div>
+}
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Index" asp-controller="PagarPassagem" name="form">

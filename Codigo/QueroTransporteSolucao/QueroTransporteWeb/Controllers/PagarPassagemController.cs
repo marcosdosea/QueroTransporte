@@ -1,4 +1,4 @@
-﻿using Business;
+using Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
@@ -16,14 +16,17 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorRota _gerenciadorRota;
         private readonly GerenciadorComprarCredito _gerenciadorCredito;
         private readonly GerenciadorPagamento _gerenciadorPagamento;
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota,
-                                       GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento)
+        private readonly GerenciadorTransacao _gerenciadorTransacao;
+
+        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, 
+                                       GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento, GerenciadorTransacao gerenciadorTransacao)
         {
             _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
             _gerenciadorViagem = gerenciadorViagem;
             _gerenciadorRota = gerenciadorRota;
             _gerenciadorCredito = gerenciadorCredito;
             _gerenciadorPagamento = gerenciadorPagamento;
+            _gerenciadorTransacao = gerenciadorTransacao;
         }
 
         /// <summary>
@@ -73,8 +76,11 @@ namespace QueroTransporteWeb.Controllers
                 if (_gerenciadorPagamento.Inserir(pagamento))
                 {
                     TempData["mensagemSucesso"] = "Pagamento com crédito com sucesso.";
-                    return RedirectToAction(nameof(Index));
 
+                    if (!_gerenciadorTransacao.Inserir(addTransacao(vP, true)))
+                        TempData["mensagemErroTransacao"] = "Houve um erro ao salvar esta transação no seu histórico";
+
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -84,6 +90,24 @@ namespace QueroTransporteWeb.Controllers
 
             }
             return View();
+        }
+
+
+        public TransacaoModel addTransacao(ViagemPassagemViewModel vp, bool deferido)
+        {
+            TransacaoModel tm = new TransacaoModel();
+            tm.Data = DateTime.Now;
+            tm.Deferido = deferido;
+            tm.IdUsuario = vp.Creditos.IdUsuario;
+            tm.QtdCreditos = vp.Creditos.Saldo;
+            tm.Valor = vp.Creditos.Saldo;
+            if (deferido)
+                tm.Status = "Aprovado";
+            else
+                tm.Status = "Cancelada";
+            tm.Tipo = "PAGAMENTO DE PASSAGEM";
+
+            return tm;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Persistence;
+using Persistence;
 using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;
@@ -34,8 +34,6 @@ namespace Business
                 return Editar(objeto);
             }
         }
-
-
 
         /// <summary>
         /// Atualiza saldo de creditos de viagem comprados por um usuário

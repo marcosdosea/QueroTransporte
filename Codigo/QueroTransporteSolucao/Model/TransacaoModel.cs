@@ -6,14 +6,19 @@ namespace QueroTransporte.Model
 {
     public class TransacaoModel
     {
+
+        [Display(Name = "Codigo")]
         [Required]
         [Key]
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Saldo de Créditos")]
-        public double QtdCreditos { get; set; }
+        [Display(Name = "Creditos")]
+        public decimal QtdCreditos { get; set; }
         [Required]
-        [Display(Name = "Status Pagamento")]
+        [Display(Name = "Valor")]
+        public decimal? Valor { get; set; }
+        [Required]
+        [Display(Name = "Deferido")]
         public bool Deferido { get; set; }
         [Required]
         [Display(Name = "Data Pagamento")]
@@ -23,7 +28,9 @@ namespace QueroTransporte.Model
         [Required]
         public int IdUsuario { get; set; }
         [MaxLength(45)]
-        public int Status { get; set; }
+        public string Status { get; set; }
         // 0 = Cancelado, 1 = Pendente, 2 = Aprovado
+        [Required]
+        public string Tipo { get; set; }
     }
 }
