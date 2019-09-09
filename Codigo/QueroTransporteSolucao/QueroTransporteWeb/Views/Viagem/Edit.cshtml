@@ -13,14 +13,8 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label name="OrigemRota" class="control-label">Origem</label>
-                @Html.DropDownList("Origem", ViewBag.rotaOrigem as SelectList, new
-                { @class = "form-control" })
-                <span asp-validation-for="IdRota" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label name="DestinoRota" class="control-label">Destino</label>
-                @Html.DropDownList("Destino", ViewBag.rotaDestino as SelectList, new
+                <label asp-for="IdRota" class="control-label"></label>
+                @Html.DropDownListFor(model => model.IdRota, ViewBag.rotas as SelectList, new
                 { @class = "form-control" })
                 <span asp-validation-for="IdRota" class="text-danger"></span>
             </div>

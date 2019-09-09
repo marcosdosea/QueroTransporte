@@ -18,7 +18,7 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorPagamento _gerenciadorPagamento;
         private readonly GerenciadorTransacao _gerenciadorTransacao;
 
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, 
+        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota,
                                        GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento, GerenciadorTransacao gerenciadorTransacao)
         {
             _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
@@ -37,17 +37,25 @@ namespace QueroTransporteWeb.Controllers
         {
             //Id usuario session
             var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(1, DateTime.Now);
-            var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
-            var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
-            var creditos = _gerenciadorCredito.ObterPorId(solicitacao.IdUsuario);
-            var viagemPassagem = new ViagemPassagemViewModel
+            if (solicitacao != null)
             {
-                Viagem = viagem,
-                Solicitacao = solicitacao,
-                Rota = rota,
-                Creditos = creditos
-            };
-            return View(viagemPassagem);
+                var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
+                var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
+                var creditos = _gerenciadorCredito.ObterPorId(solicitacao.IdUsuario);
+                var viagemPassagem = new ViagemPassagemViewModel
+                {
+                    Viagem = viagem,
+                    Solicitacao = solicitacao,
+                    Rota = rota,
+                    Creditos = creditos
+                };
+                return View(viagemPassagem);
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         /// <summary>
