@@ -87,5 +87,10 @@ namespace QueroTransporte.QueroTransporteWeb
 
             return View(_gerenciadorConsumivelVeicular.ObterPorId(id));
         }
+
+        public IActionResult Reports()
+        {
+            return View(_gerenciadorConsumivelVeicular.ObterTodos());
+        }
     }
 }

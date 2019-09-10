@@ -1,0 +1,68 @@
+﻿@model IEnumerable<QueroTransporte.Model.ConsumivelVeicularModel>
+
+@{
+    ViewData["Title"] = "Reports";
+    var despesas = Model.GroupBy(x => x.DataDespesa.Date).Select(y => new
+    {
+        data = y.First().DataDespesa.Date,
+        valor = y.Sum(z => z.Valor)
+    });
+
+}
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+        var data;
+        function drawChart() {
+            var data = google.visualization().DataTable();
+            data.addColumn('datetime', 'Data Despesa');
+            data.addColumn('number', 'Valor');
+            data.addRows([
+              [Date.now, 12]
+            ]);
+         
+            var options = {
+                title: 'Company Performance',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<h2>Reports</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DataDespesa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in despesas)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.valor)
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<div id="curve_chart" style="width: 900px; height: 500px;"></div>
