@@ -50,7 +50,14 @@ namespace QueroTransporte.QueroTransporteWeb
             if (ModelState.IsValid)
             {
                 if (_gerenciadorMotorista.Inserir(motorista))
+                {
+                    var usuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario);
+                    usuario.Tipo = "MOTORISTA";
+                    _gerenciadorUsuario.Editar(usuario);
+
                     return RedirectToAction(nameof(Index));
+                }
+                        
                 // TODO: Retornar uma mensagem ao usuario, caso tente cadastrar um motorista a um usuario já cadastrado.
                 // Tipo: Motorista X = Usuario X => Motorista Y = Motorista X ... Isso quebra o banco e retorna o erro p a aplicação.
             }

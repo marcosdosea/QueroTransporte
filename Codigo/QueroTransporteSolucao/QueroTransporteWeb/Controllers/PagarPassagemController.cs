@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using QueroTransporteWeb.Resources.Methods;
 using System;
+using System.Security.Claims;
 
 namespace QueroTransporteWeb.Controllers
 {
@@ -36,7 +38,8 @@ namespace QueroTransporteWeb.Controllers
         public IActionResult Index()
         {
             //Id usuario session
-            var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(1, DateTime.Now);
+            var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(
+                MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity).Id, DateTime.Now);
             if (solicitacao != null)
             {
                 var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
@@ -67,6 +70,7 @@ namespace QueroTransporteWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ViagemPassagemViewModel vP)
         {
+            
             if (ModelState.IsValid)
             {
                 var pagamento = new PagamentoPassagemModel();
