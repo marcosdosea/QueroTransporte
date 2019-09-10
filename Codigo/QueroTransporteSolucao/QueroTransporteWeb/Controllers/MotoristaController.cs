@@ -39,23 +39,23 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
-            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
+            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterTodosUsuarios(), "Id", "Nome");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MotoristaModel motorista)
+        public IActionResult Create(MotoristaModel motorista)
         {
             if (ModelState.IsValid)
             {
                 if (_gerenciadorMotorista.Inserir(motorista))
                     return RedirectToAction(nameof(Index));
-
                 // TODO: Retornar uma mensagem ao usuario, caso tente cadastrar um motorista a um usuario já cadastrado.
                 // Tipo: Motorista X = Usuario X => Motorista Y = Motorista X ... Isso quebra o banco e retorna o erro p a aplicação.
             }
 
+            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
             return View(motorista);
         }
         public IActionResult Edit(int id)
@@ -80,8 +80,9 @@ namespace QueroTransporte.QueroTransporteWeb
         // GET: Usuario/Details/5
         public IActionResult Details(int id)
         {
-            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
-            motorista.Nome = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
+            MotoristaUsuarioViewModel motorista = new MotoristaUsuarioViewModel();
+            motorista.Motorista = _gerenciadorMotorista.ObterPorId(id);
+            motorista.Usuario = _gerenciadorUsuario.ObterPorId(motorista.Motorista.IdUsuario);
             return View(motorista);
         }
 

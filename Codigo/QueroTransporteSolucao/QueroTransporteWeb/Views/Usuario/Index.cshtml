@@ -23,9 +23,6 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Senha)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
@@ -50,9 +47,6 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Senha)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
@@ -62,9 +56,9 @@
                 @Html.DisplayFor(modelItem => item.Tipo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                <a href="@Url.Action("Details", "Usuario", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
+                <a href="@Url.Action("Edit", "Usuario", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                <a href="@Url.Action("Delete", "Usuario", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
             </td>
         </tr>
 }

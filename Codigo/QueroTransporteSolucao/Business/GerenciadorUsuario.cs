@@ -145,6 +145,24 @@ namespace QueroTransporte.Negocio
                     Tipo = usuario.Tipo
                 });
 
+        /// <summary>
+        /// Serve para retornar os usuarios que são motoristas, ou seja, o elemento 1 do Inumerable de strings
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<UsuarioModel> ObterTodosUsuarios()
+            => _context.Usuario
+                .Where(usuarioModel => usuarioModel.Tipo.Equals(GetTipos().ElementAt(0)))
+                .Select(usuario => new UsuarioModel
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Cpf = usuario.Cpf,
+                    Email = usuario.Email,
+                    Senha = usuario.Senha,
+                    Telefone = usuario.Telefone,
+                    Tipo = usuario.Tipo
+                });
+
         public UsuarioModel ObterPorLoginSenha(string cpf, string senha)
             => _context.Usuario
                 .Where(u => u.Cpf.Equals(cpf) && u.Senha.Equals(senha))

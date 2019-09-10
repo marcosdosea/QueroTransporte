@@ -85,6 +85,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id}) |
-    <a asp-action="Index">Back to List</a>
+    <a href="@Url.Action("Edit", "Veiculo", new { id = Model.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
+    <a class="btn btn-default" asp-action="Index">Voltar</a>
 </div>
