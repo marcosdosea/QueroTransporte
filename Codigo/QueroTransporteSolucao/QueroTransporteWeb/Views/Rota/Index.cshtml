@@ -38,35 +38,39 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Origem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Destino)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioSaida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioChegada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaSemana)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RotaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsComposta)
-            </td>
-            <td>
-                <a href="@Url.Action("Details", "Rota", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
-                <a href="@Url.Action("Edit", "Rota", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                <a href="@Url.Action("Delete", "Rota", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Origem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Destino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HorarioSaida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HorarioChegada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaSemana)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RotaId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsComposta)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Rota", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
+                    <a href="@Url.Action("Edit", "Rota", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                    <a href="@Url.Action("Delete", "Rota", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<a class="btn btn-primary" asp-action="Grafico">Ver Graficos</a>
+

@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using System.Collections.Generic;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
@@ -139,6 +141,52 @@ namespace QueroTransporte.QueroTransporteWeb
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Grafico()
+        {
+            DiasDaSemana Dias = ContagemRotas();
+            ViewBag.Segunda = Dias.Segunda;
+            ViewBag.Terca = Dias.Terca;
+            ViewBag.Quarta = Dias.Quarta;
+            ViewBag.Quinta = Dias.Quinta;
+            ViewBag.Sexta = Dias.Sexta;
+            ViewBag.Sabado = Dias.Sabado;
+            ViewBag.Domingo = Dias.Domingo;
+
+
+            return View();
+
+        }
+
+        private DiasDaSemana ContagemRotas()
+        {
+            DiasDaSemana dias = new DiasDaSemana();
+            List<RotaModel> rotas = _gerenciadorRota.ObterTodos();
+            foreach (var rota in rotas)
+            {
+                if (rota.DiaSemana.ToLower() == "Segunda".ToLower() ||
+                    rota.DiaSemana.ToLower() == "Segunda-feira".ToLower())
+                    dias.Segunda++;
+                else if (rota.DiaSemana.ToLower() == "Terça".ToLower() ||
+                  rota.DiaSemana.ToLower() == "Terça-feira".ToLower())
+                    dias.Terca++;
+                else if (rota.DiaSemana.ToLower() == "Quarta".ToLower() ||
+                   rota.DiaSemana.ToLower() == "Quarta-feira".ToLower())
+                    dias.Quarta++;
+                else if (rota.DiaSemana.ToLower() == "Quinta".ToLower() ||
+                   rota.DiaSemana.ToLower() == "Quinta-feira".ToLower())
+                    dias.Quinta++;
+                else if (rota.DiaSemana.ToLower() == "Sexta".ToLower() ||
+                   rota.DiaSemana.ToLower() == "Sexta-feira".ToLower())
+                    dias.Sexta++;
+                else if (rota.DiaSemana.ToLower() == "Sabado".ToLower())
+                    dias.Sabado++;
+                else if (rota.DiaSemana.ToLower() == "Domingo".ToLower())
+                    dias.Domingo++;
+            }
+
+            return dias;
         }
     }
 }
