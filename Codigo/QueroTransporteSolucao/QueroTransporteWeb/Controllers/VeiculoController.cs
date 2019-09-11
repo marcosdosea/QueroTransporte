@@ -105,5 +105,10 @@ namespace QueroTransporte.QueroTransporteWeb
 
             return View(_gerenciadorVeiculo.ObterPorId(id));
         }
+
+        public IActionResult Grafico()
+        {
+            return View();
+        }
     }
 }
