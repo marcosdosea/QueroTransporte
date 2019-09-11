@@ -63,8 +63,8 @@
     </dl>
 
     <form asp-action="Delete">
-        <input type="submit" id="btn" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Remover" class="btn btn-success" />
+        <a class="btn btn-danger" asp-action="Index">Cancelar</a>
     </form>
 
     @if (TempData["mensagemErro"] != null)

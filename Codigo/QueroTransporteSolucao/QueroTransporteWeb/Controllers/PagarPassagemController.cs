@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using QueroTransporteWeb.Resources.Methods;
 using System;
+using System.Security.Claims;
 
 namespace QueroTransporteWeb.Controllers
 {
@@ -18,7 +20,7 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorPagamento _gerenciadorPagamento;
         private readonly GerenciadorTransacao _gerenciadorTransacao;
 
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota, 
+        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota,
                                        GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento, GerenciadorTransacao gerenciadorTransacao)
         {
             _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
@@ -36,18 +38,27 @@ namespace QueroTransporteWeb.Controllers
         public IActionResult Index()
         {
             //Id usuario session
-            var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(1, DateTime.Now);
-            var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
-            var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
-            var creditos = _gerenciadorCredito.ObterPorId(solicitacao.IdUsuario);
-            var viagemPassagem = new ViagemPassagemViewModel
+            var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(
+                MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity).Id, DateTime.Now);
+            if (solicitacao != null)
             {
-                Viagem = viagem,
-                Solicitacao = solicitacao,
-                Rota = rota,
-                Creditos = creditos
-            };
-            return View(viagemPassagem);
+                var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
+                var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
+                var creditos = _gerenciadorCredito.ObterPorId(solicitacao.IdUsuario);
+                var viagemPassagem = new ViagemPassagemViewModel
+                {
+                    Viagem = viagem,
+                    Solicitacao = solicitacao,
+                    Rota = rota,
+                    Creditos = creditos
+                };
+                return View(viagemPassagem);
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         /// <summary>
@@ -59,6 +70,7 @@ namespace QueroTransporteWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ViagemPassagemViewModel vP)
         {
+            
             if (ModelState.IsValid)
             {
                 var pagamento = new PagamentoPassagemModel();

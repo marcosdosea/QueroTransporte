@@ -53,9 +53,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Create
         public ActionResult Create()
         {
-            var rotas = _gerenciadorRota.ObterTodos();
-            ViewBag.rotaOrigem = new SelectList(rotas, "Origem", "Origem");
-            ViewBag.rotaDestino = new SelectList(rotas, "Destino", "Destino");
+            ViewBag.rotas = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             ViewBag.placas = new SelectList(_gerenciadorVeiculo.ObterTodos(), "Id", "Placa");
             return View();
         }
@@ -63,28 +61,11 @@ namespace QueroTransporteWeb.Controllers
         // POST: ManterViagem/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViagemRotaViewModel viagemViewModel)
+        public ActionResult Create(ViagemModel viagemModel)
         {
             try
             {
-                // Retornando para reinserir os dados.
-                var rota = _gerenciadorRota.ObterPorOrigemDestino(viagemViewModel.Rota.Origem, viagemViewModel.Rota.Destino);
-                if (rota == null)
-                {
-                    // TODO: INSERIR NA ENTIDADE DE ROTAS, PORÉM, DEVE PREENCHER OS HORARIOS.
-                    return View();
-                }
-
-                var viagem = new ViagemModel
-                {
-                    IdRota = rota.Id,
-                    IdVeiculo = viagemViewModel.Veiculo.Id,
-                    Preco = viagemViewModel.Viagem.Preco,
-                    Lotacao = viagemViewModel.Viagem.Lotacao,
-                    IsRealizada = viagemViewModel.Viagem.IsRealizada
-                };
-
-                if (_gerenciador.Inserir(viagem))
+                if (_gerenciador.Inserir(viagemModel))
                     return RedirectToAction(nameof(Index));
 
                 return View();
@@ -100,8 +81,7 @@ namespace QueroTransporteWeb.Controllers
         {
             var viagem = _gerenciador.ObterPorId(id);
             var rotas = _gerenciadorRota.ObterTodos();
-            ViewBag.rotaOrigem = new SelectList(rotas, "Origem", "Origem");
-            ViewBag.rotaDestino = new SelectList(rotas, "Destino", "Destino");
+            ViewBag.rotas = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             ViewBag.placas = new SelectList(_gerenciadorVeiculo.ObterTodos(), "Id", "Placa");
             return View(viagem);
         }
@@ -109,28 +89,11 @@ namespace QueroTransporteWeb.Controllers
         // POST: ManterViagem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ViagemRotaViewModel viagemViewModel)
+        public ActionResult Edit(int id, ViagemModel viagemModel)
         {
             try
             {
-                var rota = _gerenciadorRota.ObterPorOrigemDestino(viagemViewModel.Rota.Origem, viagemViewModel.Rota.Destino);
-                if (rota == null)
-                {
-                    // TODO: INSERIR NA ENTIDADE DE ROTAS, PORÉM, DEVE PREENCHER OS HORARIOS.
-                    return View();
-                }
-
-                //
-                var viagem = new ViagemModel
-                {
-                    IdRota = rota.Id,
-                    IdVeiculo = viagemViewModel.Veiculo.Id,
-                    Preco = viagemViewModel.Viagem.Preco,
-                    Lotacao = viagemViewModel.Viagem.Lotacao,
-                    IsRealizada = viagemViewModel.Viagem.IsRealizada
-                };
-
-                if (_gerenciador.Editar(viagem))
+                if (_gerenciador.Editar(viagemModel))
                     return RedirectToAction(nameof(Index));
 
                 return View();

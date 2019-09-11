@@ -6,8 +6,10 @@ namespace QueroTransporte.Model
 {
     public class MotoristaModel
     {
-        public object id;
 
+        public MotoristaModel(){}
+
+        [Display(Name = "Codigo")]
         [Required]
         [Key]
         public int Id { get; set; }
@@ -16,15 +18,14 @@ namespace QueroTransporte.Model
         public string Categoria { get; set; }
         [Required]
         [Display(Name = "Validade CNH")]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Validade { get; set; }
         [Required]
-        [MaxLength(12)]
+        [MaxLength(15)]
         [Display(Name = "Numero CNH")]
         public string Cnh { get; set; }
         [Required]
         public int IdUsuario { get; set; }
-        [MaxLength(50)]
-        public string Nome { get; set; }
     }
 }

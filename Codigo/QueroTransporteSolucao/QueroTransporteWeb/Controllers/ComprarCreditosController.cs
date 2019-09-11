@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using QueroTransporteWeb.Resources.Methods;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace QueroTransporteWeb.Controllers
 {
@@ -48,6 +50,8 @@ namespace QueroTransporteWeb.Controllers
         {
             bool deferido;
             ViewBag.Creditos = addListaCreditos();
+            cv.IdUsuario = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity).Id;
+
             if (ModelState.IsValid)
             {
                 if (_gerenciadorUsuario.ObterPorId(cv.IdUsuario) != null)

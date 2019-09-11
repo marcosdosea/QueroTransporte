@@ -43,16 +43,20 @@
                     <li>
                         <a asp-controller="Home" asp-action="Index"><i class="fa fa-bar-chart"></i> Dashboard </a>
                     </li>
-                    @if (User.IsInRole("MOTORISTA") || User.IsInRole("ADMIN"))
+                    @if (User.IsInRole("MOTORISTA"))
+                    {
+
+                    }
+                    else if (User.IsInRole("ADMIN"))
                     {
                         <li>
                             <a asp-controller="Frota" asp-action="Index"><i class="fa fa-car"></i> Frotas </a>
                         </li>
                         <li>
-                            <a asp-controller="Viagem" asp-action="Index"><i class="fa fa-road"></i> Viagem </a>
+                            <a asp-controller="Rota" asp-action="Index"><i class="fa fa-road"></i> Rotas </a>
                         </li>
                         <li>
-                            <a asp-controller="Rota" asp-action="Index"><i class="fa fa-road"></i> Rotas </a>
+                            <a asp-controller="Viagem" asp-action="Index"><i class="fa fa-road"></i> Viagem </a>
                         </li>
                         <li>
                             <a asp-controller="Veiculo" asp-action="Index"><i class="fa fa-car"></i> Veiculos </a>

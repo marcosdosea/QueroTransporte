@@ -153,7 +153,8 @@ namespace QueroTransporte.Negocio
 
             for (int i = 0; i < rotas.Count; i++)
             {
-                rotas[i].DetalhesRota = rotas[i].Id + " | " + rotas[i].Origem + " - " + rotas[i].Destino;
+                rotas[i].DetalhesRota = rotas[i].Origem + " - " + rotas[i].Destino + 
+                    " | " + rotas[i].HorarioSaida +" - "+ rotas[i].HorarioChegada + " | " + rotas[i].DiaSemana;
             }
 
             return rotas;
