@@ -1,0 +1,54 @@
+﻿@model QueroTransporte.Model.ViagemModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detalhes das Viagens</h2>
+
+<div>
+    <h4>ViagemModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdRota)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdRota)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdVeiculo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdVeiculo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lotacao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lotacao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsRealizada)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsRealizada)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Index">Retornar</a>
+</div>
+

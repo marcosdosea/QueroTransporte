@@ -1,0 +1,52 @@
+﻿@model IEnumerable<QueroTransporte.Model.ViagemModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Histórico de Viagens</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVeiculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lotacao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdVeiculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lotacao)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-primary" asp-action="Index">Mostrar Mais</a>
