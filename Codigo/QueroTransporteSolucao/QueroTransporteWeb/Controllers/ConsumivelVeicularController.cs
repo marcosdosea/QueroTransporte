@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
+using Model.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
@@ -86,6 +90,18 @@ namespace QueroTransporte.QueroTransporteWeb
                 return RedirectToAction(nameof(Index));
 
             return View(_gerenciadorConsumivelVeicular.ObterPorId(id));
+        }
+
+        public IActionResult Reports()
+        {
+            IEnumerable<ConsumivelVeicularModel> cns = _gerenciadorConsumivelVeicular.ObterTodos();
+            IEnumerable<RelatorioConsumivelVeicularViewModel> itens = cns.GroupBy(x => x.DataDespesa.Date).Select(y => new RelatorioConsumivelVeicularViewModel
+            {
+                Data = y.First().DataDespesa.ToString("dd/MM/yyyy"),
+                Valor = y.Sum(z => z.Valor),
+                ValorMasked = y.Sum(z => z.Valor) + " R$"
+            });
+            return View(itens);
         }
     }
 }
