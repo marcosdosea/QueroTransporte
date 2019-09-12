@@ -9,7 +9,7 @@ namespace Model.ViewModel
 
         public double Valor { get; set; }
 
-        public CreditoViagemViewModel(int id, string descricao,double valor)
+        public CreditoViagemViewModel(int id, string descricao, double valor)
         {
             Id = id;
             Descricao = descricao;

@@ -43,7 +43,27 @@ namespace Business
         public List<TransacaoModel> ObterTodos(int idUsuario)
             => _context.Transacao
                 .Where(tm => tm.IdUsuario == idUsuario)
-                .OrderByDescending(tm => tm.Data) 
+                .OrderByDescending(tm => tm.Data)
+                .Select(transacao => new TransacaoModel
+                {
+                    Id = transacao.Id,
+                    IdUsuario = transacao.IdUsuario,
+                    QtdCreditos = transacao.QtdCreditos,
+                    Valor = transacao.Valor,
+                    Deferido = Convert.ToBoolean(transacao.Deferido),
+                    Status = transacao.Status,
+                    Data = transacao.Data,
+                    Tipo = transacao.Tipo
+                }).ToList();
+
+        /// <summary>
+        /// Obtem Todas as transações deferidas/Não deferidas do sistema.
+        /// </summary>
+        /// <param name="deferido"></param>
+        /// <returns></returns>
+        public List<TransacaoModel> ObterTodasDeferidas(bool deferido)
+            => _context.Transacao
+                .Where(tm => tm.Deferido == Convert.ToByte(deferido))
                 .Select(transacao => new TransacaoModel
                 {
                     Id = transacao.Id,
@@ -97,7 +117,7 @@ namespace Business
             Atribuir(_transacao, objeto);
             _context.Update(_transacao);
             return _context.SaveChanges() == 1 ? true : false;
-        } 
+        }
 
         public bool Remover(int id)
         {

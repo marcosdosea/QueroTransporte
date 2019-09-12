@@ -45,6 +45,23 @@ namespace QueroTransporte.Negocio
                 }).ToList();
 
         /// <summary>
+        /// Obtem todas as viagens armazenadas na base de dados completas ou não
+        /// </summary>
+        /// <returns></returns>
+        public List<ViagemModel> ObterTodosAbertos(bool realizada)
+            => _context.Viagem
+                .Where(v => v.FoiRealizada == Convert.ToByte(realizada))
+                .Select(v => new ViagemModel
+                {
+                    Id = v.Id,
+                    IdRota = v.IdRota,
+                    IdVeiculo = v.IdVeiculo,
+                    Preco = v.Preco,
+                    Lotacao = v.Lotacao,
+                    IsRealizada = Convert.ToBoolean(v.FoiRealizada)
+                }).ToList();
+
+        /// <summary>
         /// busca uma viagem por id 
         /// </summary>
         /// <param name="id"></param>

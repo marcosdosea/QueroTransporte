@@ -7,7 +7,7 @@ namespace QueroTransporte.Model
     public class MotoristaModel
     {
 
-        public MotoristaModel(){}
+        public MotoristaModel() { }
 
         [Display(Name = "Codigo")]
         [Required]

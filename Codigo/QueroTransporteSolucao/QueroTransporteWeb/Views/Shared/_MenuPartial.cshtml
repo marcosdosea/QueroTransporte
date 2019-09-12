@@ -70,21 +70,27 @@
                         <li>
                             <a asp-controller="ConsumivelVeicular" asp-action="Index"><i class="fa fa-edit"></i> Consumíveis Veículares </a>
                         </li>
+                        <li>
+                            <a asp-controller="Historico" asp-action="HistoricoTransacoes"><i class="fa fa-history"></i> Gráfico de Transacoes </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Historico" asp-action="HistoricoViagens"><i class="fa fa-history"></i> Gráfico de Viagens </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Historico" asp-action="HistoricoSolicitacoes"><i class="fa fa-history"></i> Gráfico de Solicitações </a>
+                        </li>
+                        <li>
+                            <a asp-controller="ConsumivelVeicular" asp-action="Reports"><i class="fa fa-history"></i> Gráfico de Consumiveis </a>
+                        </li>
                     }
                     <li>
                         <a asp-controller="ComprarCreditos" asp-action="Index"><i class="fa fa-shopping-cart"></i> Comprar Creditos </a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "Solicitacao")"><i class="fa fa-car"></i> Solicitar Viagem </a>
+                        <a asp-controller="Solicitacao" asp-action="Index"><i class="fa fa-shopping-cart"></i> Solicitar Viagem </a>
                     </li>
                     <li>
                         <a asp-controller="PagarPassagem" asp-action="Index"><i class="fa fa-edit"></i> Pagar Passagem </a>
-                    </li>
-                    <li>
-                        <a asp-controller="HistoricoDeTransacoes" asp-action="Index"><i class="fa fa-history"></i> Historico de Transacoes </a>
-                    </li>
-                    <li>
-                        <a asp-controller="HistoricoDeViagens" asp-action="Index"><i class="fa fa-history"></i> Historico de Viagens </a>
                     </li>
                 </ul>
             </div>
