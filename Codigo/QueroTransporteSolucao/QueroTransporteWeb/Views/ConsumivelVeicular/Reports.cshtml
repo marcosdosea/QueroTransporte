@@ -1,35 +1,28 @@
-﻿@model IEnumerable<QueroTransporte.Model.ConsumivelVeicularModel>
+﻿@model IEnumerable<Model.ViewModel.RelatorioConsumivelVeicularViewModel>
 
 @{
     ViewData["Title"] = "Reports";
-
-    var itens = Model.GroupBy(x => x.DataDespesa.Date).Select(y => new
-    {
-        data = y.First().DataDespesa.ToString(),
-        valor = y.Sum(z => z.Valor).ToString()
-    });
 }
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
+
     google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
 
-    let obj = '@itens';
-
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['Year', 'Sales'],
-            @foreach (var item in itens)
+            ['Data Despesa', 'Despesa total'],
+            @foreach (var item in Model)
             {
-                @:[String('@item.data'), @item.valor],
+                @:['@item.Data', @item.Valor],
             }
         ]);
 
         var options = {
-            title: 'Company Performance',
+            title: 'Gastos de consumíveis veículares',
             curveType: 'function',
-            legend: { position: 'bottom' }
+            legend: { position: 'top', alignment: 'end' }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -44,22 +37,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DataDespesa)
+                @Html.DisplayNameFor(model => model.Data)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Valor)
+                @Html.DisplayNameFor(model => model.ValorMasked)
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in itens)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.data)
+                    @Html.DisplayFor(modelItem =>  item.Data)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.valor)
+                    @Html.DisplayFor(modelItem => item.ValorMasked)
                 </td>
             </tr>
         }
