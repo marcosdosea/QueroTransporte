@@ -64,6 +64,24 @@ namespace Business
                 }).ToList();
 
         /// <summary>
+        /// Obtem todas as solicitacoes de viagem atendidas ou não.
+        /// </summary>
+        /// <returns></returns>
+        public List<SolicitacaoVeiculoModel> ObterTodosAtendidas(bool atendida)
+            => _context
+                .Solicitacao
+                .Where(s => s.FoiAtentida == Convert.ToByte(atendida))
+                .Select(s => new SolicitacaoVeiculoModel
+                {
+                    Id = s.Id,
+                    DataSolicitacao = s.DataSolicitacao,
+                    IdViagem = s.IdViagem,
+                    IdUsuario = s.IdUsuario,
+                    IsAtendida = Convert.ToBoolean(s.FoiAtentida),
+                    IdPagamento = s.IdPagamento
+                }).ToList();
+
+        /// <summary>
         /// Obtem todas as solicitacoes pendentes de um usuario
         /// </summary>
         /// <param name="idUsuario"></param>

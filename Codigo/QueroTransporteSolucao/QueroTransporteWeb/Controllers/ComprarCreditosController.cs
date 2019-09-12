@@ -20,7 +20,7 @@ namespace QueroTransporteWeb.Controllers
         private readonly GerenciadorTransacao _gerenciadorTransacao;
 
 
-        public ComprarCreditosController(GerenciadorUsuario gerenciadorUsuario, 
+        public ComprarCreditosController(GerenciadorUsuario gerenciadorUsuario,
                                          GerenciadorComprarCredito gerenciadorComprarCredito,
                                          GerenciadorTransacao gerenciadorTransacao)
         {
@@ -59,16 +59,16 @@ namespace QueroTransporteWeb.Controllers
                     if (_gerenciadorComprarCredito.Inserir(cv))
                     {
                         TempData["mensagemSucesso"] = "Compra realizada com sucesso!.";
-                        deferido = true;   
+                        deferido = true;
                     }
                     else
                     {
                         TempData["mensagemErro"] = "Compra não pode ser realizada!.";
-                        deferido = false;    
+                        deferido = false;
                     }
 
                     if (!_gerenciadorTransacao.Inserir(addTransacao(cv, deferido)))
-                           TempData["mensagemErroTransacao"] = "Houve um problema ao gravar a transacao";
+                        TempData["mensagemErroTransacao"] = "Houve um problema ao gravar a transacao";
                 }
                 else
                     TempData["mensagemErro"] = "Compra não pode ser finalizada pois não existe nenhum usuário logado na sessão!.";
@@ -79,7 +79,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
 
-        private TransacaoModel addTransacao(CreditoViagemModel cv,bool deferido)
+        private TransacaoModel addTransacao(CreditoViagemModel cv, bool deferido)
         {
             TransacaoModel tm = new TransacaoModel();
             tm.Data = DateTime.Now;

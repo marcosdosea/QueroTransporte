@@ -70,7 +70,7 @@ namespace QueroTransporteWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ViagemPassagemViewModel vP)
         {
-            
+
             if (ModelState.IsValid)
             {
                 var pagamento = new PagamentoPassagemModel();
