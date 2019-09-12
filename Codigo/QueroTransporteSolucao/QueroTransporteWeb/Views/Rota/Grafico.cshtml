@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "Grafico";
+}
+
+
+<h2>Quantidade de Rotas por dia da semana cadastradas no sistema</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Segunda
+            </th>
+            <th>
+                Terça
+            </th>
+            <th>
+                Qurta
+            </th>
+            <th>
+                Quinta
+            </th>
+            <th>
+                Sexta
+            </th>
+            <th>
+                Sabado
+            </th>
+            <th>
+                Domingo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td> @ViewBag.Segunda</td>
+
+            <td> @ViewBag.Terca</td>
+
+            <td> @ViewBag.Quarta</td>
+
+            <td> @ViewBag.Quinta</td>
+
+            <td>  @ViewBag.Sexta</td>
+
+            <td> @ViewBag.Sabado</td>
+
+            <td>  @ViewBag.Domingo</td>
+
+        </tr>
+    </tbody>
+</table>
+
+<div class="row tile-stats">
+    <div id="chart_div" align="center">
+
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+
+
+    let segunda = @ViewBag.Segunda;
+    let terca = @ViewBag.Terca;
+    let quarta = @ViewBag.Quarta;
+    let quinta = @ViewBag.Quinta;
+    let sexta = @ViewBag.Sexta;
+    let sabado = @ViewBag.Sabado;
+    let domingo = @ViewBag.Domingo;
+
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Rotas');
+        data.addRows([
+            ['Segunda', segunda],
+            ['Terça'  , terca],
+            ['Quarta' , quarta],
+            ['Quinta' , quinta],
+            ['Sexta'  , sexta],
+            ['Sábado' , sabado],
+            ['Domingo', domingo]
+        ]);
+
+        // Set chart options
+        var options = {
+            'title': 'Rotas por Dia da Semana',
+            'width': 600,
+            'height': 350
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+
+<a class="btn btn-primary" asp-action="Index">Voltar</a>
+
