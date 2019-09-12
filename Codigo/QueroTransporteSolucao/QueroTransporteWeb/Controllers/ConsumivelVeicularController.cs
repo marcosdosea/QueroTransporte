@@ -97,7 +97,7 @@ namespace QueroTransporte.QueroTransporteWeb
             IEnumerable<ConsumivelVeicularModel> cns = _gerenciadorConsumivelVeicular.ObterTodos();
             IEnumerable<RelatorioConsumivelVeicularViewModel> itens = cns.GroupBy(x => x.DataDespesa.Date).Select(y => new RelatorioConsumivelVeicularViewModel
             {
-                Data =  y.First().DataDespesa.Date,
+                Data = y.First().DataDespesa.ToString("dd/MM/yyyy"),
                 Valor = y.Sum(z => z.Valor),
                 ValorMasked = y.Sum(z => z.Valor) + " R$"
             });

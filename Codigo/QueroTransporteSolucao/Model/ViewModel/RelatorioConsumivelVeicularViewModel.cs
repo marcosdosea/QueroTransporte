@@ -8,8 +8,7 @@ namespace Model.ViewModel
     public class RelatorioConsumivelVeicularViewModel
     {
         public double Valor { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Data { get; set; }
+        public String Data { get; set; }
         public String ValorMasked{ get; set; }
     }
 }
