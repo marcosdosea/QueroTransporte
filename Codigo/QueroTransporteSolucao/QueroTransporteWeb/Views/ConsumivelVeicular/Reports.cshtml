@@ -25,7 +25,8 @@
             legend: { position: 'top', alignment: 'end' },
             hAxis: { minValue: 0, maxValue: 9 },
             curveType: 'function',
-            pointSize: 20
+            pointSize: 20,
+            vAxis: { scaleType: 'log' }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
