@@ -22,7 +22,10 @@
         var options = {
             title: 'Gastos de consumíveis veículares',
             curveType: 'function',
-            legend: { position: 'top', alignment: 'end' }
+            legend: { position: 'top', alignment: 'end' },
+            hAxis: { minValue: 0, maxValue: 9 },
+            curveType: 'function',
+            pointSize: 20
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -49,7 +52,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem =>  item.Data)
+                    @Html.DisplayFor(modelItem => item.Data)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ValorMasked)
