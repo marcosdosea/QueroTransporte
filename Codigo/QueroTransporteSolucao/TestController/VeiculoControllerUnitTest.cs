@@ -1,3 +1,4 @@
+using Moq;
 using QueroTransporte.Negocio;
 using System;
 using Xunit;
@@ -10,7 +11,7 @@ namespace TestController
         public void Index()
         {
 
-            //var mockRepo = new Mock<GerenciadorVeiculo>();
+            var mockRepo = new Mock<GerenciadorVeiculo>();
         }
     }
 }
