@@ -1,18 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using QueroTransporte.Model;
 using QueroTransporte.Negocio;
 using QueroTransporte.QueroTransporteWeb;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
-namespace TestController
+namespace Test
 {
-    public class VeiculoControllerUnitTest
+    public class UnitTest1
     {
-
-
         [Fact]
         public void Index()
         {
@@ -22,9 +17,9 @@ namespace TestController
             mockRepoVeiculos.Setup(repo => repo.ObterTodos()).Returns(GetTestVeiculos());
             mockRepoFrotas.Setup(repo => repo.ObterTodos()).Returns(GetTestFrotas());
 
-            var controller = new VeiculoController(mockRepoVeiculos.Object,mockRepoFrotas.Object);
-            
-            var result =  controller.Index();
+            var controller = new VeiculoController(mockRepoVeiculos.Object, mockRepoFrotas.Object);
+
+            var result = controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<List<VeiculoModel>>(viewResult.ViewData.Model);
@@ -93,7 +88,5 @@ namespace TestController
                 }
             };
         }
-
     }
-    
 }

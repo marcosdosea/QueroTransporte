@@ -14,7 +14,6 @@ namespace QueroTransporte.QueroTransporteWeb
         private readonly GerenciadorVeiculo _gerenciadorVeiculo;
         private readonly GerenciadorFrota _gerenciadorFrota;
 
-
         public VeiculoController(GerenciadorVeiculo gerenciadorVeiculo, GerenciadorFrota gerenciadorFrota)
         {
             _gerenciadorVeiculo = gerenciadorVeiculo;
