@@ -3,7 +3,7 @@ using Xunit;
 
 namespace TestService
 {
-    public class VeiculoControllerUnitTest
+    public class GerenciadorVeiculoUnitTest
     {
         [Fact]
         public void Inserir()
