@@ -10,8 +10,10 @@ namespace TestController
         [Fact]
         public void Index()
         {
-
             var mockRepo = new Mock<GerenciadorVeiculo>();
+
+           // mockRepo.Setup(repo => repo.ObterTodos()).
+           //     Returns(GetTestVeiculos());
         }
     }
 }
