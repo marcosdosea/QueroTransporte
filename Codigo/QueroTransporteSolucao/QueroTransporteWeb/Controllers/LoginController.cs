@@ -33,6 +33,7 @@ namespace QueroTransporteWeb.Controllers
             if (ModelState.IsValid)
             {
                 var user = _gerenciadoraUsuario.ObterPorLoginSenha(MethodsUtils.RemoverCaracteresEspeciais(model.Cpf), Criptografia.GerarHashSenha(model.Senha));
+                Console.WriteLine(Criptografia.GerarHashSenha(model.Senha));
                 if (user != null)
                 {
                     var claims = new List<Claim>
