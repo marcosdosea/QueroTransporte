@@ -17,11 +17,15 @@ namespace QueroTransporte.Negocio
             _context = context;
         }
 
+        public GerenciadorFrota()
+        {
+        }
+
         /// <summary>
         /// retorna todas as rotas da base de dados
         /// </summary>
         /// <returns></returns>
-        public List<FrotaModel> ObterTodos()
+        public virtual List<FrotaModel> ObterTodos()
             => _context.Frota
                 .Select(frota => new FrotaModel
                 {

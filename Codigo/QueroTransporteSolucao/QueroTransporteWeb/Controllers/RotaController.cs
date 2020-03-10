@@ -36,6 +36,7 @@ namespace QueroTransporte.QueroTransporteWeb
         /// <returns></returns>
         public IActionResult Create()
         {
+            
             ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             return View();
         }

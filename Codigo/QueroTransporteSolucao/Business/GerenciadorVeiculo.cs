@@ -16,12 +16,16 @@ namespace QueroTransporte.Negocio
             this._context = context;
         }
 
+        public GerenciadorVeiculo()
+        {
+        }
+
         /// <summary>
         /// Inseri um veiculo na base de dados
         /// </summary>
         /// <param name="objeto"></param>
         /// <returns></returns>
-        public bool Inserir(VeiculoModel objeto)
+        public virtual bool Inserir(VeiculoModel objeto)
         {
             Veiculo _veiculo = new Veiculo();
 
@@ -34,7 +38,7 @@ namespace QueroTransporte.Negocio
         /// Altera os dados de um veiculo da base de dados
         /// </summary>
         /// <param name="veiculoModel"></param>
-        public bool Editar(VeiculoModel objeto)
+        public virtual bool Editar(VeiculoModel objeto)
         {
             Veiculo _veiculo = new Veiculo();
 
@@ -48,7 +52,7 @@ namespace QueroTransporte.Negocio
         /// Exclui um veiculo na base de dados
         /// </summary>
         /// <param name="id"></param>
-        public bool Remover(int id)
+        public virtual bool Remover(int id)
         {
             var veiculo = _context.Veiculo.Find(id);
             _context.Veiculo.Remove(veiculo);
@@ -80,7 +84,7 @@ namespace QueroTransporte.Negocio
         /// Obtem todos os veiculos da base de dados
         /// </summary>
         /// <returns></returns>
-        public List<VeiculoModel> ObterTodos()
+        public virtual List<VeiculoModel> ObterTodos()
             => _context.Veiculo
                 .Select(veiculo => new VeiculoModel
                 {
@@ -103,7 +107,7 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        public IEnumerable<VeiculoModel> ObterPorModelo(string modelo)
+        public virtual IEnumerable<VeiculoModel> ObterPorModelo(string modelo)
             => _context.Veiculo
                 .Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo))
                 .Select(veiculo => new VeiculoModel
@@ -127,7 +131,7 @@ namespace QueroTransporte.Negocio
         /// </summary>
         /// <param name="chassi"></param>
         /// <returns></returns>
-        public int VerificaInsercaoVeiculo(string chassi, string placa)
+        public virtual int VerificaInsercaoVeiculo(string chassi, string placa)
             => _context.Veiculo
                 .Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi) || veiculoModel.Placa.StartsWith(placa))
                 .Select(veiculo => new VeiculoModel
@@ -185,7 +189,7 @@ namespace QueroTransporte.Negocio
             return existe;
         }
 
-        public VeiculoModel ObterPorId(int idVeiculo)
+        public virtual VeiculoModel ObterPorId(int idVeiculo)
             => _context.Veiculo.Where(v => v.Id == idVeiculo)
                 .Select(v => new VeiculoModel
                 {

@@ -94,12 +94,10 @@ namespace QueroTransporte.Negocio
             _rota.HorarioChegada = rotaModel.HorarioChegada;
             _rota.HorarioSaida = rotaModel.HorarioSaida;
             _rota.DiaSemana = rotaModel.DiaSemana;
-
-            if (rotaModel.IsComposta)
+            if (rotaModel.RotaId == -1)
                 _rota.IdRota = null;
             else
                 _rota.IdRota = rotaModel.RotaId;
-
             _rota.EhComposta = Convert.ToByte(rotaModel.IsComposta);
         }
 
@@ -151,7 +149,9 @@ namespace QueroTransporte.Negocio
         {
             List<RotaModel> rotas = ObterTodos();
 
-            for (int i = 0; i < rotas.Count; i++)
+            rotas.Insert(0, new RotaModel { Id = -1, DetalhesRota = "Não possui" });
+
+            for (int i = 1; i < rotas.Count; i++)
             {
                 rotas[i].DetalhesRota = rotas[i].Origem + " - " + rotas[i].Destino +
                     " | " + rotas[i].HorarioSaida + " - " + rotas[i].HorarioChegada + " | " + rotas[i].DiaSemana;
@@ -169,7 +169,9 @@ namespace QueroTransporte.Negocio
             List<RotaModel> rotas = ObterTodos();
             int index = 0;
 
-            for (int i = 0; i < rotas.Count; i++)
+            rotas.Insert(0, new RotaModel { Id = -1, DetalhesRota = "Não possui" });
+
+            for (int i = 1; i < rotas.Count; i++)
             {
                 if (id == rotas[i].Id)
                 {
