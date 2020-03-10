@@ -13,6 +13,7 @@ namespace WebAPI.Controllers
         {
             _service = service;
         }
+
         // GET: api/Frota
         [HttpGet]
         public IActionResult Get()

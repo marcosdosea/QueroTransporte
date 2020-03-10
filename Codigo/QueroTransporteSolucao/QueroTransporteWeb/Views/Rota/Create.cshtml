@@ -64,16 +64,3 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
-<script src="/lib/jquery/dist/jquery.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#checkRota').change(function () {
-            if (this.checked) {
-                $('#ListElements').hide();                
-            }
-            else {
-                $('#ListElements').show();
-            }
-        });
-    });
-</script>
