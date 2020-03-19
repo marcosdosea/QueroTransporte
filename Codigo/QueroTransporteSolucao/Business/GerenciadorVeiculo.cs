@@ -11,11 +11,15 @@ namespace QueroTransporte.Negocio
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
+        public GerenciadorVeiculo()
+        {
+
+        }
+
         public GerenciadorVeiculo(BD_QUERO_TRANSPORTEContext context)
         {
             this._context = context;
         }
-
         /// <summary>
         /// Inseri um veiculo na base de dados
         /// </summary>
@@ -34,7 +38,7 @@ namespace QueroTransporte.Negocio
         /// Altera os dados de um veiculo da base de dados
         /// </summary>
         /// <param name="veiculoModel"></param>
-        public bool Editar(VeiculoModel objeto)
+        public virtual bool Editar(VeiculoModel objeto)
         {
             Veiculo _veiculo = new Veiculo();
 
@@ -48,7 +52,7 @@ namespace QueroTransporte.Negocio
         /// Exclui um veiculo na base de dados
         /// </summary>
         /// <param name="id"></param>
-        public bool Remover(int id)
+        public virtual bool Remover(int id)
         {
             var veiculo = _context.Veiculo.Find(id);
             _context.Veiculo.Remove(veiculo);
@@ -80,7 +84,7 @@ namespace QueroTransporte.Negocio
         /// Obtem todos os veiculos da base de dados
         /// </summary>
         /// <returns></returns>
-        public List<VeiculoModel> ObterTodos()
+        public virtual List<VeiculoModel> ObterTodos()
             => _context.Veiculo
                 .Select(veiculo => new VeiculoModel
                 {

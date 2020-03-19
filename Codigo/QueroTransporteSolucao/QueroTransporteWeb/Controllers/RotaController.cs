@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
+using Persistence;
 using QueroTransporte.Model;
 using QueroTransporte.Negocio;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             _gerenciadorRota = gerenciadorRota;
         }
-
         /// <summary>
         /// Mostra na tela todas as rotas cadastradas na base de dados
         /// </summary>
@@ -27,6 +27,7 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Index()
         {
             return View(_gerenciadorRota.ObterTodos());
+            
         }
 
 

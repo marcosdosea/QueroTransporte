@@ -5,29 +5,32 @@ using QueroTransporte.Negocio;
 using QueroTransporte.QueroTransporteWeb;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace TestController
 {
     public class RotaControllerUnitTest
     {
+        
+        [Fact(DisplayName = "Deve retornar 2 rotas")]
+        public void Index_should_return_valid_model()
+        {
+           //
+        }
+
         [Fact]
         public void Index()
         {
             var mockRepoRotas = new Mock<GerenciadorRota>();
-           // var mockRepoFrotas = new Mock<GerenciadorFrota>();
 
             mockRepoRotas.Setup(repo => repo.ObterTodos()).Returns(GetTestRotas());
-           // mockRepoFrotas.Setup(repo => repo.ObterTodos()).Returns(GetTestFrotas());
 
             var controller = new RotaController(mockRepoRotas.Object);
 
             var result = controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<List<VeiculoModel>>(viewResult.ViewData.Model);
-
+            var model = Assert.IsAssignableFrom<List<RotaModel>>(viewResult.ViewData.Model);
 
             Assert.Equal(2, model.Count);
         }
@@ -64,8 +67,6 @@ namespace TestController
                 }
             };
         }
-
-       
 
     }
 

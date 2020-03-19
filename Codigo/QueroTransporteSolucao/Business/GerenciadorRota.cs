@@ -11,18 +11,23 @@ namespace QueroTransporte.Negocio
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
 
+
+        public GerenciadorRota()
+        {
+
+        }
+
         public GerenciadorRota(BD_QUERO_TRANSPORTEContext context)
         {
             this._context = context;
         }
-
 
         /// <summary>
         /// Inseri uma rota na base de dados
         /// </summary>
         /// <param name="rotaModel"></param>
         /// <returns></returns>
-        public bool Inserir(RotaModel objeto)
+        public virtual bool Inserir(RotaModel objeto)
         {
             Rota _rota = new Rota();
             Atribuir(objeto, _rota);
@@ -107,7 +112,7 @@ namespace QueroTransporte.Negocio
         /// retorna todas as rotas da base de dados
         /// </summary>
         /// <returns></returns>
-        public List<RotaModel> ObterTodos()
+        public virtual List<RotaModel> ObterTodos()
             => _context.Rota
                   .Select(rota => new RotaModel
                   {
