@@ -1,4 +1,5 @@
 
+using AutoMapper;
 using Domain.Interfaces.Repositories;
 using Persistence;
 using QueroTransporte.Model;
@@ -11,10 +12,12 @@ namespace Data.Gerenciadoras
     public class FrotaRepository : IFrotaRepository
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly IMapper _mapper;
 
-        public FrotaRepository(BD_QUERO_TRANSPORTEContext context)
+        public FrotaRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public FrotaRepository()
@@ -68,8 +71,8 @@ namespace Data.Gerenciadoras
         /// <returns></returns>
         public bool Inserir(FrotaModel objeto)
         {
-            _context.Add(ModelToPersistence(objeto, new Frota()));
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Add(_mapper.Map<Frota>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
