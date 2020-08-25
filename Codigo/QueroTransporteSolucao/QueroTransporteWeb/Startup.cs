@@ -45,6 +45,8 @@ namespace QueroTransporteWeb
             App_Start.Injecoes.InjecaoGerenciadora.InjetarGerenciadoras(services);
             // Unities of Works.
             App_Start.Injecoes.InjecaoUnities.InjetarUnities(services);
+            // Services.
+            App_Start.Injecoes.InjecaoServices.InjetarServices(services);
             //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
