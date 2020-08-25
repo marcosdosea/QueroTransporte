@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Persistence
+namespace Data.Entities
 {
     public partial class Transacao
     {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Data.Entities;
 using Persistence;
 using QueroTransporte.Model;
 

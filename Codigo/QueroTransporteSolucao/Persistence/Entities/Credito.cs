@@ -1,4 +1,4 @@
-﻿namespace Persistence
+﻿namespace Data.Entities
 {
     public partial class Credito
     {

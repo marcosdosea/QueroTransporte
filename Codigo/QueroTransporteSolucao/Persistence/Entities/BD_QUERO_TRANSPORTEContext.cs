@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Persistence
+namespace Data.Entities
 {
     public partial class BD_QUERO_TRANSPORTEContext : DbContext
     {
@@ -19,12 +19,13 @@ namespace Persistence
         public virtual DbSet<Motorista> Motorista { get; set; }
         public virtual DbSet<Pagamento> Pagamento { get; set; }
         public virtual DbSet<Rota> Rota { get; set; }
-        public virtual DbSet<RotaFrota> RotaFrota { get; set; }
         public virtual DbSet<Solicitacao> Solicitacao { get; set; }
         public virtual DbSet<Transacao> Transacao { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Veiculo> Veiculo { get; set; }
         public virtual DbSet<Viagem> Viagem { get; set; }
+
+        // Unable to generate entity type for table 'bd_quero_transporte.rota_frota'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,7 +42,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Categoria)
                     .IsRequired()
@@ -55,7 +56,7 @@ namespace Persistence
 
                 entity.Property(e => e.IdVeiculo)
                     .HasColumnName("ID_VEICULO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Valor).HasColumnName("VALOR");
 
@@ -79,11 +80,11 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("ID_USUARIO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Saldo)
                     .HasColumnName("SALDO")
@@ -102,7 +103,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Descricao)
                     .IsRequired()
@@ -130,7 +131,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Categoria)
                     .IsRequired()
@@ -144,7 +145,7 @@ namespace Persistence
 
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("ID_USUARIO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Validade)
                     .HasColumnName("VALIDADE")
@@ -167,7 +168,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Data).HasColumnName("DATA");
 
@@ -185,7 +186,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Destino)
                     .IsRequired()
@@ -194,10 +195,8 @@ namespace Persistence
                     .IsUnicode(false);
 
                 entity.Property(e => e.DiaSemana)
-                    .IsRequired()
                     .HasColumnName("DIA_SEMANA")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.EhComposta)
                     .HasColumnName("EH_COMPOSTA")
@@ -209,7 +208,7 @@ namespace Persistence
 
                 entity.Property(e => e.IdRota)
                     .HasColumnName("ID_ROTA")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Origem)
                     .IsRequired()
@@ -221,39 +220,6 @@ namespace Persistence
                     .WithMany(p => p.InverseIdRotaNavigation)
                     .HasForeignKey(d => d.IdRota)
                     .HasConstraintName("fk_TB_ROTA_TB_ROTA1");
-            });
-
-            modelBuilder.Entity<RotaFrota>(entity =>
-            {
-                entity.HasKey(e => new { e.IdFrota, e.IdRota });
-
-                entity.ToTable("rota_frota", "bd_quero_transporte");
-
-                entity.HasIndex(e => e.IdFrota)
-                    .HasName("fk_TB_FROTA_has_TB_ROTA_TB_FROTA1_idx");
-
-                entity.HasIndex(e => e.IdRota)
-                    .HasName("fk_TB_FROTA_has_TB_ROTA_TB_ROTA1_idx");
-
-                entity.Property(e => e.IdFrota)
-                    .HasColumnName("ID_FROTA")
-                    .HasColumnType("int(10) unsigned");
-
-                entity.Property(e => e.IdRota)
-                    .HasColumnName("ID_ROTA")
-                    .HasColumnType("int(10) unsigned");
-
-                entity.HasOne(d => d.IdFrotaNavigation)
-                    .WithMany(p => p.RotaFrota)
-                    .HasForeignKey(d => d.IdFrota)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_TB_FROTA_has_TB_ROTA_TB_FROTA1");
-
-                entity.HasOne(d => d.IdRotaNavigation)
-                    .WithMany(p => p.RotaFrota)
-                    .HasForeignKey(d => d.IdRota)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_TB_FROTA_has_TB_ROTA_TB_ROTA1");
             });
 
             modelBuilder.Entity<Solicitacao>(entity =>
@@ -275,7 +241,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.DataSolicitacao).HasColumnName("DATA_SOLICITACAO");
 
@@ -285,15 +251,15 @@ namespace Persistence
 
                 entity.Property(e => e.IdPagamento)
                     .HasColumnName("ID_PAGAMENTO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("ID_USUARIO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.IdViagem)
                     .HasColumnName("ID_VIAGEM")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.HasOne(d => d.IdPagamentoNavigation)
                     .WithMany(p => p.Solicitacao)
@@ -323,7 +289,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("DATA")
@@ -335,7 +301,7 @@ namespace Persistence
 
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("ID_USUARIO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.QtdCreditos)
                     .HasColumnName("QTD_CREDITOS")
@@ -372,7 +338,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Cpf)
                     .IsRequired()
@@ -419,7 +385,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.AnoFabricacao)
                     .IsRequired()
@@ -433,9 +399,7 @@ namespace Persistence
                     .HasMaxLength(4)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Capacidade)
-                    .HasColumnName("CAPACIDADE")
-                    .HasColumnType("int(11)");
+                entity.Property(e => e.Capacidade).HasColumnName("CAPACIDADE");
 
                 entity.Property(e => e.Categoria)
                     .IsRequired()
@@ -461,7 +425,7 @@ namespace Persistence
 
                 entity.Property(e => e.IdFrota)
                     .HasColumnName("ID_FROTA")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.Marca)
                     .IsRequired()
@@ -504,7 +468,7 @@ namespace Persistence
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.FoiRealizada)
                     .HasColumnName("FOI_REALIZADA")
@@ -512,15 +476,13 @@ namespace Persistence
 
                 entity.Property(e => e.IdRota)
                     .HasColumnName("ID_ROTA")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
                 entity.Property(e => e.IdVeiculo)
                     .HasColumnName("ID_VEICULO")
-                    .HasColumnType("int(10) unsigned");
+                    .HasColumnType("int unsigned");
 
-                entity.Property(e => e.Lotacao)
-                    .HasColumnName("LOTACAO")
-                    .HasColumnType("int(11)");
+                entity.Property(e => e.Lotacao).HasColumnName("LOTACAO");
 
                 entity.Property(e => e.Preco).HasColumnName("PRECO");
 

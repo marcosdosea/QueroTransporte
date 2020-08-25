@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Persistence
+namespace Data.Entities
 {
     public partial class Viagem
     {

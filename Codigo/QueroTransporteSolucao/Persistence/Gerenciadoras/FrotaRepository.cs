@@ -1,7 +1,7 @@
 
 using AutoMapper;
+using Data.Entities;
 using Domain.Interfaces.Repositories;
-using Persistence;
 using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;

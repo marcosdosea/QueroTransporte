@@ -1,4 +1,5 @@
 using AutoMapper;
+using Data.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence;
 using QueroTransporteWeb.App_Start.AutoMapper;
 
 namespace QueroTransporteWeb

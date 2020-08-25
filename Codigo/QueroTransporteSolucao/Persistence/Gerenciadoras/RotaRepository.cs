@@ -1,5 +1,5 @@
+using Data.Entities;
 using Domain.Interfaces.Repositories;
-using Persistence;
 using QueroTransporte.Model;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace Data.Gerenciadoras
                     Destino = rota.Destino,
                     HorarioChegada = rota.HorarioChegada,
                     HorarioSaida = rota.HorarioSaida,
-                    DiaSemana = rota.DiaSemana,
+                    DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
                     RotaId = (int)rota.IdRota,
                     IsComposta = Convert.ToBoolean(rota.EhComposta)
                 }).FirstOrDefault();
@@ -93,7 +93,7 @@ namespace Data.Gerenciadoras
             _rota.Destino = rotaModel.Destino;
             _rota.HorarioChegada = rotaModel.HorarioChegada;
             _rota.HorarioSaida = rotaModel.HorarioSaida;
-            _rota.DiaSemana = rotaModel.DiaSemana;
+            _rota.DiaSemana = rotaModel.DiaSemana.Length;
             if (rotaModel.RotaId == -1)
                 _rota.IdRota = null;
             else
@@ -114,7 +114,7 @@ namespace Data.Gerenciadoras
                       Destino = rota.Destino,
                       HorarioChegada = rota.HorarioChegada,
                       HorarioSaida = rota.HorarioSaida,
-                      DiaSemana = rota.DiaSemana,
+                      DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
                       RotaId = (int)rota.IdRota,
                       IsComposta = Convert.ToBoolean(rota.EhComposta)
                   }).ToList();
@@ -135,7 +135,7 @@ namespace Data.Gerenciadoras
                     Destino = rota.Destino,
                     HorarioChegada = rota.HorarioChegada,
                     HorarioSaida = rota.HorarioSaida,
-                    DiaSemana = rota.DiaSemana,
+                    DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
                     RotaId = (int)rota.IdRota,
                     IsComposta = Convert.ToBoolean(rota.EhComposta)
                 }).ToList();
@@ -198,7 +198,7 @@ namespace Data.Gerenciadoras
                     Id = r.Id,
                     Origem = r.Origem,
                     Destino = r.Destino,
-                    DiaSemana = r.DiaSemana
+                    DiaSemana = Enum.GetName(typeof(DayOfWeek), r.DiaSemana),
                 }).FirstOrDefault();
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Data.Gerenciadoras
                     Destino = r.Destino,
                     HorarioSaida = r.HorarioSaida,
                     HorarioChegada = r.HorarioChegada,
-                    DiaSemana = r.DiaSemana,
+                    DiaSemana = Enum.GetName(typeof(DayOfWeek), r.DiaSemana),
                     IsComposta = Convert.ToBoolean(r.EhComposta)
                 }).ToList();
 
@@ -238,7 +238,7 @@ namespace Data.Gerenciadoras
                     Destino = rota.Destino,
                     HorarioChegada = rota.HorarioChegada,
                     HorarioSaida = rota.HorarioSaida,
-                    DiaSemana = rota.DiaSemana,
+                    DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
                     RotaId = (int)rota.IdRota,
                     IsComposta = Convert.ToBoolean(rota.EhComposta)
                 }).ToList().Count();

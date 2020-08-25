@@ -1,4 +1,6 @@
-﻿namespace Persistence
+﻿using Data.Entities;
+
+namespace Persistence
 {
     public partial class RotaFrota
     {
