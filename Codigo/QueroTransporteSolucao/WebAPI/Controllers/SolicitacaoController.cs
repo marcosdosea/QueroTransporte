@@ -1,5 +1,4 @@
-﻿using Business;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QueroTransporte.Model;
 
 namespace WebAPI.Controllers

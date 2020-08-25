@@ -1,8 +1,6 @@
-using Business;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using QueroTransporte.QueroTransporteWeb;
 using System;
 using System.Collections.Generic;
@@ -23,9 +21,9 @@ namespace TestController
             mockRepoFrotas.Setup(repo => repo.ObterTodos()).Returns(GetTestFrotas());
 
 
-            var controller = new VeiculoController( mockRepoVeiculos.Object, mockRepoFrotas.Object);
-            
-            var result =  controller.Index();
+            var controller = new VeiculoController(mockRepoVeiculos.Object, mockRepoFrotas.Object);
+
+            var result = controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<List<VeiculoModel>>(viewResult.ViewData.Model);
@@ -33,9 +31,10 @@ namespace TestController
 
             Assert.Equal(2, model.Count);
         }
-        
+
         [Fact]
-        public void InserirVeiculoInvalido() {
+        public void InserirVeiculoInvalido()
+        {
             var mockRepoVeiculos = new Mock<GerenciadorVeiculo>();
             var mockRepoFrotas = new Mock<GerenciadorFrota>();
 
@@ -71,7 +70,7 @@ namespace TestController
             mockRepoVeiculos.Setup(repo => repo.Inserir(It.IsAny<VeiculoModel>())).Verifiable();
             //mockRepoFrotas.Setup(repo => repo.ObterTodos()).Returns(GetTestFrotas());
 
-            var controller = new VeiculoController(mockRepoVeiculos.Object,mockRepoFrotas.Object);
+            var controller = new VeiculoController(mockRepoVeiculos.Object, mockRepoFrotas.Object);
 
             var result = controller.Create(GetTestVeiculo());
 
@@ -85,9 +84,9 @@ namespace TestController
         public void EditarVeiculoValido()
         {
             var mockRepoVeiculos = new Mock<GerenciadorVeiculo>();
-            var mockRepoFrotas   = new Mock<GerenciadorFrota>();
+            var mockRepoFrotas = new Mock<GerenciadorFrota>();
 
-            
+
             mockRepoVeiculos.Setup(repo => repo.ObterPorId(It.IsAny<int>())).Returns(GetTestVeiculo());
             mockRepoFrotas.Setup(repo => repo.ObterTodos()).Returns(GetTestFrotas());
 
@@ -144,18 +143,18 @@ namespace TestController
         {
             return new VeiculoModel()
             {
-                    Id = 3,
-                    IdFrota = 1,
-                    Placa = "OCF2565",
-                    Marca = "Volkswagen",
-                    Modelo = "Volksbus 15.190 OD",
-                    Cor = "Amarelo",
-                    AnoFabricacao = "2010",
-                    AnoModelo = "2011",
-                    DataEmplacamento = DateTime.Now.Date,
-                    Chassi = "9BWZZZ377VT004251",
-                    Categoria = "D",
-                    Capacidade = 42
+                Id = 3,
+                IdFrota = 1,
+                Placa = "OCF2565",
+                Marca = "Volkswagen",
+                Modelo = "Volksbus 15.190 OD",
+                Cor = "Amarelo",
+                AnoFabricacao = "2010",
+                AnoModelo = "2011",
+                DataEmplacamento = DateTime.Now.Date,
+                Chassi = "9BWZZZ377VT004251",
+                Categoria = "D",
+                Capacidade = 42
             };
         }
 

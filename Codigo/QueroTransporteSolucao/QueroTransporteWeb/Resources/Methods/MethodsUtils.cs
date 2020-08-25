@@ -15,7 +15,7 @@ namespace QueroTransporteWeb.Resources.Methods
         /// <param name="user"></param>
         /// <returns></returns>
         public static UsuarioModel RetornaUserLogado(ClaimsIdentity claimsIdentity)
-            => new UsuarioModel 
+            => new UsuarioModel
             {
                 Id = int.Parse(claimsIdentity.Claims.Where(s => s.Type == ClaimTypes.SerialNumber).Select(s => s.Value).FirstOrDefault()),
                 Nome = claimsIdentity.Claims.Where(s => s.Type == ClaimTypes.NameIdentifier).Select(s => s.Value).FirstOrDefault(),

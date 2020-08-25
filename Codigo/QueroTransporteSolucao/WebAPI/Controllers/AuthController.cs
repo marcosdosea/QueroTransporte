@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Model.ViewModel;
-using QueroTransporte.Negocio;
 using QueroTransporteWeb.Resources.Methods;
 using System;
 using System.IdentityModel.Tokens.Jwt;

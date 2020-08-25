@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 
 namespace WebAPI.Controllers
 {

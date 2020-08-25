@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using QueroTransporteWeb.Resources.Methods;
 using System;
 using System.Collections.Generic;
@@ -16,10 +16,10 @@ namespace QueroTransporteWeb.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        private readonly GerenciadorUsuario _gerenciadoraUsuario;
-        public LoginController(GerenciadorUsuario gerenciadoraUsuario)
+        private readonly IUsuarioService UsuarioService;
+        public LoginController(IUsuarioService gerenciadoraUsuario)
         {
-            _gerenciadoraUsuario = gerenciadoraUsuario;
+            UsuarioService = gerenciadoraUsuario;
         }
 
         public ActionResult Index()
@@ -32,7 +32,7 @@ namespace QueroTransporteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _gerenciadoraUsuario.ObterPorLoginSenha(MethodsUtils.RemoverCaracteresEspeciais(model.Cpf), Criptografia.GerarHashSenha(model.Senha));
+                var user = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorLoginSenha(MethodsUtils.RemoverCaracteresEspeciais(model.Cpf), Criptografia.GerarHashSenha(model.Senha));
                 if (user != null)
                 {
                     var claims = new List<Claim>
@@ -82,8 +82,8 @@ namespace QueroTransporteWeb.Controllers
                 usuario.Senha = Criptografia.GerarHashSenha(usuario.Senha);
                 usuario.Tipo = "CLIENTE";
 
-                if (_gerenciadoraUsuario.Inserir(usuario))
-                    return RedirectToAction("Autenticar", "Login");
+                if (UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Inserir(usuario))
+                    return RedirectToAction("Index", "Login", new { msg = "Success" });
             }
             return View(usuario);
         }

@@ -1,4 +1,3 @@
-using Business;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
-using QueroTransporte.Negocio;
 
 namespace QueroTransporteWeb
 {
@@ -44,20 +42,9 @@ namespace QueroTransporteWeb
                     Configuration.GetConnectionString("QueroTransporteConnection")));
 
             // Gerenciadoras
-            services.AddScoped<GerenciadorFrota>();
-            services.AddScoped<GerenciadorMotorista>();
-            services.AddScoped<GerenciadorRota>();
-            services.AddScoped<GerenciadorUsuario>();
-            services.AddScoped<GerenciadorVeiculo>();
-            services.AddScoped<GerenciadorViagem>();
-            services.AddScoped<GerenciadorConsumivelVeicular>();
-            services.AddScoped<GerenciadorComprarCredito>();
-            services.AddScoped<GerenciadorFrota>();
-            services.AddScoped<GerenciadorSolicitacao>();
-            services.AddScoped<GerenciadorPagarPassagem>();
-            services.AddScoped<GerenciadorPagamento>();
-            services.AddScoped<GerenciadorTransacao>();
-            // Contexto padrão.
+            App_Start.Injecoes.InjecaoGerenciadora.InjetarGerenciadoras(services);
+            // Unities of Works.
+            App_Start.Injecoes.InjecaoUnities.InjetarUnities(services);
             //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

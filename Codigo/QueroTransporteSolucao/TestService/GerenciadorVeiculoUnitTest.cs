@@ -1,7 +1,4 @@
-using QueroTransporte.Model;
-using System;
 using Xunit;
-using Moq;
 
 namespace TestService
 {

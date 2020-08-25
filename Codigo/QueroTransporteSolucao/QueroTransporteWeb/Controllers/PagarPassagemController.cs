@@ -1,9 +1,8 @@
-    using Business;
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using QueroTransporteWeb.Resources.Methods;
 using System;
 using System.Security.Claims;
@@ -13,22 +12,22 @@ namespace QueroTransporteWeb.Controllers
     [Authorize]
     public class PagarPassagemController : Controller
     {
-        private readonly GerenciadorPagarPassagem _gerenciadorPagarPassagem;
-        private readonly GerenciadorViagem _gerenciadorViagem;
-        private readonly GerenciadorRota _gerenciadorRota;
-        private readonly GerenciadorComprarCredito _gerenciadorCredito;
-        private readonly GerenciadorPagamento _gerenciadorPagamento;
-        private readonly GerenciadorTransacao _gerenciadorTransacao;
+        private readonly IPagarPassagemService PagarPassagemService;
+        private readonly IViagemService ViagemService;
+        private readonly IRotaService RotaService;
+        private readonly ICreditoService CreditoService;
+        private readonly IPagamentoService PagamentoService;
+        private readonly ITransacaoService TransacaoService;
 
-        public PagarPassagemController(GerenciadorPagarPassagem gerenciadorPagarPassagem, GerenciadorViagem gerenciadorViagem, GerenciadorRota gerenciadorRota,
-                                       GerenciadorComprarCredito gerenciadorCredito, GerenciadorPagamento gerenciadorPagamento, GerenciadorTransacao gerenciadorTransacao)
+        public PagarPassagemController(IPagarPassagemService gerenciadorPagarPassagem, IViagemService gerenciadorViagem, IRotaService gerenciadorRota,
+                                       ICreditoService gerenciadorCredito, IPagamentoService gerenciadorPagamento, ITransacaoService gerenciadorTransacao)
         {
-            _gerenciadorPagarPassagem = gerenciadorPagarPassagem;
-            _gerenciadorViagem = gerenciadorViagem;
-            _gerenciadorRota = gerenciadorRota;
-            _gerenciadorCredito = gerenciadorCredito;
-            _gerenciadorPagamento = gerenciadorPagamento;
-            _gerenciadorTransacao = gerenciadorTransacao;
+            PagarPassagemService = gerenciadorPagarPassagem;
+            ViagemService = gerenciadorViagem;
+            RotaService = gerenciadorRota;
+            CreditoService = gerenciadorCredito;
+            PagamentoService = gerenciadorPagamento;
+            TransacaoService = gerenciadorTransacao;
         }
 
         /// <summary>
@@ -38,13 +37,13 @@ namespace QueroTransporteWeb.Controllers
         public IActionResult Index()
         {
             //Id usuario session
-            var solicitacao = _gerenciadorPagarPassagem.ObterViagemPorUsuarioData(
+            var solicitacao = PagarPassagemService.PagamentoPassagemUnityOfWork.GerenciadorPagarPassagem.ObterViagemPorUsuarioData(
                 MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity).Id, DateTime.Now);
             if (solicitacao != null)
             {
-                var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
-                var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
-                var creditos = _gerenciadorCredito.ObterPorId(solicitacao.IdUsuario);
+                var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(solicitacao.IdViagem);
+                var rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
+                var creditos = CreditoService.CreditoUnityOfWork.GerenciadorComprarCredito.ObterPorId(solicitacao.IdUsuario);
                 var viagemPassagem = new ViagemPassagemViewModel
                 {
                     Viagem = viagem,
@@ -80,16 +79,16 @@ namespace QueroTransporteWeb.Controllers
                     pagamento.Tipo = 2;
                     var creditosRestantes = (vP.Creditos.Saldo - (decimal)vP.Viagem.Preco);
                     vP.Creditos.Saldo = creditosRestantes;
-                    _gerenciadorCredito.Editar(vP.Creditos);
+                    CreditoService.CreditoUnityOfWork.GerenciadorComprarCredito.Editar(vP.Creditos);
                 }
                 else
                     pagamento.Tipo = 1;
 
-                if (_gerenciadorPagamento.Inserir(pagamento))
+                if (PagamentoService.PagamentoUnityOfWork.GerenciadorPagamento.Inserir(pagamento))
                 {
                     TempData["mensagemSucesso"] = "Pagamento com crédito com sucesso.";
 
-                    if (!_gerenciadorTransacao.Inserir(addTransacao(vP, true)))
+                    if (!TransacaoService.TransacaoUnityOfWork.GerenciadorTransacao.Inserir(addTransacao(vP, true)))
                         TempData["mensagemErroTransacao"] = "Houve um erro ao salvar esta transação no seu histórico";
 
                     return RedirectToAction(nameof(Index));

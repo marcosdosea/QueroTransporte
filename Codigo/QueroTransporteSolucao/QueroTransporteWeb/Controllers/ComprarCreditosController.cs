@@ -1,9 +1,8 @@
-﻿using Business;
+﻿using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using QueroTransporteWeb.Resources.Methods;
 using System;
 using System.Collections.Generic;
@@ -15,18 +14,18 @@ namespace QueroTransporteWeb.Controllers
     public class ComprarCreditosController : Controller
     {
 
-        private readonly GerenciadorComprarCredito _gerenciadorComprarCredito;
-        private readonly GerenciadorUsuario _gerenciadorUsuario;
-        private readonly GerenciadorTransacao _gerenciadorTransacao;
+        private readonly ICreditoService ComprarCreditoUnityOfWork;
+        private readonly IUsuarioService UsuarioUnityOfWork;
+        private readonly ITransacaoService TransacaoUnityOfWork;
 
 
-        public ComprarCreditosController(GerenciadorUsuario gerenciadorUsuario,
-                                         GerenciadorComprarCredito gerenciadorComprarCredito,
-                                         GerenciadorTransacao gerenciadorTransacao)
+        public ComprarCreditosController(IUsuarioService usuarioUnity,
+                                         ICreditoService creditoUnity,
+                                         ITransacaoService transacaoUnity)
         {
-            _gerenciadorComprarCredito = gerenciadorComprarCredito;
-            _gerenciadorUsuario = gerenciadorUsuario;
-            _gerenciadorTransacao = gerenciadorTransacao;
+            ComprarCreditoUnityOfWork = creditoUnity;
+            UsuarioUnityOfWork = usuarioUnity;
+            TransacaoUnityOfWork = transacaoUnity;
         }
 
         /// <summary>
@@ -54,9 +53,9 @@ namespace QueroTransporteWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_gerenciadorUsuario.ObterPorId(cv.IdUsuario) != null)
+                if (UsuarioUnityOfWork.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(cv.IdUsuario) != null)
                 {
-                    if (_gerenciadorComprarCredito.Inserir(cv))
+                    if (ComprarCreditoUnityOfWork.CreditoUnityOfWork.GerenciadorComprarCredito.Inserir(cv))
                     {
                         TempData["mensagemSucesso"] = "Compra realizada com sucesso!.";
                         deferido = true;
@@ -67,7 +66,7 @@ namespace QueroTransporteWeb.Controllers
                         deferido = false;
                     }
 
-                    if (!_gerenciadorTransacao.Inserir(addTransacao(cv, deferido)))
+                    if (!TransacaoUnityOfWork.TransacaoUnityOfWork.GerenciadorTransacao.Inserir(addTransacao(cv, deferido)))
                         TempData["mensagemErroTransacao"] = "Houve um problema ao gravar a transacao";
                 }
                 else

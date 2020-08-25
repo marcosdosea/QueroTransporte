@@ -1,11 +1,11 @@
 
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using System.Collections.Generic;
 
 namespace QueroTransporte.QueroTransporteWeb
@@ -13,11 +13,11 @@ namespace QueroTransporte.QueroTransporteWeb
     [Authorize]
     public class RotaController : Controller
     {
-        private readonly GerenciadorRota _gerenciadorRota;
+        private readonly IRotaService RotaService;
 
-        public RotaController(GerenciadorRota gerenciadorRota)
+        public RotaController(IRotaService gerenciadorRota)
         {
-            _gerenciadorRota = gerenciadorRota;
+            RotaService = gerenciadorRota;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace QueroTransporte.QueroTransporteWeb
         /// <returns></returns>
         public IActionResult Index()
         {
-            return View(_gerenciadorRota.ObterTodos());
+            return View(RotaService.RotaUnityOfWork.GerenciadorRota.ObterTodos());
         }
 
 
@@ -36,8 +36,8 @@ namespace QueroTransporte.QueroTransporteWeb
         /// <returns></returns>
         public IActionResult Create()
         {
-            
-            ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
+
+            ViewBag.RotaList = new SelectList(RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
             return View();
         }
 
@@ -52,7 +52,7 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (_gerenciadorRota.Inserir(rotaModel))
+                if (RotaService.RotaUnityOfWork.GerenciadorRota.Inserir(rotaModel))
                     return RedirectToAction(nameof(Index));
             }
 
@@ -66,8 +66,8 @@ namespace QueroTransporte.QueroTransporteWeb
         /// <returns></returns>
         public IActionResult Edit(int id)
         {
-            ViewBag.RotaList = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            RotaModel Rota = _gerenciadorRota.ObterPorId(id);
+            ViewBag.RotaList = new SelectList(RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
+            RotaModel Rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(id);
             ViewBag.Checked = Rota.IsComposta;
             return View(Rota);
 
@@ -85,7 +85,7 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (_gerenciadorRota.Editar(rotaModel))
+                if (RotaService.RotaUnityOfWork.GerenciadorRota.Editar(rotaModel))
                     return RedirectToAction(nameof(Index));
             }
             return View(rotaModel);
@@ -98,10 +98,10 @@ namespace QueroTransporte.QueroTransporteWeb
         /// <returns></returns>
         public IActionResult Details(int id)
         {
-            RotaModel rotaModel = _gerenciadorRota.ObterPorId(id);
+            RotaModel rotaModel = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(id);
 
             if (rotaModel.RotaId != null)
-                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
+                ViewBag.DetalhesRota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
             else
                 ViewBag.DetalhesRota = "--";
 
@@ -115,10 +115,10 @@ namespace QueroTransporte.QueroTransporteWeb
         /// <returns></returns>
         public IActionResult Delete(int id)
         {
-            RotaModel rotaModel = _gerenciadorRota.ObterPorId(id);
+            RotaModel rotaModel = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(id);
 
             if (rotaModel.RotaId != null)
-                ViewBag.DetalhesRota = _gerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
+                ViewBag.DetalhesRota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota((int)rotaModel.RotaId).DetalhesRota;
             else
                 ViewBag.DetalhesRota = "--";
 
@@ -135,7 +135,7 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            if (!_gerenciadorRota.Remover(id))
+            if (!RotaService.RotaUnityOfWork.GerenciadorRota.Remover(id))
             {
                 TempData["mensagemErro"] = "Você não pode remover esta rota porque outras rotas dependem dela!.";
                 return RedirectToAction(nameof(Delete));
@@ -154,16 +154,13 @@ namespace QueroTransporte.QueroTransporteWeb
             ViewBag.Sexta = Dias.Sexta;
             ViewBag.Sabado = Dias.Sabado;
             ViewBag.Domingo = Dias.Domingo;
-
-
             return View();
-
         }
 
         private DiasDaSemana ContagemRotas()
         {
             DiasDaSemana dias = new DiasDaSemana();
-            List<RotaModel> rotas = _gerenciadorRota.ObterTodos();
+            List<RotaModel> rotas = RotaService.RotaUnityOfWork.GerenciadorRota.ObterTodos();
             foreach (var rota in rotas)
             {
                 if (rota.DiaSemana.ToLower() == "Segunda".ToLower() ||

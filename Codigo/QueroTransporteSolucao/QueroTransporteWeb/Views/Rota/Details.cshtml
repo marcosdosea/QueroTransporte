@@ -4,63 +4,44 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>RotaModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Origem)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Origem)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Destino)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Destino)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HorarioSaida)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HorarioSaida)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HorarioChegada)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HorarioChegada)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaSemana)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DiaSemana)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RotaId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DetalhesRota) @ViewBag.DetalhesRota
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsComposta)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsComposta)
-        </dd>
-    </dl>
+<h2>Detalhes</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label asp-for="Origem" class="control-label"></label>
+                <input asp-for="Origem" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Destino" class="control-label"></label>
+                <input asp-for="Destino" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioSaida" class="control-label"></label>
+                <input asp-for="HorarioSaida" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioChegada" class="control-label"></label>
+                <input asp-for="HorarioChegada" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaSemana" class="control-label"></label>
+                <input asp-for="DiaSemana" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="RotaId" class="control-label"></label>
+                <input asp-for="RotaId" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsComposta" id="checkRota" /> @Html.DisplayNameFor(model => model.IsComposta)
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-<div>
-    <a href="@Url.Action("Edit", "Rota", new { id = Model.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
-    <a class="btn btn-default" asp-action="Index">Voltar</a>
-</div>
+<a href="@Url.Action("Edit", "Rota", new { id = Model.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
+<a class="btn btn-default" asp-action="Index">Voltar</a>

@@ -1,11 +1,10 @@
-﻿using Business;
+﻿using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using QueroTransporteWeb.Resources.Methods;
 using System;
 using System.Collections.Generic;
@@ -16,17 +15,17 @@ namespace QueroTransporteWeb.Controllers
     [Authorize]
     public class SolicitacaoController : Controller
     {
-        private readonly GerenciadorVeiculo _gerenciadorVeiculo;
-        private readonly GerenciadorViagem _gerenciadorViagem;
-        private readonly GerenciadorSolicitacao _gerenciadorSolicitacao;
-        private readonly GerenciadorRota _gerenciadorRota;
+        private readonly IVeiculoService VeiculoService;
+        private readonly IViagemService ViagemService;
+        private readonly ISolicitacaoService SolicitacaoService;
+        private readonly IRotaService RotaService;
 
-        public SolicitacaoController(GerenciadorVeiculo gerenciadorVeiculo, GerenciadorViagem gerenciadorViagem, GerenciadorSolicitacao gerenciadorSolicitacao, GerenciadorRota gerenciadorRota)
+        public SolicitacaoController(IVeiculoService gerenciadorVeiculo, IViagemService gerenciadorViagem, ISolicitacaoService gerenciadorSolicitacao, IRotaService gerenciadorRota)
         {
-            _gerenciadorVeiculo = gerenciadorVeiculo;
-            _gerenciadorViagem = gerenciadorViagem;
-            _gerenciadorSolicitacao = gerenciadorSolicitacao;
-            _gerenciadorRota = gerenciadorRota;
+            VeiculoService = gerenciadorVeiculo;
+            ViagemService = gerenciadorViagem;
+            SolicitacaoService = gerenciadorSolicitacao;
+            RotaService = gerenciadorRota;
         }
         // GET: Solicitacao
         public ActionResult Index()
@@ -35,18 +34,18 @@ namespace QueroTransporteWeb.Controllers
             // Retornando todas as viagens do determinado usuario, obtido pelo id setado na sessão.
             var listViewModels = new List<ViagemRotaViewModel>();
 
-            foreach (var solicitacao in _gerenciadorSolicitacao.ObterSolicitacoesAbertasPorUsuario(_usuarioLogado.Id))
+            foreach (var solicitacao in SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterSolicitacoesAbertasPorUsuario(_usuarioLogado.Id))
             {
-                var viagem = _gerenciadorViagem.ObterPorId(solicitacao.IdViagem);
+                var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(solicitacao.IdViagem);
                 listViewModels.Add(new ViagemRotaViewModel
                 {
-                    Rota = _gerenciadorRota.ObterPorId(viagem.IdRota),
-                    Veiculo = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo),
+                    Rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota),
+                    Veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo),
                     Viagem = viagem
                 });
             }
 
-            var rotas = _gerenciadorRota.ObterTodos();
+            var rotas = RotaService.RotaUnityOfWork.GerenciadorRota.ObterTodos();
             ViewBag.rotaOrigem = new SelectList(rotas, "Origem", "Origem");
             ViewBag.rotaDestino = new SelectList(rotas, "Destino", "Destino");
             return View(listViewModels);
@@ -63,15 +62,15 @@ namespace QueroTransporteWeb.Controllers
         {
             var listaViagemRotaViewModel = new List<ViagemRotaViewModel>();
 
-            foreach (var rota in _gerenciadorRota.ObterPorOrigemDestino(origem, destino, diaSemana))
+            foreach (var rota in RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorOrigemDestino(origem, destino, diaSemana))
             {
-                var viagem = _gerenciadorViagem.BuscarPorRota(rota.Id);
+                var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.BuscarPorRota(rota.Id);
 
                 listaViagemRotaViewModel.Add(new ViagemRotaViewModel
                 {
                     Rota = rota,
                     Viagem = viagem,
-                    Veiculo = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo)
+                    Veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo)
                 });
             }
 
@@ -86,7 +85,7 @@ namespace QueroTransporteWeb.Controllers
             {
                 var _usuarioLogado = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity);
                 var x = new SolicitacaoVeiculoModel { IdUsuario = _usuarioLogado.Id, IdViagem = id, DataSolicitacao = DateTime.Now, IdPagamento = 1 };
-                if (_gerenciadorSolicitacao.Inserir(x))
+                if (SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.Inserir(x))
                 {
                     TempData["msg"] = "success";
                     return RedirectToAction("Index", "Solicitacao");
@@ -126,12 +125,12 @@ namespace QueroTransporteWeb.Controllers
         // GET: Solicitacao/Delete/5
         public ActionResult Delete(int id)
         {
-            var viagem = _gerenciadorViagem.ObterPorId(id);
-            var veiculo = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
-            var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
+            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
+            var veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+            var rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
             var _usuarioLogado = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity);
 
-            ViewBag.solicitacao = _gerenciadorSolicitacao.ObterPorViagemUsuario(_usuarioLogado.Id, id);
+            ViewBag.solicitacao = SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterPorViagemUsuario(_usuarioLogado.Id, id);
             // Obter a solicitação pelo ID da viagem/ID do usuario em questao.
             //var solicitacao = _gerenciadorSolicitacao.ObterPorViagemUsuario(idUsuario, id);
             return View(new ViagemRotaViewModel { Veiculo = veiculo, Rota = rota, Viagem = viagem });
@@ -145,8 +144,8 @@ namespace QueroTransporteWeb.Controllers
             try
             {
                 var _usuarioLogado = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity);
-                var solicitacao = _gerenciadorSolicitacao.ObterPorViagemUsuario(_usuarioLogado.Id, id);
-                if (_gerenciadorSolicitacao.Remover(solicitacao.Id))
+                var solicitacao = SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterPorViagemUsuario(_usuarioLogado.Id, id);
+                if (SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.Remover(solicitacao.Id))
                     return RedirectToAction("Index", "Solicitacao", new { msg = "sucess" });
 
                 return RedirectToAction("Index", "Solicitacao", new { msg = "fail" });

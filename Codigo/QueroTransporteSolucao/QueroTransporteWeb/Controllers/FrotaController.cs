@@ -1,29 +1,29 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 
 namespace QueroTransporteWeb.Controllers
 {
     [Authorize]
     public class FrotaController : Controller
     {
-        private readonly GerenciadorFrota _gerenciadorFrota;
-        public FrotaController(GerenciadorFrota gerenciadorFrota)
+        private readonly IFrotaService FrotaService;
+        public FrotaController(IFrotaService frotaService)
         {
-            _gerenciadorFrota = gerenciadorFrota;
+            FrotaService = frotaService;
         }
         // GET: Frota
         public ActionResult Index()
         {
-            return View(_gerenciadorFrota.ObterTodos());
+            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterTodos());
         }
 
         // GET: Frota/Details/5
         public ActionResult Details(int id)
         {
-            return View(_gerenciadorFrota.ObterPorId(id));
+            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(id));
         }
 
         // GET: Frota/Create
@@ -40,7 +40,7 @@ namespace QueroTransporteWeb.Controllers
             try
             {
                 if (ModelState.IsValid)
-                    if (_gerenciadorFrota.Inserir(frota))
+                    if (FrotaService.FrotaUnityOfWork.GerenciadorFrota.Inserir(frota))
                         return RedirectToAction(nameof(Index));
             }
             catch
@@ -53,7 +53,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: Frota/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_gerenciadorFrota.ObterPorId(id));
+            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(id));
         }
 
         // POST: Frota/Edit/5
@@ -76,7 +76,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: Frota/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(_gerenciadorFrota.ObterPorId(id));
+            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(id));
         }
 
         // POST: Frota/Delete/5

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
-    <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\Model\Domain.csproj" />
     <ProjectReference Include="..\QueroTransporteWeb\QueroTransporteWeb.csproj" />
   </ItemGroup>
 

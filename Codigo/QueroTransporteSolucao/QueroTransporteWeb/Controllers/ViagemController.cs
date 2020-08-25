@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using System.Collections.Generic;
 
 namespace QueroTransporteWeb.Controllers
@@ -12,23 +12,23 @@ namespace QueroTransporteWeb.Controllers
     [Authorize]
     public class ViagemController : Controller
     {
-        private readonly GerenciadorViagem _gerenciador;
-        private readonly GerenciadorRota _gerenciadorRota;
-        private readonly GerenciadorVeiculo _gerenciadorVeiculo;
-        public ViagemController(GerenciadorViagem gerenciador, GerenciadorRota gerenciadorRota, GerenciadorVeiculo gerenciadorVeiculo)
+        private readonly IViagemService ViagemService;
+        private readonly IRotaService RotaService;
+        private readonly IVeiculoService VeiculoService;
+        public ViagemController(IViagemService gerenciador, IRotaService gerenciadorRota, IVeiculoService gerenciadorVeiculo)
         {
-            _gerenciador = gerenciador;
-            _gerenciadorRota = gerenciadorRota;
-            _gerenciadorVeiculo = gerenciadorVeiculo;
+            ViagemService = gerenciador;
+            RotaService = gerenciadorRota;
+            VeiculoService = gerenciadorVeiculo;
         }
         // GET: ManterViagem
         public ActionResult Index()
         {
             var listViewModels = new List<ViagemRotaViewModel>();
-            foreach (var viagem in _gerenciador.ObterTodos())
+            foreach (var viagem in ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterTodos())
             {
-                var rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
-                var veiculo = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+                var rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
+                var veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
 
                 listViewModels.Add(new ViagemRotaViewModel()
                 {
@@ -44,17 +44,17 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Details/5
         public ActionResult Details(int id)
         {
-            var viagem = _gerenciador.ObterPorId(id);
-            ViewBag.rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
-            ViewBag.placa = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
+            ViewBag.rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
+            ViewBag.placa = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
             return View(viagem);
         }
 
         // GET: ManterViagem/Create
         public ActionResult Create()
         {
-            ViewBag.rotas = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            ViewBag.placas = new SelectList(_gerenciadorVeiculo.ObterTodos(), "Id", "Placa");
+            ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
+            ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterTodos(), "Id", "Placa");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (_gerenciador.Inserir(viagemModel))
+                if (ViagemService.ViagemUnityOfWork.GerenciadorViagem.Inserir(viagemModel))
                     return RedirectToAction(nameof(Index));
 
                 return View();
@@ -79,10 +79,10 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Edit/5
         public ActionResult Edit(int id)
         {
-            var viagem = _gerenciador.ObterPorId(id);
-            var rotas = _gerenciadorRota.ObterTodos();
-            ViewBag.rotas = new SelectList(_gerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            ViewBag.placas = new SelectList(_gerenciadorVeiculo.ObterTodos(), "Id", "Placa");
+            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
+            var rotas = RotaService.RotaUnityOfWork.GerenciadorRota.ObterTodos();
+            ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
+            ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterTodos(), "Id", "Placa");
             return View(viagem);
         }
 
@@ -93,7 +93,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (_gerenciador.Editar(viagemModel))
+                if (ViagemService.ViagemUnityOfWork.GerenciadorViagem.Editar(viagemModel))
                     return RedirectToAction(nameof(Index));
 
                 return View();
@@ -107,9 +107,9 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Delete/5
         public ActionResult Delete(int id)
         {
-            var viagem = _gerenciador.ObterPorId(id);
-            ViewBag.rota = _gerenciadorRota.ObterPorId(viagem.IdRota);
-            ViewBag.placa = _gerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
+            ViewBag.rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
+            ViewBag.placa = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
             return View(viagem);
         }
 
@@ -120,7 +120,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (_gerenciador.Remover(id))
+                if (ViagemService.ViagemUnityOfWork.GerenciadorViagem.Remover(id))
                     return RedirectToAction(nameof(Index));
                 else
                     return RedirectToAction(nameof(Delete));

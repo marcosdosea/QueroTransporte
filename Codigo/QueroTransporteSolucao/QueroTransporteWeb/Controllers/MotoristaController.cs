@@ -1,11 +1,11 @@
 
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.ViewModel;
 using QueroTransporte.Model;
-using QueroTransporte.Negocio;
 using System.Collections.Generic;
 
 namespace QueroTransporte.QueroTransporteWeb
@@ -13,20 +13,20 @@ namespace QueroTransporte.QueroTransporteWeb
     [Authorize]
     public class MotoristaController : Controller
     {
-        private readonly GerenciadorMotorista _gerenciadorMotorista;
-        private readonly GerenciadorUsuario _gerenciadorUsuario;
-        public MotoristaController(GerenciadorMotorista gerenciadorMotorista, GerenciadorUsuario gerenciadorUsuario)
+        private readonly IMotoristaService MotoristaService;
+        private readonly IUsuarioService UsuarioService;
+        public MotoristaController(IMotoristaService gerenciadorMotorista, IUsuarioService gerenciadorUsuario)
         {
-            _gerenciadorMotorista = gerenciadorMotorista;
-            _gerenciadorUsuario = gerenciadorUsuario;
+            MotoristaService = gerenciadorMotorista;
+            UsuarioService = gerenciadorUsuario;
         }
 
         public IActionResult Index()
         {
             var listViewModel = new List<MotoristaUsuarioViewModel>();
-            foreach (var motorista in _gerenciadorMotorista.ObterTodos())
+            foreach (var motorista in MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterTodos())
             {
-                var usuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario);
+                var usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario);
 
                 listViewModel.Add(new MotoristaUsuarioViewModel()
                 {
@@ -39,7 +39,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
-            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterTodosUsuarios(), "Id", "Nome");
+            ViewBag.UsuariosMotoristas = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterTodosUsuarios(), "Id", "Nome");
             return View();
         }
 
@@ -49,11 +49,11 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (_gerenciadorMotorista.Inserir(motorista))
+                if (MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.Inserir(motorista))
                 {
-                    var usuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario);
+                    var usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario);
                     usuario.Tipo = "MOTORISTA";
-                    _gerenciadorUsuario.Editar(usuario);
+                    UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Editar(usuario);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -62,13 +62,13 @@ namespace QueroTransporte.QueroTransporteWeb
                 // Tipo: Motorista X = Usuario X => Motorista Y = Motorista X ... Isso quebra o banco e retorna o erro p a aplicação.
             }
 
-            ViewBag.UsuariosMotoristas = new SelectList(_gerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
+            ViewBag.UsuariosMotoristas = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
             return View(motorista);
         }
         public IActionResult Edit(int id)
         {
-            var motorista = _gerenciadorMotorista.ObterPorId(id);
-            return View(new MotoristaUsuarioViewModel { Motorista = motorista, Usuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario) });
+            var motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
+            return View(new MotoristaUsuarioViewModel { Motorista = motorista, Usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario) });
         }
 
         [HttpPost]
@@ -77,7 +77,7 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (_gerenciadorMotorista.Editar(motorista))
+                if (MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.Editar(motorista))
                     return RedirectToAction(nameof(Index));
 
             }
@@ -88,15 +88,15 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Details(int id)
         {
             MotoristaUsuarioViewModel motorista = new MotoristaUsuarioViewModel();
-            motorista.Motorista = _gerenciadorMotorista.ObterPorId(id);
-            motorista.Usuario = _gerenciadorUsuario.ObterPorId(motorista.Motorista.IdUsuario);
+            motorista.Motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
+            motorista.Usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.Motorista.IdUsuario);
             return View(motorista);
         }
 
         public IActionResult Delete(int id)
         {
-            MotoristaModel motorista = _gerenciadorMotorista.ObterPorId(id);
-            ViewBag.NomeUsuario = _gerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
+            MotoristaModel motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
+            ViewBag.NomeUsuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }
 
@@ -104,10 +104,10 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            if (_gerenciadorMotorista.Remover(id))
+            if (MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.Remover(id))
                 return RedirectToAction(nameof(Index));
 
-            return View(_gerenciadorMotorista.ObterPorId(id));
+            return View(MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id));
         }
     }
 }

@@ -5,7 +5,7 @@
 }
 
 <div class="x_title">
-    <h2>Index</h2>
+    <h2>Usuarios</h2>
     <a class="btn btn-primary" style="float:right" asp-controller="Usuario" asp-action="Create">Adicionar Usuario</a>
     <div class="clearfix"></div>
 </div>
@@ -13,9 +13,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cpf)
             </th>
@@ -37,9 +34,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cpf)
             </td>
