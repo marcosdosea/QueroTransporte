@@ -106,7 +106,7 @@ namespace Data.Repositories
         /// O motivo é de fixar na lista de opcoes dos tipos na view, selectList
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetTipos() => new string[] { "Cliente", "Motorista", "ADMIN", "Gestor" };
+        public IEnumerable<string> GetTipos() => new string[] { "CLIENTE", "MOTORISTA", "ADMIN", "GESTOR" };
 
         /// <summary>
         /// Serve para retornar os usuarios que são motoristas, ou seja, o elemento 1 do Inumerable de strings

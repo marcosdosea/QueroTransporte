@@ -1,42 +1,36 @@
 ﻿@model Model.ViewModel.MotoristaUsuarioViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes Motorista";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>MotoristaModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Usuario.Nome)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Usuario.Nome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Motorista.Categoria)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Motorista.Categoria)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Motorista.Validade)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Motorista.Validade)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Motorista.Cnh)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Motorista.Cnh)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a href="@Url.Action("Edit", "Motorista", new { id = Model.Motorista.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
-    <a class="btn btn-default" asp-action="Index">Voltar</a>
+<h2>Detalhes</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="Usuario.Nome" class="control-label"></label>
+            <input asp-for="Usuario.Nome" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="Motorista.Categoria" class="control-label"></label>
+            <input asp-for="Motorista.Categoria" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label">@Html.DisplayNameFor(model => model.Motorista.Validade)</label>
+            <input class="form-control" value="@Html.DisplayFor(model => model.Motorista.Validade)" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="Motorista.Cnh" class="control-label"></label>
+            <input asp-for="Motorista.Cnh" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="Usuario.Telefone" class="control-label"></label>
+            <input asp-for="Usuario.Telefone" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <a href="@Url.Action("Edit", "Motorista", new { id = Model.Motorista.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
+            <a class="btn btn-default" asp-action="Index">Voltar</a>
+        </div>
+    </div>
 </div>

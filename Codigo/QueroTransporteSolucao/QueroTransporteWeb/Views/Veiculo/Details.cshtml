@@ -4,87 +4,59 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>VeiculoModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdFrota) 
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdFrota) - @ViewBag.TituloFrota
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Placa)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Placa)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Marca)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Marca)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Modelo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Modelo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cor)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AnoFabricacao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AnoFabricacao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AnoModelo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AnoModelo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DataEmplacamento)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataEmplacamento)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Chassi)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Chassi)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Capacidade)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Capacidade)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a href="@Url.Action("Edit", "Veiculo", new { id = Model.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
-    <a class="btn btn-default" asp-action="Index">Voltar</a>
+<h2>Detalhes</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label class="control-label">@Html.DisplayNameFor(model => model.IdFrota) </label>
+                <input class="form-control" value="@ViewBag.TituloFrota" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Placa" class="control-label"></label>
+                <input asp-for="Placa" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Modelo" class="control-label"></label>
+                <input asp-for="Modelo" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Cor" class="control-label"></label>
+                <input asp-for="Cor" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="AnoFabricacao" class="control-label"></label>
+                <input asp-for="AnoFabricacao" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="AnoModelo" class="control-label"></label>
+                <input asp-for="AnoModelo" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="DataEmplacamento" class="control-label"></label>
+                <input asp-for="DataEmplacamento" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Chassi" class="control-label"></label>
+                <input asp-for="Chassi" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacidade" class="control-label"></label>
+                <input asp-for="Capacidade" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <a href="@Url.Action("Edit", "Veiculo", new { id = Model.Id })" class="btn btn-info"><i class="fa fa-pencil"></i> Editar </a>
+                <a class="btn btn-default" asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
 </div>

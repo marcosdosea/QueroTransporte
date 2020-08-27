@@ -39,7 +39,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
-            ViewBag.UsuariosMotoristas = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterTodosUsuarios(), "Id", "Nome");
+            ViewBag.UsuariosMotoristas = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Edit(int id)
         {
             var motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
-            return View(new MotoristaUsuarioViewModel { Motorista = motorista, Usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario) });
+            return View(motorista);
         }
 
         [HttpPost]

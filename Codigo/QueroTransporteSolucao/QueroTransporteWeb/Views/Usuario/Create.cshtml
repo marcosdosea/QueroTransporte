@@ -4,55 +4,64 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-
-<h4>UsuarioModel</h4>
+<h2>Cadastro</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" class="form-control" />
-                <span asp-validation-for="Cpf" class="text-danger"></span>
+    <div class="x_content">
+        <form class="form-horizontal form-label-left" asp-action="Create" asp-controller="Usuario" novalidate>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Cpf">CPF <span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" asp-for="Cpf" id="Cpf" required="required" data-inputmask="'mask' : '***.***.***-**'" class="form-control col-md-7 col-xs-12">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Nome">
+                    Nome <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" asp-for="Nome" id="Nome" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Senha" class="control-label"></label>
-                <input asp-for="Senha" class="form-control" />
-                <span asp-validation-for="Senha" class="text-danger"></span>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Senha">
+                    Senha <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" asp-for="Senha" id="Senha" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Email">
+                    Email <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" asp-for="Email" id="Email" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Telefone">
+                    Telefone <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" asp-for="Telefone" id="Telefone" required="required" data-inputmask="'mask' : '(**) * ****-****'" class="form-control col-md-7 col-xs-12">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Telefone">
+                    Tipo <span class="required">*</span>
+                </label>
                 @*ViewBag.RotaList is holding all the routs values*@
-                @Html.DropDownListFor(model => model.Tipo, ViewBag.Tipos as SelectList, new
-                { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.Tipo, ViewBag.Tipos as SelectList, new
+                    { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />  <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+            <div class="ln_solid"></div>
+            <div class="item form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-success" />  <a class="btn btn-danger" asp-action="Index">Cancelar</a>
             </div>
-
         </form>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

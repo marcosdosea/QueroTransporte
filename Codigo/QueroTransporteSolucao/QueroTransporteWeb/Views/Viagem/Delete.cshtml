@@ -4,47 +4,42 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ViagemModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdRota)
-        </dt>
-        <dd>
-            @ViewBag.rota.Origem - @ViewBag.rota.Destino
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdVeiculo)
-        </dt>
-        <dd>
-            @ViewBag.placa.Placa
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Lotacao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Lotacao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsRealizada)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsRealizada)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Remover" class="btn btn-success" />
-        <a class="btn btn-danger" asp-action="Index">Cancelar</a>
-    </form>
+<h2>Remoção</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label class="control-label">Origem</label>
+                <input class="form-control" value="@ViewBag.rota.Origem" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Destino</label>
+                <input class="form-control" value="@ViewBag.rota.Destino" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Html.DisplayNameFor(model => model.IdVeiculo)</label>
+                <input class="form-control" value="@ViewBag.placa.Placa" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Html.DisplayNameFor(model => model.Preco)</label>
+                <input class="form-control" value="R$@Html.DisplayFor(model => model.Preco)" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Html.DisplayNameFor(model => model.Lotacao)</label>
+                <input class="form-control" value="@Html.DisplayFor(model => model.Lotacao)" readonly />
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsRealizada" /> @Html.DisplayNameFor(model => model.IsRealizada)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <a href="@Url.Action("Delete", "Viagem", new { id = Model.Id })" class="btn btn-success"> Remover </a>
+                <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </div>

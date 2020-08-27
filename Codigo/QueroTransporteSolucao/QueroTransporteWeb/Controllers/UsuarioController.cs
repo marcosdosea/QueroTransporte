@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
+using QueroTransporteWeb.Resources.Methods;
 using System.Linq;
 
 namespace QueroTransporteWeb.Controllers
@@ -56,6 +57,8 @@ namespace QueroTransporteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                usuarioModel.Cpf = MethodsUtils.RemoverCaracteresEspeciais(usuarioModel.Cpf);
+                usuarioModel.Telefone = MethodsUtils.RemoverCaracteresEspeciais(usuarioModel.Telefone);
                 if (UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Inserir(usuarioModel))
                     return RedirectToAction(nameof(Index));
             }

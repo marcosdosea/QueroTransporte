@@ -4,9 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-
-<h4>VeiculoModel</h4>
+<h2>Cadastro</h2>
 <hr />
 
 @if (TempData["mensagemErro"] != null)
@@ -79,13 +77,8 @@
                 <span asp-validation-for="Capacidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />  <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+                <input type="submit" value="Salvar" class="btn btn-success" />  <a class="btn btn-danger" asp-action="Index">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
