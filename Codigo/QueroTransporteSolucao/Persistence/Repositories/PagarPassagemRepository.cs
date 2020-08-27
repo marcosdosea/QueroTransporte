@@ -4,7 +4,7 @@ using QueroTransporte.Model;
 using System;
 using System.Linq;
 
-namespace Data.Gerenciadoras
+namespace Data.Repositories
 {
     public class PagarPassagemRepository : IPagarPassagemRepository
     {

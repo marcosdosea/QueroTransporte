@@ -1,4 +1,3 @@
-
 using AutoMapper;
 using Data.Entities;
 using Domain.Interfaces.Repositories;
@@ -7,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Gerenciadoras
+namespace Data.Repositories
 {
     public class FrotaRepository : IFrotaRepository
     {
@@ -40,7 +39,8 @@ namespace Data.Gerenciadoras
 
         public bool Editar(FrotaModel objeto)
         {
-            throw new NotImplementedException();
+            _context.Frota.Update(_mapper.Map<Frota>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -61,7 +61,8 @@ namespace Data.Gerenciadoras
 
         public bool Remover(int id)
         {
-            throw new NotImplementedException();
+            _context.Frota.Remove(_context.Frota.FirstOrDefault(f => f.Id == id));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -71,24 +72,8 @@ namespace Data.Gerenciadoras
         /// <returns></returns>
         public bool Inserir(FrotaModel objeto)
         {
-            _context.Add(_mapper.Map<Frota>(objeto));
+            _context.Frota.Add(_mapper.Map<Frota>(objeto));
             return _context.SaveChanges() == 1;
-        }
-
-        /// <summary>
-        /// Faz o cast entre um model e uma entidade
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        private static Frota ModelToPersistence(FrotaModel model, Frota entity)
-        {
-            entity.Id = model.Id;
-            entity.Descricao = model.Descricao;
-            entity.Titulo = model.Titulo;
-            entity.EhPublica = Convert.ToByte(model.IsPublic);
-
-            return entity;
         }
     }
 }

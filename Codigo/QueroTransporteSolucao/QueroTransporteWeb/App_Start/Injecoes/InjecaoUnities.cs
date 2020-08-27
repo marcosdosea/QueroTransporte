@@ -1,4 +1,4 @@
-﻿using Data.Gerenciadoras;
+﻿using Data.Repositories;
 using Data.UnitiesOfWork;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.UnityOfWork;

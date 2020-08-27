@@ -1,17 +1,20 @@
-﻿using Data.Entities;
+﻿using AutoMapper;
+using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Gerenciadoras
+namespace Data.Repositories
 {
     public class ConsumivelRepository : IConsumivelVeicularRepository
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
-        public ConsumivelRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly IMapper _mapper;
+        public ConsumivelRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
-            this._context = context;
+            _context = context;
+            _mapper = mapper;
         }
         /// <summary>
         /// Insere um consumível veicular na base de dados
@@ -20,11 +23,8 @@ namespace Data.Gerenciadoras
         /// <returns></returns>
         public bool Inserir(ConsumivelVeicularModel objeto)
         {
-            ConsumivelVeicular _consumivel = new ConsumivelVeicular();
-
-            Atribuir(objeto, _consumivel);
-            _context.Add(_consumivel);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.ConsumivelVeicular.Add(_mapper.Map<ConsumivelVeicular>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -34,11 +34,8 @@ namespace Data.Gerenciadoras
         /// <returns></returns>
         public bool Editar(ConsumivelVeicularModel objeto)
         {
-            ConsumivelVeicular _consumivel = new ConsumivelVeicular();
-
-            Atribuir(objeto, _consumivel);
-            _context.Update(_consumivel);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.ConsumivelVeicular.Update(_mapper.Map<ConsumivelVeicular>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -50,21 +47,7 @@ namespace Data.Gerenciadoras
         {
             var consumivel = _context.ConsumivelVeicular.Find(id);
             _context.ConsumivelVeicular.Remove(consumivel);
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// Atribue dados de um objeto para o outro
-        /// </summary>
-        /// <param name="consumivelveicularModel"></param>
-        /// <param name="_consumivel"></param>
-        private void Atribuir(ConsumivelVeicularModel consumivelveicularModel, ConsumivelVeicular _consumivel)
-        {
-            _consumivel.Id = consumivelveicularModel.Id;
-            _consumivel.IdVeiculo = consumivelveicularModel.IdVeiculo;
-            _consumivel.Valor = consumivelveicularModel.Valor;
-            _consumivel.DataDespesa = consumivelveicularModel.DataDespesa;
-            _consumivel.Categoria = consumivelveicularModel.Categoria;
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>

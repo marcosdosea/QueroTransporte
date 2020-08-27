@@ -1,18 +1,20 @@
+using AutoMapper;
 using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Gerenciadoras
+namespace Data.Repositories
 {
     public class ComprarCreditoRepository : IComprarCreditoRepository
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
-        public ComprarCreditoRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly IMapper _mapper;
+        public ComprarCreditoRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -24,10 +26,8 @@ namespace Data.Gerenciadoras
         {
             if (ObterPorId(objeto.IdUsuario) == null)
             {
-                Credito _credito = new Credito();
-                Atribuir(_credito, objeto);
-                _context.Add(_credito);
-                return _context.SaveChanges() == 1 ? true : false;
+                _context.Credito.Add(_mapper.Map<Credito>(objeto));
+                return _context.SaveChanges() == 1;
             }
             else
             {
@@ -42,25 +42,10 @@ namespace Data.Gerenciadoras
         /// <returns></returns>
         public bool Editar(CreditoViagemModel objeto)
         {
-            CreditoViagemModel cv = ObterPorId(objeto.IdUsuario);
+            var cv = ObterPorId(objeto.IdUsuario);
             cv.Saldo += objeto.Saldo;
-
-            Credito _credito = new Credito();
-            Atribuir(_credito, cv);
-            _context.Update(_credito);
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// Atribui dados do model para o objeto a ser inserido no banco 
-        /// </summary>
-        /// <param name="credito"></param>
-        /// <param name="objeto"></param>
-        private void Atribuir(Credito credito, CreditoViagemModel objeto)
-        {
-            credito.Id = objeto.Id;
-            credito.Saldo = objeto.Saldo;
-            credito.IdUsuario = objeto.IdUsuario;
+            _context.Update(_mapper.Map<Credito>(cv));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -79,13 +64,15 @@ namespace Data.Gerenciadoras
                 }).FirstOrDefault();
 
         public List<CreditoViagemModel> ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
+            => _context
+                .Credito
+                .Select(c => new CreditoViagemModel { Id = c.Id, Saldo = (decimal)c.Saldo, IdUsuario = c.IdUsuario })
+                .ToList();
 
         public bool Remover(int id)
         {
-            throw new NotImplementedException();
+            _context.Credito.Remove(_context.Credito.FirstOrDefault(c => c.Id == id));
+            return _context.SaveChanges() == 1;
         }
     }
 }

@@ -86,14 +86,14 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                if (FrotaService.FrotaUnityOfWork.GerenciadorFrota.Remover(id))
+                    return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
             }
+            return RedirectToAction(nameof(Index), new { msg = "Erro" });
         }
     }
 }
