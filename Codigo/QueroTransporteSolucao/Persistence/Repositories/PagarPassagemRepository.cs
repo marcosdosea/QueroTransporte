@@ -11,7 +11,7 @@ namespace Data.Repositories
         private readonly BD_QUERO_TRANSPORTEContext _context;
         public PagarPassagemRepository(BD_QUERO_TRANSPORTEContext context)
         {
-            this._context = context;
+            _context = context;
         }
         /// <summary>
         /// Obter viagem que o Usuario está em debito
@@ -30,11 +30,5 @@ namespace Data.Repositories
                 DataSolicitacao = sol.DataSolicitacao,
                 IsAtendida = Convert.ToBoolean(sol.FoiAtentida)
             }).FirstOrDefault();
-
-        public bool Remover(int id)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

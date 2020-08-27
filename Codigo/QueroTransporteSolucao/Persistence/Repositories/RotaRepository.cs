@@ -13,9 +13,8 @@ namespace Data.Repositories
 
         public RotaRepository(BD_QUERO_TRANSPORTEContext context)
         {
-            this._context = context;
+            _context = context;
         }
-
 
         /// <summary>
         /// Inseri uma rota na base de dados

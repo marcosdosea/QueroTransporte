@@ -1,3 +1,4 @@
+using AutoMapper;
 using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
@@ -10,10 +11,12 @@ namespace Data.Repositories
     {
 
         private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly IMapper _mapper;
 
-        public MotoristaRepository(BD_QUERO_TRANSPORTEContext context)
+        public MotoristaRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -23,25 +26,8 @@ namespace Data.Repositories
         /// <returns> </returns>
         public bool Inserir(MotoristaModel objeto)
         {
-            Motorista _motorista = new Motorista();
-
-            Atribuir(objeto, _motorista);
-            _context.Add(_motorista);
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// Faz o cast entre o model e a entidade
-        /// </summary>
-        /// <param name="motoristaModel"></param>
-        /// <param name="_motorista"></param>
-        private void Atribuir(MotoristaModel motoristaModel, Motorista _motorista)
-        {
-            _motorista.Id = motoristaModel.Id;
-            _motorista.Categoria = motoristaModel.Categoria;
-            _motorista.Validade = motoristaModel.Validade;
-            _motorista.Cnh = motoristaModel.Cnh;
-            _motorista.IdUsuario = motoristaModel.IdUsuario;
+            _context.Motorista.Add(_mapper.Map<Motorista>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -68,7 +54,7 @@ namespace Data.Repositories
         public bool Remover(int id)
         {
             _context.Motorista.Remove(_context.Motorista.Find(id));
-            return _context.SaveChanges() == 1 ? true : false;
+            return _context.SaveChanges() == 1;
         }
         /// <summary>
         /// Altera os dados de um motorista da base de dados
@@ -76,10 +62,8 @@ namespace Data.Repositories
         /// <param name="objeto"></param>
         public bool Editar(MotoristaModel objeto)
         {
-            Motorista _motorista = new Motorista();
-            Atribuir(objeto, _motorista);
-            _context.Update(_motorista);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Update(_mapper.Map<Motorista>(objeto));
+            return _context.SaveChanges() == 1;
 
         }
         /// <summary>

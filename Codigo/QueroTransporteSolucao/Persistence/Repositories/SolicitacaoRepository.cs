@@ -42,9 +42,8 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Remover(int id)
         {
-            var solicitacao = _context.Solicitacao.Where(s => s.Id == id).FirstOrDefault();
-            _context.Remove(solicitacao);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Remove(_context.Solicitacao.FirstOrDefault(s => s.Id == id));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>

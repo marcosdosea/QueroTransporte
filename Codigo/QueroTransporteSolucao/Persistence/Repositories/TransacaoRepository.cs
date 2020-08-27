@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using AutoMapper;
+using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
 using System;
@@ -11,9 +12,11 @@ namespace Data.Repositories
     {
 
         private readonly BD_QUERO_TRANSPORTEContext _context;
-        public TransacaoRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly IMapper _mapper;
+        public TransacaoRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -84,27 +87,8 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Inserir(TransacaoModel objeto)
         {
-            Transacao _transacao = new Transacao();
-
-            Atribuir(_transacao, objeto);
-            _context.Add(_transacao);
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// Atribui dados do model para o objeto a ser inserido no banco 
-        /// </summary>
-        /// <param name="credito"></param>
-        /// <param name="objeto"></param>
-        private void Atribuir(Transacao transacao, TransacaoModel objeto)
-        {
-            transacao.IdUsuario = objeto.IdUsuario;
-            transacao.QtdCreditos = objeto.QtdCreditos;
-            transacao.Valor = objeto.Valor;
-            transacao.Status = objeto.Status;
-            transacao.Deferido = Convert.ToByte(objeto.Deferido);
-            transacao.Data = objeto.Data;
-            transacao.Tipo = objeto.Tipo;
+            _context.Transacao.Add(_mapper.Map<Transacao>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -114,20 +98,29 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Editar(TransacaoModel objeto)
         {
-            Transacao _transacao = new Transacao();
-            Atribuir(_transacao, objeto);
-            _context.Update(_transacao);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Transacao.Update(_mapper.Map<Transacao>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         public bool Remover(int id)
         {
-            throw new NotImplementedException();
+            _context.Transacao.Remove(_context.Transacao.FirstOrDefault(t => t.Id == id));
+            return _context.SaveChanges() == 1;
         }
 
         public List<TransacaoModel> ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
+            => _context
+                .Transacao
+                .Select(transacao => new TransacaoModel
+                {
+                    Id = transacao.Id,
+                    IdUsuario = transacao.IdUsuario,
+                    QtdCreditos = transacao.QtdCreditos,
+                    Valor = transacao.Valor,
+                    Deferido = Convert.ToBoolean(transacao.Deferido),
+                    Status = transacao.Status,
+                    Data = transacao.Data,
+                    Tipo = transacao.Tipo
+                }).ToList();
     }
 }

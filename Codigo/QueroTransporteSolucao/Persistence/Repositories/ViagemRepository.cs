@@ -1,3 +1,4 @@
+using AutoMapper;
 using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
@@ -10,9 +11,11 @@ namespace Data.Repositories
     public class ViagemRepository : IViagemRepository
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
-        public ViagemRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly IMapper _mapper;
+        public ViagemRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -22,8 +25,8 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Editar(ViagemModel viagem)
         {
-            _context.Update(Atribuir(new Viagem(), viagem));
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Viagem.Update(_mapper.Map<Viagem>(viagem));
+            return _context.SaveChanges() == 1;
         }
 
 
@@ -139,8 +142,8 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Remover(int id)
         {
-            _context.Remove(_context.Viagem.Where(v => v.Id == id).FirstOrDefault());
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Remove(_context.Viagem.FirstOrDefault(v => v.Id == id));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -150,26 +153,8 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Inserir(ViagemModel objeto)
         {
-            _context.Add(Atribuir(new Viagem(), objeto));
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// faz um cast entre um Model e a entidade
-        /// </summary>
-        /// <param name="viagem"></param>
-        /// <param name="_viagem"></param>
-        /// <returns></returns>
-        private Viagem Atribuir(Viagem viagem, ViagemModel _viagem)
-        {
-            viagem.Id = _viagem.Id;
-            viagem.IdRota = _viagem.IdRota;
-            viagem.IdVeiculo = _viagem.IdVeiculo;
-            viagem.Preco = _viagem.Preco;
-            viagem.Lotacao = _viagem.Lotacao;
-            viagem.FoiRealizada = _viagem.IsRealizada ? (byte)1 : (byte)0;
-
-            return viagem;
+            _context.Viagem.Add(_mapper.Map<Viagem>(objeto));
+            return _context.SaveChanges() == 1;
         }
     }
 }

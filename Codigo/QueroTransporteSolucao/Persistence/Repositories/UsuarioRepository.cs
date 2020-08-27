@@ -1,3 +1,4 @@
+using AutoMapper;
 using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
@@ -9,9 +10,11 @@ namespace Data.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
-        public UsuarioRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly IMapper _mapper;
+        public UsuarioRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -20,10 +23,8 @@ namespace Data.Repositories
         /// <param name="objeto">Objeto na qual irá sobreescrever o objeto (usuario) antigo</param>
         public bool Editar(UsuarioModel objeto)
         {
-            Usuario usuario = new Usuario();
-            Atribuir(objeto, usuario);
-            _context.Update(usuario);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Usuario.Update(_mapper.Map<Usuario>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -51,9 +52,8 @@ namespace Data.Repositories
         /// <param name="id">serve para buscar um usuario no banco para excluir</param>
         public bool Remover(int id)
         {
-            var usuario = _context.Usuario.Find(id);
-            _context.Remove(usuario);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Remove(_context.Usuario.FirstOrDefault(x => x.Id == id));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -62,10 +62,8 @@ namespace Data.Repositories
         /// <param name="objeto">Objeto que será adicionando no banco</param>
         public bool Inserir(UsuarioModel objeto)
         {
-            Usuario usuario = new Usuario();
-            Atribuir(objeto, usuario);
-            _context.Add(usuario);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Usuario.Add(_mapper.Map<Usuario>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -103,22 +101,6 @@ namespace Data.Repositories
                     Telefone = usuario.Telefone,
                     Tipo = usuario.Tipo
                 }).ToList();
-
-        /// <summary>
-        /// Obetivo é reaproveitar o código, pois é utilizado em alterar e inserir
-        /// </summary>
-        /// <param name="usuarioModel">Objeto do modelo</param>
-        /// <param name="usuario">Objeto da persistencia</param>
-        private void Atribuir(UsuarioModel usuarioModel, Usuario usuario)
-        {
-            usuario.Id = usuarioModel.Id;
-            usuario.Nome = usuarioModel.Nome;
-            usuario.Cpf = usuarioModel.Cpf;
-            usuario.Email = usuarioModel.Email;
-            usuario.Senha = usuarioModel.Senha;
-            usuario.Telefone = usuarioModel.Telefone;
-            usuario.Tipo = usuarioModel.Tipo;
-        }
 
         /// <summary>
         /// O motivo é de fixar na lista de opcoes dos tipos na view, selectList

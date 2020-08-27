@@ -1,3 +1,4 @@
+using AutoMapper;
 using Data.Entities;
 using Domain.Interfaces.Repositories;
 using QueroTransporte.Model;
@@ -9,10 +10,11 @@ namespace Data.Repositories
     public class VeiculoRepository : IVeiculoRepository
     {
         private readonly BD_QUERO_TRANSPORTEContext _context;
-
-        public VeiculoRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly IMapper _mapper;
+        public VeiculoRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
         {
-            this._context = context;
+            _context = context;
+            _mapper = mapper;
         }
 
         public VeiculoRepository()
@@ -26,11 +28,8 @@ namespace Data.Repositories
         /// <returns></returns>
         public virtual bool Inserir(VeiculoModel objeto)
         {
-            Veiculo _veiculo = new Veiculo();
-
-            Atribuir(objeto, _veiculo);
-            _context.Add(_veiculo);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Veiculo.Add(_mapper.Map<Veiculo>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
@@ -39,11 +38,8 @@ namespace Data.Repositories
         /// <param name="veiculoModel"></param>
         public virtual bool Editar(VeiculoModel objeto)
         {
-            Veiculo _veiculo = new Veiculo();
-
-            Atribuir(objeto, _veiculo);
-            _context.Update(_veiculo);
-            return _context.SaveChanges() == 1 ? true : false;
+            _context.Veiculo.Update(_mapper.Map<Veiculo>(objeto));
+            return _context.SaveChanges() == 1;
         }
 
 
@@ -53,30 +49,8 @@ namespace Data.Repositories
         /// <param name="id"></param>
         public virtual bool Remover(int id)
         {
-            var veiculo = _context.Veiculo.Find(id);
-            _context.Veiculo.Remove(veiculo);
-            return _context.SaveChanges() == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// Atribui dados de um objeto para outro
-        /// </summary>
-        /// <param name="veiculoModel"></param>
-        /// <param name="_veiculo"></param>
-        private void Atribuir(VeiculoModel veiculoModel, Veiculo _veiculo)
-        {
-            _veiculo.Id = veiculoModel.Id;
-            _veiculo.AnoFabricacao = veiculoModel.AnoFabricacao;
-            _veiculo.AnoModelo = veiculoModel.AnoModelo;
-            _veiculo.Capacidade = veiculoModel.Capacidade;
-            _veiculo.Categoria = veiculoModel.Categoria;
-            _veiculo.Chassi = veiculoModel.Chassi;
-            _veiculo.Cor = veiculoModel.Cor;
-            _veiculo.DataEmplacamento = veiculoModel.DataEmplacamento;
-            _veiculo.IdFrota = veiculoModel.IdFrota;
-            _veiculo.Marca = veiculoModel.Marca;
-            _veiculo.Modelo = veiculoModel.Modelo;
-            _veiculo.Placa = veiculoModel.Placa;
+            _context.Veiculo.Remove(_context.Veiculo.FirstOrDefault(x => x.Id == id));
+            return _context.SaveChanges() == 1;
         }
 
         /// <summary>
