@@ -53,9 +53,9 @@ namespace QueroTransporteWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                if (UsuarioUnityOfWork.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(cv.IdUsuario) != null)
+                if (UsuarioUnityOfWork.UsuarioUnityOfWork.UsuarioRepository.ObterPorId(cv.IdUsuario) != null)
                 {
-                    if (ComprarCreditoUnityOfWork.CreditoUnityOfWork.GerenciadorComprarCredito.Inserir(cv))
+                    if (ComprarCreditoUnityOfWork.CreditoUnityOfWork.ComprarCreditoRepository.Inserir(cv))
                     {
                         TempData["mensagemSucesso"] = "Compra realizada com sucesso!.";
                         deferido = true;
@@ -66,7 +66,7 @@ namespace QueroTransporteWeb.Controllers
                         deferido = false;
                     }
 
-                    if (!TransacaoUnityOfWork.TransacaoUnityOfWork.GerenciadorTransacao.Inserir(addTransacao(cv, deferido)))
+                    if (!TransacaoUnityOfWork.TransacaoUnityOfWork.TransacaoRepository.Inserir(addTransacao(cv, deferido)))
                         TempData["mensagemErroTransacao"] = "Houve um problema ao gravar a transacao";
                 }
                 else

@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface IUsuarioUnityOfWork
     {
-        IUsuarioRepository GerenciadorUsuario { get; }
+        IUsuarioRepository UsuarioRepository { get; }
     }
 }

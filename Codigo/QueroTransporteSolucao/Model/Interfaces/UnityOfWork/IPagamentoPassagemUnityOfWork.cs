@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface IPagamentoPassagemUnityOfWork
     {
-        IPagarPassagemRepository GerenciadorPagarPassagem { get; }
+        IPagarPassagemRepository PagarPassagemRepository { get; }
     }
 }

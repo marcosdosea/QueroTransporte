@@ -14,19 +14,17 @@ namespace QueroTransporte.QueroTransporteWeb
     public class MotoristaController : Controller
     {
         private readonly IMotoristaService MotoristaService;
-        private readonly IUsuarioService UsuarioService;
-        public MotoristaController(IMotoristaService gerenciadorMotorista, IUsuarioService gerenciadorUsuario)
+        public MotoristaController(IMotoristaService gerenciadorMotorista)
         {
             MotoristaService = gerenciadorMotorista;
-            UsuarioService = gerenciadorUsuario;
         }
 
         public IActionResult Index()
         {
             var listViewModel = new List<MotoristaUsuarioViewModel>();
-            foreach (var motorista in MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterTodos())
+            foreach (var motorista in MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.ObterTodos())
             {
-                var usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario);
+                var usuario = MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.ObterPorId(motorista.IdUsuario);
 
                 listViewModel.Add(new MotoristaUsuarioViewModel()
                 {
@@ -39,7 +37,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Create()
         {
-            ViewBag.UsuariosMotoristas = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
+            ViewBag.UsuariosMotoristas = new SelectList(MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.ObterUsuariosMotoristas(), "Id", "Nome");
             return View();
         }
 
@@ -49,25 +47,29 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.Inserir(motorista))
+                MotoristaService.MotoristaUsuarioUnityOfWork.BeginTransaction();
+                if (MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.Inserir(motorista))
                 {
-                    var usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario);
+                    var usuario = MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.ObterPorId(motorista.IdUsuario);
                     usuario.Tipo = "MOTORISTA";
-                    UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Editar(usuario);
-
-                    return RedirectToAction(nameof(Index));
+                    if (MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.Editar(usuario))
+                    {
+                        MotoristaService.MotoristaUsuarioUnityOfWork.Commit();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else MotoristaService.MotoristaUsuarioUnityOfWork.Rollback();
                 }
-
+                else MotoristaService.MotoristaUsuarioUnityOfWork.Rollback();
                 // TODO: Retornar uma mensagem ao usuario, caso tente cadastrar um motorista a um usuario já cadastrado.
                 // Tipo: Motorista X = Usuario X => Motorista Y = Motorista X ... Isso quebra o banco e retorna o erro p a aplicação.
             }
 
-            ViewBag.UsuariosMotoristas = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterUsuariosMotoristas(), "Id", "Nome");
+            ViewBag.UsuariosMotoristas = new SelectList(MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.ObterUsuariosMotoristas(), "Id", "Nome");
             return View(motorista);
         }
         public IActionResult Edit(int id)
         {
-            var motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
+            var motorista = MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.ObterPorId(id);
             return View(motorista);
         }
 
@@ -77,7 +79,7 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.Editar(motorista))
+                if (MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.Editar(motorista))
                     return RedirectToAction(nameof(Index));
 
             }
@@ -87,16 +89,16 @@ namespace QueroTransporte.QueroTransporteWeb
         // GET: Usuario/Details/5
         public IActionResult Details(int id)
         {
-            MotoristaUsuarioViewModel motorista = new MotoristaUsuarioViewModel();
-            motorista.Motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
-            motorista.Usuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.Motorista.IdUsuario);
+            var motorista = new MotoristaUsuarioViewModel();
+            motorista.Motorista = MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.ObterPorId(id);
+            motorista.Usuario = MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.ObterPorId(motorista.Motorista.IdUsuario);
             return View(motorista);
         }
 
         public IActionResult Delete(int id)
         {
-            MotoristaModel motorista = MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id);
-            ViewBag.NomeUsuario = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(motorista.IdUsuario).Nome;
+            MotoristaModel motorista = MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.ObterPorId(id);
+            ViewBag.NomeUsuario = MotoristaService.MotoristaUsuarioUnityOfWork.UsuarioRepository.ObterPorId(motorista.IdUsuario).Nome;
             return View(motorista);
         }
 
@@ -104,10 +106,10 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            if (MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.Remover(id))
+            if (MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.Remover(id))
                 return RedirectToAction(nameof(Index));
 
-            return View(MotoristaService.MotoristaUnityOfWork.GerenciadorMotorista.ObterPorId(id));
+            return View(MotoristaService.MotoristaUsuarioUnityOfWork.MotoristaRepository.ObterPorId(id));
         }
     }
 }

@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class CreditoUnityOfWork : ICreditoUnityOfWork
     {
-        public IComprarCreditoRepository GerenciadorComprarCredito { get; }
+        public IComprarCreditoRepository ComprarCreditoRepository { get; }
         public CreditoUnityOfWork(IComprarCreditoRepository gerenciadorComprarCredito)
         {
-            GerenciadorComprarCredito = gerenciadorComprarCredito;
+            ComprarCreditoRepository = gerenciadorComprarCredito;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface ICreditoUnityOfWork
     {
-        IComprarCreditoRepository GerenciadorComprarCredito { get; }
+        IComprarCreditoRepository ComprarCreditoRepository { get; }
     }
 }

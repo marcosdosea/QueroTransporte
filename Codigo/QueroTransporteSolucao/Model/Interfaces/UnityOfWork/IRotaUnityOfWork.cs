@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface IRotaUnityOfWork
     {
-        IRotaRepository GerenciadorRota { get; }
+        IRotaRepository RotaRepository { get; }
     }
 }

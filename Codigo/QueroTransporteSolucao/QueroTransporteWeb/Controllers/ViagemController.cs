@@ -25,10 +25,10 @@ namespace QueroTransporteWeb.Controllers
         public ActionResult Index()
         {
             var listViewModels = new List<ViagemRotaViewModel>();
-            foreach (var viagem in ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterTodos())
+            foreach (var viagem in ViagemService.ViagemUnityOfWork.ViagemRepository.ObterTodos())
             {
-                var rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
-                var veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+                var rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
+                var veiculo = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(viagem.IdVeiculo);
 
                 listViewModels.Add(new ViagemRotaViewModel()
                 {
@@ -44,17 +44,17 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Details/5
         public ActionResult Details(int id)
         {
-            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
-            ViewBag.rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
-            ViewBag.placa = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+            var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
+            ViewBag.rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
+            ViewBag.placa = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(viagem.IdVeiculo);
             return View(viagem);
         }
 
         // GET: ManterViagem/Create
         public ActionResult Create()
         {
-            ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterTodos(), "Id", "Placa");
+            ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.RotaRepository.ObterDetalhesRota(), "Id", "DetalhesRota");
+            ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos(), "Id", "Placa");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (ViagemService.ViagemUnityOfWork.GerenciadorViagem.Inserir(viagemModel))
+                if (ViagemService.ViagemUnityOfWork.ViagemRepository.Inserir(viagemModel))
                     return RedirectToAction(nameof(Index));
 
                 return View();
@@ -79,10 +79,10 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Edit/5
         public ActionResult Edit(int id)
         {
-            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
-            var rotas = RotaService.RotaUnityOfWork.GerenciadorRota.ObterTodos();
-            ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.GerenciadorRota.ObterDetalhesRota(), "Id", "DetalhesRota");
-            ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterTodos(), "Id", "Placa");
+            var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
+            var rotas = RotaService.RotaUnityOfWork.RotaRepository.ObterTodos();
+            ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.RotaRepository.ObterDetalhesRota(), "Id", "DetalhesRota");
+            ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos(), "Id", "Placa");
             return View(viagem);
         }
 
@@ -93,7 +93,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (ViagemService.ViagemUnityOfWork.GerenciadorViagem.Editar(viagemModel))
+                if (ViagemService.ViagemUnityOfWork.ViagemRepository.Editar(viagemModel))
                     return RedirectToAction(nameof(Index));
 
                 return View();
@@ -107,9 +107,9 @@ namespace QueroTransporteWeb.Controllers
         // GET: ManterViagem/Delete/5
         public ActionResult Delete(int id)
         {
-            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
-            ViewBag.rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
-            ViewBag.placa = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
+            var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
+            ViewBag.rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
+            ViewBag.placa = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(viagem.IdVeiculo);
             return View(viagem);
         }
 
@@ -120,7 +120,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (ViagemService.ViagemUnityOfWork.GerenciadorViagem.Remover(id))
+                if (ViagemService.ViagemUnityOfWork.ViagemRepository.Remover(id))
                     return RedirectToAction(nameof(Index));
                 else
                     return RedirectToAction(nameof(Delete));

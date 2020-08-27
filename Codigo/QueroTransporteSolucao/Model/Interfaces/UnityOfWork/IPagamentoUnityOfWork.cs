@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface IPagamentoUnityOfWork
     {
-        IPagamentoRepository GerenciadorPagamento { get; }
+        IPagamentoRepository PagamentoRepository { get; }
     }
 }

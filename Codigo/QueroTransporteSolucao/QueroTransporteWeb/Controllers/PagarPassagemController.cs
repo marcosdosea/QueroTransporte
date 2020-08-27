@@ -37,13 +37,13 @@ namespace QueroTransporteWeb.Controllers
         public IActionResult Index()
         {
             //Id usuario session
-            var solicitacao = PagarPassagemService.PagamentoPassagemUnityOfWork.GerenciadorPagarPassagem.ObterViagemPorUsuarioData(
+            var solicitacao = PagarPassagemService.PagamentoPassagemUnityOfWork.PagarPassagemRepository.ObterViagemPorUsuarioData(
                 MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity).Id, DateTime.Now);
             if (solicitacao != null)
             {
-                var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(solicitacao.IdViagem);
-                var rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
-                var creditos = CreditoService.CreditoUnityOfWork.GerenciadorComprarCredito.ObterPorId(solicitacao.IdUsuario);
+                var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(solicitacao.IdViagem);
+                var rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
+                var creditos = CreditoService.CreditoUnityOfWork.ComprarCreditoRepository.ObterPorId(solicitacao.IdUsuario);
                 var viagemPassagem = new ViagemPassagemViewModel
                 {
                     Viagem = viagem,
@@ -79,16 +79,16 @@ namespace QueroTransporteWeb.Controllers
                     pagamento.Tipo = 2;
                     var creditosRestantes = (vP.Creditos.Saldo - (decimal)vP.Viagem.Preco);
                     vP.Creditos.Saldo = creditosRestantes;
-                    CreditoService.CreditoUnityOfWork.GerenciadorComprarCredito.Editar(vP.Creditos);
+                    CreditoService.CreditoUnityOfWork.ComprarCreditoRepository.Editar(vP.Creditos);
                 }
                 else
                     pagamento.Tipo = 1;
 
-                if (PagamentoService.PagamentoUnityOfWork.GerenciadorPagamento.Inserir(pagamento))
+                if (PagamentoService.PagamentoUnityOfWork.PagamentoRepository.Inserir(pagamento))
                 {
                     TempData["mensagemSucesso"] = "Pagamento com crédito com sucesso.";
 
-                    if (!TransacaoService.TransacaoUnityOfWork.GerenciadorTransacao.Inserir(addTransacao(vP, true)))
+                    if (!TransacaoService.TransacaoUnityOfWork.TransacaoRepository.Inserir(addTransacao(vP, true)))
                         TempData["mensagemErroTransacao"] = "Houve um erro ao salvar esta transação no seu histórico";
 
                     return RedirectToAction(nameof(Index));

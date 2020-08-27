@@ -17,13 +17,13 @@ namespace QueroTransporteWeb.Controllers
         // GET: Frota
         public ActionResult Index()
         {
-            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterTodos());
+            return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterTodos());
         }
 
         // GET: Frota/Details/5
         public ActionResult Details(int id)
         {
-            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(id));
+            return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
         }
 
         // GET: Frota/Create
@@ -40,7 +40,7 @@ namespace QueroTransporteWeb.Controllers
             try
             {
                 if (ModelState.IsValid)
-                    if (FrotaService.FrotaUnityOfWork.GerenciadorFrota.Inserir(frota))
+                    if (FrotaService.FrotaUnityOfWork.FrotaRepository.Inserir(frota))
                         return RedirectToAction(nameof(Index));
             }
             catch
@@ -53,7 +53,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: Frota/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(id));
+            return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
         }
 
         // POST: Frota/Edit/5
@@ -76,7 +76,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: Frota/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(id));
+            return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
         }
 
         // POST: Frota/Delete/5
@@ -86,7 +86,7 @@ namespace QueroTransporteWeb.Controllers
         {
             try
             {
-                if (FrotaService.FrotaUnityOfWork.GerenciadorFrota.Remover(id))
+                if (FrotaService.FrotaUnityOfWork.FrotaRepository.Remover(id))
                     return RedirectToAction(nameof(Index));
             }
             catch

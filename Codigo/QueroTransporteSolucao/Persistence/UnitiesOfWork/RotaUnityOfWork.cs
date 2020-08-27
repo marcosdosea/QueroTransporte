@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class RotaUnityOfWork : IRotaUnityOfWork
     {
-        public IRotaRepository GerenciadorRota { get; }
+        public IRotaRepository RotaRepository { get; }
         public RotaUnityOfWork(IRotaRepository gerenciadorRota)
         {
-            GerenciadorRota = gerenciadorRota;
+            RotaRepository = gerenciadorRota;
         }
     }
 }

@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class PagarPassagemUnityOfWork : IPagamentoPassagemUnityOfWork
     {
-        public IPagarPassagemRepository GerenciadorPagarPassagem { get; }
+        public IPagarPassagemRepository PagarPassagemRepository { get; }
         public PagarPassagemUnityOfWork(IPagarPassagemRepository gerenciadorPagarPassagem)
         {
-            GerenciadorPagarPassagem = gerenciadorPagarPassagem;
+            PagarPassagemRepository = gerenciadorPagarPassagem;
         }
     }
 }

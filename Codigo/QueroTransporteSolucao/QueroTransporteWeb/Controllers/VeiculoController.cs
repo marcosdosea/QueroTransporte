@@ -21,11 +21,11 @@ namespace QueroTransporte.QueroTransporteWeb
         }
 
 
-        public IActionResult Index() => View(VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterTodos());
+        public IActionResult Index() => View(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos());
 
         public IActionResult Create()
         {
-            ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterTodos(), "Id", "Titulo");
+            ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterTodos(), "Id", "Titulo");
             return View();
         }
 
@@ -35,15 +35,15 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.VerificaInsercaoVeiculo(veiculoModel.Chassi, veiculoModel.Placa) == 0)
+                if (VeiculoService.VeiculoUnityOfWork.VeiculoRepository.VerificaInsercaoVeiculo(veiculoModel.Chassi, veiculoModel.Placa) == 0)
                 {
-                    if (VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.Inserir(veiculoModel))
+                    if (VeiculoService.VeiculoUnityOfWork.VeiculoRepository.Inserir(veiculoModel))
                         return RedirectToAction(nameof(Index));
                 }
                 else
                 {
                     TempData["mensagemErro"] = "Já existe um veículo com esse chassi ou placa na base de dados";
-                    ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterTodos(), "Id", "Titulo");
+                    ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterTodos(), "Id", "Titulo");
                     return View(veiculoModel);
                 }
             }
@@ -54,8 +54,8 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Edit(int id)
         {
-            ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterTodos(), "Id", "Titulo");
-            VeiculoModel veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(id);
+            ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterTodos(), "Id", "Titulo");
+            VeiculoModel veiculo = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(id);
             return View(veiculo);
         }
 
@@ -66,15 +66,15 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (!VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.VerificaEdicaoExistente(veiculoModel.Chassi, veiculoModel.Placa, veiculoModel.Id))
+                if (!VeiculoService.VeiculoUnityOfWork.VeiculoRepository.VerificaEdicaoExistente(veiculoModel.Chassi, veiculoModel.Placa, veiculoModel.Id))
                 {
-                    if (VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.Editar(veiculoModel))
+                    if (VeiculoService.VeiculoUnityOfWork.VeiculoRepository.Editar(veiculoModel))
                         return RedirectToAction(nameof(Index));
                 }
                 else
                 {
                     TempData["mensagemErro"] = "Já existe um veículo com esse chassi ou placa na base de dados";
-                    ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterTodos(), "Id", "Titulo");
+                    ViewBag.Frotas = new SelectList(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterTodos(), "Id", "Titulo");
                     return View(veiculoModel);
                 }
             }
@@ -83,15 +83,15 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Details(int id)
         {
-            VeiculoModel veiculoModel = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(id);
-            ViewBag.TituloFrota = FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(veiculoModel.IdFrota).Titulo;
+            VeiculoModel veiculoModel = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(id);
+            ViewBag.TituloFrota = FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(veiculoModel.IdFrota).Titulo;
             return View(veiculoModel);
         }
 
         public IActionResult Delete(int id)
         {
-            VeiculoModel veiculoModel = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(id);
-            ViewBag.TituloFrota = FrotaService.FrotaUnityOfWork.GerenciadorFrota.ObterPorId(veiculoModel.IdFrota).Titulo;
+            VeiculoModel veiculoModel = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(id);
+            ViewBag.TituloFrota = FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(veiculoModel.IdFrota).Titulo;
             return View(veiculoModel);
         }
 
@@ -99,10 +99,10 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            if (VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.Remover(id))
+            if (VeiculoService.VeiculoUnityOfWork.VeiculoRepository.Remover(id))
                 return RedirectToAction(nameof(Index));
 
-            return View(VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(id));
+            return View(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(id));
         }
     }
 }

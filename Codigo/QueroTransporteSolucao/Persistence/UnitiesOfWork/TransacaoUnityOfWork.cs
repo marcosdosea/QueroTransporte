@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class TransacaoUnityOfWork : ITransacaoUnityOfWork
     {
-        public ITransacaoRepository GerenciadorTransacao { get; }
+        public ITransacaoRepository TransacaoRepository { get; }
         public TransacaoUnityOfWork(ITransacaoRepository gerenciadorTransacao)
         {
-            GerenciadorTransacao = gerenciadorTransacao;
+            TransacaoRepository = gerenciadorTransacao;
         }
     }
 }

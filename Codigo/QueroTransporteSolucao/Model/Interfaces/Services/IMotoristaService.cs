@@ -1,9 +1,9 @@
-﻿using Domain.Interfaces.UnityOfWork;
+﻿using Domain.Interfaces.UnityOfWork.Multiple;
 
 namespace Domain.Interfaces.Services
 {
     public interface IMotoristaService
     {
-        IMotoristaUnityOfWork MotoristaUnityOfWork { get; }
+        IMotoristaUsuarioUnityOfWork MotoristaUsuarioUnityOfWork { get; }
     }
 }

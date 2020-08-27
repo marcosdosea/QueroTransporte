@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface IViagemUnityOfWork
     {
-        IViagemRepository GerenciadorViagem { get; }
+        IViagemRepository ViagemRepository { get; }
     }
 }

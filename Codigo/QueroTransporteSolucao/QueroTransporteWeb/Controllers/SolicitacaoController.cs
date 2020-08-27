@@ -34,18 +34,18 @@ namespace QueroTransporteWeb.Controllers
             // Retornando todas as viagens do determinado usuario, obtido pelo id setado na sessão.
             var listViewModels = new List<ViagemRotaViewModel>();
 
-            foreach (var solicitacao in SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterSolicitacoesAbertasPorUsuario(_usuarioLogado.Id))
+            foreach (var solicitacao in SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.ObterSolicitacoesAbertasPorUsuario(_usuarioLogado.Id))
             {
-                var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(solicitacao.IdViagem);
+                var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(solicitacao.IdViagem);
                 listViewModels.Add(new ViagemRotaViewModel
                 {
-                    Rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota),
-                    Veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo),
+                    Rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota),
+                    Veiculo = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(viagem.IdVeiculo),
                     Viagem = viagem
                 });
             }
 
-            var rotas = RotaService.RotaUnityOfWork.GerenciadorRota.ObterTodos();
+            var rotas = RotaService.RotaUnityOfWork.RotaRepository.ObterTodos();
             ViewBag.rotaOrigem = new SelectList(rotas, "Origem", "Origem");
             ViewBag.rotaDestino = new SelectList(rotas, "Destino", "Destino");
             return View(listViewModels);
@@ -62,15 +62,15 @@ namespace QueroTransporteWeb.Controllers
         {
             var listaViagemRotaViewModel = new List<ViagemRotaViewModel>();
 
-            foreach (var rota in RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorOrigemDestino(origem, destino, diaSemana))
+            foreach (var rota in RotaService.RotaUnityOfWork.RotaRepository.ObterPorOrigemDestino(origem, destino, diaSemana))
             {
-                var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.BuscarPorRota(rota.Id);
+                var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.BuscarPorRota(rota.Id);
 
                 listaViagemRotaViewModel.Add(new ViagemRotaViewModel
                 {
                     Rota = rota,
                     Viagem = viagem,
-                    Veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo)
+                    Veiculo = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(viagem.IdVeiculo)
                 });
             }
 
@@ -85,7 +85,7 @@ namespace QueroTransporteWeb.Controllers
             {
                 var _usuarioLogado = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity);
                 var x = new SolicitacaoVeiculoModel { IdUsuario = _usuarioLogado.Id, IdViagem = id, DataSolicitacao = DateTime.Now, IdPagamento = 1 };
-                if (SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.Inserir(x))
+                if (SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.Inserir(x))
                 {
                     TempData["msg"] = "success";
                     return RedirectToAction("Index", "Solicitacao");
@@ -125,12 +125,12 @@ namespace QueroTransporteWeb.Controllers
         // GET: Solicitacao/Delete/5
         public ActionResult Delete(int id)
         {
-            var viagem = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterPorId(id);
-            var veiculo = VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(viagem.IdVeiculo);
-            var rota = RotaService.RotaUnityOfWork.GerenciadorRota.ObterPorId(viagem.IdRota);
+            var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
+            var veiculo = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(viagem.IdVeiculo);
+            var rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
             var _usuarioLogado = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity);
 
-            ViewBag.solicitacao = SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterPorViagemUsuario(_usuarioLogado.Id, id);
+            ViewBag.solicitacao = SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.ObterPorViagemUsuario(_usuarioLogado.Id, id);
             // Obter a solicitação pelo ID da viagem/ID do usuario em questao.
             //var solicitacao = _gerenciadorSolicitacao.ObterPorViagemUsuario(idUsuario, id);
             return View(new ViagemRotaViewModel { Veiculo = veiculo, Rota = rota, Viagem = viagem });
@@ -144,8 +144,8 @@ namespace QueroTransporteWeb.Controllers
             try
             {
                 var _usuarioLogado = MethodsUtils.RetornaUserLogado((ClaimsIdentity)User.Identity);
-                var solicitacao = SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterPorViagemUsuario(_usuarioLogado.Id, id);
-                if (SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.Remover(solicitacao.Id))
+                var solicitacao = SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.ObterPorViagemUsuario(_usuarioLogado.Id, id);
+                if (SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.Remover(solicitacao.Id))
                     return RedirectToAction("Index", "Solicitacao", new { msg = "sucess" });
 
                 return RedirectToAction("Index", "Solicitacao", new { msg = "fail" });

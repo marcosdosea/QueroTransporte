@@ -24,13 +24,13 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Index()
         {
-            ViewBag.Consumiveis = ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterTodos();
-            return View(ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterTodos());
+            ViewBag.Consumiveis = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos();
+            return View(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos());
         }
 
         public IActionResult Create()
         {
-            ViewBag.Consumiveis = new SelectList(ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterTodos(), "Id");
+            ViewBag.Consumiveis = new SelectList(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos(), "Id");
             return View();
         }
 
@@ -40,9 +40,9 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (VeiculoService.VeiculoUnityOfWork.GerenciadorVeiculo.ObterPorId(consumivelveicularModel.IdVeiculo) != null)
+                if (VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(consumivelveicularModel.IdVeiculo) != null)
                 {
-                    if (ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.Inserir(consumivelveicularModel))
+                    if (ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.Inserir(consumivelveicularModel))
                         return RedirectToAction(nameof(Index));
                 }
             }
@@ -52,7 +52,7 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Edit(int id)
         {
 
-            ConsumivelVeicularModel consumivel = ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterPorId(id);
+            ConsumivelVeicularModel consumivel = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id);
             return View(consumivel);
         }
 
@@ -62,7 +62,7 @@ namespace QueroTransporte.QueroTransporteWeb
         {
             if (ModelState.IsValid)
             {
-                if (ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.Editar(consumivelveicularModel))
+                if (ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.Editar(consumivelveicularModel))
                     return RedirectToAction(nameof(Index));
             }
             return View(consumivelveicularModel);
@@ -70,13 +70,13 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Details(int id)
         {
-            ConsumivelVeicularModel consumivelveicularModel = ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterPorId(id);
+            ConsumivelVeicularModel consumivelveicularModel = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id);
             return View(consumivelveicularModel);
         }
 
         public IActionResult Delete(int id)
         {
-            ConsumivelVeicularModel consumivel = ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterPorId(id);
+            ConsumivelVeicularModel consumivel = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id);
             return View(consumivel);
         }
 
@@ -84,15 +84,15 @@ namespace QueroTransporte.QueroTransporteWeb
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            if (ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.Remover(id))
+            if (ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.Remover(id))
                 return RedirectToAction(nameof(Index));
 
-            return View(ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterPorId(id));
+            return View(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id));
         }
 
         public IActionResult Reports()
         {
-            IEnumerable<ConsumivelVeicularModel> cns = ConsumivelService.ConsumivelUnityOfWork.GerenciadorConsumivelVeicular.ObterTodos();
+            IEnumerable<ConsumivelVeicularModel> cns = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos();
             IEnumerable<RelatorioConsumivelVeicularViewModel> itens = cns.GroupBy(x => x.DataDespesa.Date).Select(y => new RelatorioConsumivelVeicularViewModel
             {
                 Data = y.First().DataDespesa.ToString("dd/MM/yyyy"),

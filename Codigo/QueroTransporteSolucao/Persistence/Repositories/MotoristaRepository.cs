@@ -62,6 +62,7 @@ namespace Data.Repositories
         /// <param name="objeto"></param>
         public bool Editar(MotoristaModel objeto)
         {
+            objeto.IdUsuario = _context.Motorista.Where(x => x.Id == objeto.Id).Select(x => x.IdUsuario).FirstOrDefault();
             _context.Update(_mapper.Map<Motorista>(objeto));
             return _context.SaveChanges() == 1;
 

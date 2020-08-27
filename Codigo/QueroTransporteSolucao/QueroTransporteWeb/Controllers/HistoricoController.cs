@@ -19,22 +19,22 @@ namespace QueroTransporteWeb.Controllers
         }
         public IActionResult HistoricoTransacoes()
         {
-            ViewBag.deferidas = TransacaoService.TransacaoUnityOfWork.GerenciadorTransacao.ObterTodasDeferidas(true).Count();
-            ViewBag.indeferidas = TransacaoService.TransacaoUnityOfWork.GerenciadorTransacao.ObterTodasDeferidas(false).Count();
+            ViewBag.deferidas = TransacaoService.TransacaoUnityOfWork.TransacaoRepository.ObterTodasDeferidas(true).Count();
+            ViewBag.indeferidas = TransacaoService.TransacaoUnityOfWork.TransacaoRepository.ObterTodasDeferidas(false).Count();
             return View();
         }
 
         public IActionResult HistoricoViagens()
         {
-            ViewBag.realizada = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterTodosAbertos(true).Count();
-            ViewBag.naoRealizada = ViagemService.ViagemUnityOfWork.GerenciadorViagem.ObterTodosAbertos(false).Count();
+            ViewBag.realizada = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterTodosAbertos(true).Count();
+            ViewBag.naoRealizada = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterTodosAbertos(false).Count();
             return View();
         }
 
         public IActionResult HistoricoSolicitacoes()
         {
-            ViewBag.atendidas = SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterTodosAtendidas(true).Count();
-            ViewBag.naoAtendidas = SolicitacaoService.SolicitacaoUnityOfWork.GerenciadorSolicitacao.ObterTodosAtendidas(false).Count();
+            ViewBag.atendidas = SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.ObterTodosAtendidas(true).Count();
+            ViewBag.naoAtendidas = SolicitacaoService.SolicitacaoUnityOfWork.SolicitacaoRepository.ObterTodosAtendidas(false).Count();
             return View();
         }
     }

@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class UsuarioUnityOfWork : IUsuarioUnityOfWork
     {
-        public IUsuarioRepository GerenciadorUsuario { get; }
+        public IUsuarioRepository UsuarioRepository { get; }
         public UsuarioUnityOfWork(IUsuarioRepository gerenciadorUsuario)
         {
-            GerenciadorUsuario = gerenciadorUsuario;
+            UsuarioRepository = gerenciadorUsuario;
         }
     }
 }

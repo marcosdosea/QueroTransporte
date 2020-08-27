@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface ISolicitacaoUnityOfWork
     {
-        ISolicitacaoRepository GerenciadorSolicitacao { get; }
+        ISolicitacaoRepository SolicitacaoRepository { get; }
     }
 }

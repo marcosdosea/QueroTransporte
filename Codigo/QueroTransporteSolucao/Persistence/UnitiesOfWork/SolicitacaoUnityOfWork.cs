@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class SolicitacaoUnityOfWork : ISolicitacaoUnityOfWork
     {
-        public ISolicitacaoRepository GerenciadorSolicitacao { get; }
+        public ISolicitacaoRepository SolicitacaoRepository { get; }
         public SolicitacaoUnityOfWork(ISolicitacaoRepository gerenciadorSolicitacao)
         {
-            GerenciadorSolicitacao = gerenciadorSolicitacao;
+            SolicitacaoRepository = gerenciadorSolicitacao;
         }
     }
 }

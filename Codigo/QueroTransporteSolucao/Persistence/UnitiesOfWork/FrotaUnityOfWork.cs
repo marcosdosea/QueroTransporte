@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class FrotaUnityOfWork : IFrotaUnityOfWork
     {
-        public IFrotaRepository GerenciadorFrota { get; }
+        public IFrotaRepository FrotaRepository { get; }
         public FrotaUnityOfWork(IFrotaRepository gerenciadorFrota)
         {
-            GerenciadorFrota = gerenciadorFrota;
+            FrotaRepository = gerenciadorFrota;
         }
     }
 }

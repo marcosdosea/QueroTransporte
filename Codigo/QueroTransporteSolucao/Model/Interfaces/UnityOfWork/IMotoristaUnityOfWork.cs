@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UnityOfWork
 {
     public interface IMotoristaUnityOfWork
     {
-        IMotoristaRepository GerenciadorMotorista { get; }
+        IMotoristaRepository MotoristaRepository { get; }
     }
 }

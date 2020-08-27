@@ -32,7 +32,7 @@ namespace QueroTransporteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorLoginSenha(MethodsUtils.RemoverCaracteresEspeciais(model.Cpf), Criptografia.GerarHashSenha(model.Senha));
+                var user = UsuarioService.UsuarioUnityOfWork.UsuarioRepository.ObterPorLoginSenha(MethodsUtils.RemoverCaracteresEspeciais(model.Cpf), Criptografia.GerarHashSenha(model.Senha));
                 if (user != null)
                 {
                     var claims = new List<Claim>
@@ -82,7 +82,7 @@ namespace QueroTransporteWeb.Controllers
                 usuario.Senha = Criptografia.GerarHashSenha(usuario.Senha);
                 usuario.Tipo = "CLIENTE";
 
-                if (UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Inserir(usuario))
+                if (UsuarioService.UsuarioUnityOfWork.UsuarioRepository.Inserir(usuario))
                     return RedirectToAction("Index", "Login", new { msg = "Success" });
             }
             return View(usuario);

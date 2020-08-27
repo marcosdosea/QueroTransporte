@@ -24,7 +24,7 @@ namespace QueroTransporteWeb.Controllers
         /// </summary>
         /// <returns>Todos os usuarios que não são motoristas para o view que lista eles</returns>
         // GET: Usuario
-        public ActionResult Index() => View(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterTodos().Where(u => !u.Tipo.Equals("MOTORISTA")));
+        public ActionResult Index() => View(UsuarioService.UsuarioUnityOfWork.UsuarioRepository.ObterTodos().Where(u => !u.Tipo.Equals("MOTORISTA")));
 
         /// <summary>
         /// detalha o dados do usuario
@@ -32,7 +32,7 @@ namespace QueroTransporteWeb.Controllers
         /// <param name="id">serve para buscar um usuario, para posteriormente retorna-lo na view</param>
         /// <returns>retorna na view o usuario</returns>
         // GET: Usuario/Details/5
-        public ActionResult Details(int id) => View(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(id));
+        public ActionResult Details(int id) => View(UsuarioService.UsuarioUnityOfWork.UsuarioRepository.ObterPorId(id));
 
         /// <summary>
         /// Para assim que a funcao criar um usuario é chamada
@@ -41,7 +41,7 @@ namespace QueroTransporteWeb.Controllers
         // GET: Usuario/Create
         public ActionResult Create()
         {
-            ViewBag.Tipos = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.GetTipos(), "string");
+            ViewBag.Tipos = new SelectList(UsuarioService.UsuarioUnityOfWork.UsuarioRepository.GetTipos(), "string");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace QueroTransporteWeb.Controllers
             {
                 usuarioModel.Cpf = MethodsUtils.RemoverCaracteresEspeciais(usuarioModel.Cpf);
                 usuarioModel.Telefone = MethodsUtils.RemoverCaracteresEspeciais(usuarioModel.Telefone);
-                if (UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Inserir(usuarioModel))
+                if (UsuarioService.UsuarioUnityOfWork.UsuarioRepository.Inserir(usuarioModel))
                     return RedirectToAction(nameof(Index));
             }
             return View(usuarioModel);
@@ -74,8 +74,8 @@ namespace QueroTransporteWeb.Controllers
         public ActionResult Edit(int id)
         {
             UsuarioModel user = new UsuarioModel();
-            user = UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(id);
-            ViewBag.Tipos = new SelectList(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.GetTipos(), "string");
+            user = UsuarioService.UsuarioUnityOfWork.UsuarioRepository.ObterPorId(id);
+            ViewBag.Tipos = new SelectList(UsuarioService.UsuarioUnityOfWork.UsuarioRepository.GetTipos(), "string");
             return View(user);
         }
 
@@ -91,7 +91,7 @@ namespace QueroTransporteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Editar(usuarioModel))
+                if (UsuarioService.UsuarioUnityOfWork.UsuarioRepository.Editar(usuarioModel))
                     return RedirectToAction(nameof(Index));
             }
             return View(usuarioModel);
@@ -103,7 +103,7 @@ namespace QueroTransporteWeb.Controllers
         /// <param name="id">id do usuario selecionado para exclusao</param>
         /// <returns></returns>
         // GET: Usuario/Delete/5
-        public ActionResult Delete(int id) => View(UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.ObterPorId(id));
+        public ActionResult Delete(int id) => View(UsuarioService.UsuarioUnityOfWork.UsuarioRepository.ObterPorId(id));
 
         /// <summary>
         /// Serve para excluir um usuario
@@ -116,7 +116,7 @@ namespace QueroTransporteWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            UsuarioService.UsuarioUnityOfWork.GerenciadorUsuario.Remover(id);
+            UsuarioService.UsuarioUnityOfWork.UsuarioRepository.Remover(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,7 +1,9 @@
 ﻿using Data.Repositories;
 using Data.UnitiesOfWork;
+using Data.UnitiesOfWork.Multiple;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.UnityOfWork;
+using Domain.Interfaces.UnityOfWork.Multiple;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace QueroTransporteWeb.App_Start.Injecoes
@@ -23,6 +25,9 @@ namespace QueroTransporteWeb.App_Start.Injecoes
             services.AddScoped<IPagarPassagemRepository, PagarPassagemRepository>();
             services.AddScoped<IPagamentoUnityOfWork, PagamentoUnityOfWork>();
             services.AddScoped<ITransacaoUnityOfWork, TransacaoUnityOfWork>();
+
+            // Multiplas
+            services.AddScoped<IMotoristaUsuarioUnityOfWork, MotoristaUsuarioUnityOfWork>();
         }
     }
 }

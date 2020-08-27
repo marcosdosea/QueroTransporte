@@ -1,14 +1,14 @@
 ﻿using Domain.Interfaces.Services;
-using Domain.Interfaces.UnityOfWork;
+using Domain.Interfaces.UnityOfWork.Multiple;
 
 namespace Business
 {
     public class MotoristaService : IMotoristaService
     {
-        public IMotoristaUnityOfWork MotoristaUnityOfWork { get; }
-        public MotoristaService(IMotoristaUnityOfWork motoristaUnityOfWork)
+        public IMotoristaUsuarioUnityOfWork MotoristaUsuarioUnityOfWork { get; }
+        public MotoristaService(IMotoristaUsuarioUnityOfWork motoristaUsuarioUnityOfWork)
         {
-            MotoristaUnityOfWork = motoristaUnityOfWork;
+            MotoristaUsuarioUnityOfWork = motoristaUsuarioUnityOfWork;
         }
     }
 }

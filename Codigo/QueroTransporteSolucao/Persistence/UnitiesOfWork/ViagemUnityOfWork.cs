@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class ViagemUnityOfWork : IViagemUnityOfWork
     {
-        public IViagemRepository GerenciadorViagem { get; }
+        public IViagemRepository ViagemRepository { get; }
         public ViagemUnityOfWork(IViagemRepository gerenciadorViagem)
         {
-            GerenciadorViagem = gerenciadorViagem;
+            ViagemRepository = gerenciadorViagem;
         }
     }
 }

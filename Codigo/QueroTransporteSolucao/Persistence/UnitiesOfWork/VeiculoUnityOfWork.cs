@@ -5,10 +5,10 @@ namespace Data.UnitiesOfWork
 {
     public class VeiculoUnityOfWork : IVeiculoUnityOfWork
     {
-        public IVeiculoRepository GerenciadorVeiculo { get; }
+        public IVeiculoRepository VeiculoRepository { get; }
         public VeiculoUnityOfWork(IVeiculoRepository gerenciadorVeiculo)
         {
-            GerenciadorVeiculo = gerenciadorVeiculo;
+            VeiculoRepository = gerenciadorVeiculo;
         }
     }
 }
