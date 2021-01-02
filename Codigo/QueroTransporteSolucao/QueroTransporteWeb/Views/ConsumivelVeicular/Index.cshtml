@@ -1,60 +1,56 @@
-﻿@model IEnumerable<QueroTransporte.Model.ConsumivelVeicularModel>
+﻿@model IEnumerable<Domain.Models.ViewModel.ConsumivelVeiculoViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-    <div class="x_title">
-        <h2>Index</h2>
-        <a class="btn btn-primary" style="float:right" asp-controller="ConsumivelVeicular" asp-action="Create">Adicionar Consumivel</a>
-        <div class="clearfix"></div>
-    </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdVeiculo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataDespesa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdVeiculo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataDespesa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
-            </td>
-            <td>
-                <a href="@Url.Action("Details", "ConsumivelVeicular", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
-                <a href="@Url.Action("Edit", "ConsumivelVeicular", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                <a href="@Url.Action("Delete", "ConsumivelVeicular", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="x_title">
+    <h2>Consumiveis Veiculares</h2>
+    <a class="btn btn-primary" style="float:right" asp-controller="Motorista" asp-action="Create">Adicionar Motorista</a>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Veiculo.Placa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsumivelVeicular.Valor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsumivelVeicular.DataDespesa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsumivelVeicular.Categoria)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConsumivelVeicular.Valor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConsumivelVeicular.DataDespesa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConsumivelVeicular.Categoria)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", "ConsumivelVeicular", new { id = item.ConsumivelVeicular.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
+                        <a href="@Url.Action("Edit", "ConsumivelVeicular", new { id = item.ConsumivelVeicular.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                        <a href="@Url.Action("Delete", "ConsumivelVeicular", new { id = item.ConsumivelVeicular.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

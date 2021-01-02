@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces.Services;
+using Domain.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,11 @@ namespace QueroTransporte.QueroTransporteWeb
 
         public IActionResult Index()
         {
-            ViewBag.Consumiveis = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos();
-            return View(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos());
+            var consVeic = new List<ConsumivelVeiculoViewModel>();
+            foreach (var c in ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos())
+                consVeic.Add(new ConsumivelVeiculoViewModel { ConsumivelVeicular = c, Veiculo = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterPorId(c.IdVeiculo) });
+
+            return View(consVeic);
         }
 
         public IActionResult Create()
@@ -49,12 +53,7 @@ namespace QueroTransporte.QueroTransporteWeb
             return View(consumivelveicularModel);
         }
 
-        public IActionResult Edit(int id)
-        {
-
-            ConsumivelVeicularModel consumivel = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id);
-            return View(consumivel);
-        }
+        public IActionResult Edit(int id) => View(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -68,17 +67,9 @@ namespace QueroTransporte.QueroTransporteWeb
             return View(consumivelveicularModel);
         }
 
-        public IActionResult Details(int id)
-        {
-            ConsumivelVeicularModel consumivelveicularModel = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id);
-            return View(consumivelveicularModel);
-        }
+        public IActionResult Details(int id) => View(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id));
 
-        public IActionResult Delete(int id)
-        {
-            ConsumivelVeicularModel consumivel = ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id);
-            return View(consumivel);
-        }
+        public IActionResult Delete(int id) => View(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterPorId(id));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
