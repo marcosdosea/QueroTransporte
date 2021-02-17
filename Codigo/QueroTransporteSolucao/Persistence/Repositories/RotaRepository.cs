@@ -60,7 +60,7 @@ namespace Data.Repositories
                     HorarioChegada = rota.HorarioChegada,
                     HorarioSaida = rota.HorarioSaida,
                     DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
-                    RotaId = (int)rota.IdRota,
+                    RotaId = rota.Id,
                     IsComposta = Convert.ToBoolean(rota.EhComposta)
                 }).FirstOrDefault();
 
@@ -92,11 +92,11 @@ namespace Data.Repositories
             _rota.Destino = rotaModel.Destino;
             _rota.HorarioChegada = rotaModel.HorarioChegada;
             _rota.HorarioSaida = rotaModel.HorarioSaida;
-            _rota.DiaSemana = rotaModel.DiaSemana.Length;
+            _rota.DiaSemana = rotaModel.DiaSemana.Length.ToString();
             if (rotaModel.RotaId == -1)
-                _rota.IdRota = null;
+                _rota.Id = 0;
             else
-                _rota.IdRota = rotaModel.RotaId;
+                _rota.Id = (int)rotaModel.RotaId;
             _rota.EhComposta = Convert.ToByte(rotaModel.IsComposta);
         }
 
@@ -114,7 +114,7 @@ namespace Data.Repositories
                       HorarioChegada = rota.HorarioChegada,
                       HorarioSaida = rota.HorarioSaida,
                       DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
-                      RotaId = (int)rota.IdRota,
+                      RotaId = rota.Id,
                       IsComposta = Convert.ToBoolean(rota.EhComposta)
                   }).ToList();
 
@@ -135,7 +135,7 @@ namespace Data.Repositories
                     HorarioChegada = rota.HorarioChegada,
                     HorarioSaida = rota.HorarioSaida,
                     DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
-                    RotaId = (int)rota.IdRota,
+                    RotaId = rota.Id,
                     IsComposta = Convert.ToBoolean(rota.EhComposta)
                 }).ToList();
 
@@ -229,7 +229,7 @@ namespace Data.Repositories
         /// <returns></returns>
         public int ObterNumeroDeRotasDependentes(int id)
             => _context.Rota
-                .Where(rotaModel => rotaModel.IdRota == id)
+                .Where(rotaModel => rotaModel.Id == id)
                 .Select(rota => new RotaModel
                 {
                     Id = rota.Id,
@@ -238,7 +238,7 @@ namespace Data.Repositories
                     HorarioChegada = rota.HorarioChegada,
                     HorarioSaida = rota.HorarioSaida,
                     DiaSemana = Enum.GetName(typeof(DayOfWeek), rota.DiaSemana),
-                    RotaId = (int)rota.IdRota,
+                    RotaId = rota.Id,
                     IsComposta = Convert.ToBoolean(rota.EhComposta)
                 }).ToList().Count();
     }

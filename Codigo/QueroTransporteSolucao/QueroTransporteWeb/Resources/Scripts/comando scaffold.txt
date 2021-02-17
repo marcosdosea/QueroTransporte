@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=fabrica@2020;database=bd_quero_transporte" MySql.Data.EntityFrameworkCore -v -f -o Entities -c ContextDB

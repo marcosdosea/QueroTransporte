@@ -17,7 +17,7 @@ namespace Data.Entities
         public byte FoiRealizada { get; set; }
 
         public Rota IdRotaNavigation { get; set; }
-        public Veiculo IdVeiculoNavigation { get; set; }
+        public Veiculos IdVeiculoNavigation { get; set; }
         public ICollection<Solicitacao> Solicitacao { get; set; }
     }
 }

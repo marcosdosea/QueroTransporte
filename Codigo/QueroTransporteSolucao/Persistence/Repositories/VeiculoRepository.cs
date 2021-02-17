@@ -28,7 +28,7 @@ namespace Data.Repositories
         /// <returns></returns>
         public virtual bool Inserir(VeiculoModel objeto)
         {
-            _context.Veiculo.Add(_mapper.Map<Veiculo>(objeto));
+            _context.Veiculos.Add(_mapper.Map<Veiculos>(objeto));
             return _context.SaveChanges() == 1;
         }
 
@@ -38,7 +38,7 @@ namespace Data.Repositories
         /// <param name="veiculoModel"></param>
         public virtual bool Editar(VeiculoModel objeto)
         {
-            _context.Veiculo.Update(_mapper.Map<Veiculo>(objeto));
+            _context.Veiculos.Update(_mapper.Map<Veiculos>(objeto));
             return _context.SaveChanges() == 1;
         }
 
@@ -49,7 +49,7 @@ namespace Data.Repositories
         /// <param name="id"></param>
         public virtual bool Remover(int id)
         {
-            _context.Veiculo.Remove(_context.Veiculo.FirstOrDefault(x => x.Id == id));
+            _context.Veiculos.Remove(_context.Veiculos.FirstOrDefault(x => x.Id == id));
             return _context.SaveChanges() == 1;
         }
 
@@ -58,7 +58,7 @@ namespace Data.Repositories
         /// </summary>
         /// <returns></returns>
         public virtual List<VeiculoModel> ObterTodos()
-            => _context.Veiculo
+            => _context.Veiculos
                 .Select(veiculo => new VeiculoModel
                 {
                     Id = veiculo.Id,
@@ -81,7 +81,7 @@ namespace Data.Repositories
         /// <param name="modelo"></param>
         /// <returns></returns>
         public virtual IEnumerable<VeiculoModel> ObterPorModelo(string modelo)
-            => _context.Veiculo
+            => _context.Veiculos
                 .Where(veiculoModel => veiculoModel.Modelo.StartsWith(modelo))
                 .Select(veiculo => new VeiculoModel
                 {
@@ -105,7 +105,7 @@ namespace Data.Repositories
         /// <param name="chassi"></param>
         /// <returns></returns>
         public virtual int VerificaInsercaoVeiculo(string chassi, string placa)
-            => _context.Veiculo
+            => _context.Veiculos
                 .Where(veiculoModel => veiculoModel.Chassi.StartsWith(chassi) || veiculoModel.Placa.StartsWith(placa))
                 .Select(veiculo => new VeiculoModel
                 {
@@ -163,7 +163,7 @@ namespace Data.Repositories
         }
 
         public virtual VeiculoModel ObterPorId(int idVeiculo)
-            => _context.Veiculo.Where(v => v.Id == idVeiculo)
+            => _context.Veiculos.Where(v => v.Id == idVeiculo)
                 .Select(v => new VeiculoModel
                 {
                     Id = v.Id,

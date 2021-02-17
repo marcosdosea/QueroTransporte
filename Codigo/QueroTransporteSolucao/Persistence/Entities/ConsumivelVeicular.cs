@@ -10,6 +10,6 @@ namespace Data.Entities
         public string Categoria { get; set; }
         public int IdVeiculo { get; set; }
 
-        public Veiculo IdVeiculoNavigation { get; set; }
+        public Veiculos IdVeiculoNavigation { get; set; }
     }
 }

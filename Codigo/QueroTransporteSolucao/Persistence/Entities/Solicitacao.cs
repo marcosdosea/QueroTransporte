@@ -12,7 +12,7 @@ namespace Data.Entities
         public int IdPagamento { get; set; }
 
         public Pagamento IdPagamentoNavigation { get; set; }
-        public Usuario IdUsuarioNavigation { get; set; }
+        public Usuarios IdUsuarioNavigation { get; set; }
         public Viagem IdViagemNavigation { get; set; }
     }
 }

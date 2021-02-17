@@ -13,6 +13,6 @@ namespace Data.Entities
         public string Status { get; set; }
         public string Tipo { get; set; }
 
-        public Usuario IdUsuarioNavigation { get; set; }
+        public Usuarios IdUsuarioNavigation { get; set; }
     }
 }

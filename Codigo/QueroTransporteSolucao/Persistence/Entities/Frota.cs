@@ -6,7 +6,7 @@ namespace Data.Entities
     {
         public Frota()
         {
-            Veiculo = new HashSet<Veiculo>();
+            Veiculos = new HashSet<Veiculos>();
         }
 
         public int Id { get; set; }
@@ -14,6 +14,7 @@ namespace Data.Entities
         public string Descricao { get; set; }
         public byte EhPublica { get; set; }
 
-        public ICollection<Veiculo> Veiculo { get; set; }
+        public RotaFrota RotaFrota { get; set; }
+        public ICollection<Veiculos> Veiculos { get; set; }
     }
 }

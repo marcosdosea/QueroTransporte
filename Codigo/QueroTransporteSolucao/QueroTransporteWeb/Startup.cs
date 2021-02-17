@@ -1,11 +1,9 @@
 using AutoMapper;
-using Data.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QueroTransporteWeb.App_Start.AutoMapper;
@@ -39,9 +37,7 @@ namespace QueroTransporteWeb
                 });
 
 
-            services.AddDbContext<ContextDB>(options =>
-                options.UseMySQL(
-                    Configuration.GetConnectionString("QueroTransporteConnection")));
+            //services.AddDbContext<ContextDB>(options => options.UseMySQL(Configuration.GetConnectionString("QueroTransporteConnection")));
 
             // Configurando as entidades à serem mapeadas.
             var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new AutoMapperProfile()));

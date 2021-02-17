@@ -13,26 +13,81 @@ namespace Data.Entities
         {
         }
 
+        public virtual DbSet<Abastecimento> Abastecimento { get; set; }
         public virtual DbSet<ConsumivelVeicular> ConsumivelVeicular { get; set; }
         public virtual DbSet<Credito> Credito { get; set; }
         public virtual DbSet<Frota> Frota { get; set; }
-        public virtual DbSet<Motorista> Motorista { get; set; }
+        public virtual DbSet<Motoristas> Motoristas { get; set; }
         public virtual DbSet<Pagamento> Pagamento { get; set; }
+        public virtual DbSet<ProximasTrocas> ProximasTrocas { get; set; }
+        public virtual DbSet<RegistroSaidas> RegistroSaidas { get; set; }
+        public virtual DbSet<RelatorioMecanico> RelatorioMecanico { get; set; }
         public virtual DbSet<Rota> Rota { get; set; }
+        public virtual DbSet<RotaFrota> RotaFrota { get; set; }
         public virtual DbSet<Solicitacao> Solicitacao { get; set; }
+        public virtual DbSet<SolicitacoesManutencao> SolicitacoesManutencao { get; set; }
+        public virtual DbSet<TiposManutencao> TiposManutencao { get; set; }
         public virtual DbSet<Transacao> Transacao { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Veiculo> Veiculo { get; set; }
+        public virtual DbSet<Unidades> Unidades { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
+        public virtual DbSet<Veiculos> Veiculos { get; set; }
         public virtual DbSet<Viagem> Viagem { get; set; }
+        public virtual DbSet<Vistorias> Vistorias { get; set; }
 
-        // Unable to generate entity type for table 'bd_quero_transporte.rota_frota'. Please see the warning messages.
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Abastecimento>(entity =>
+            {
+                entity.ToTable("abastecimento", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.MotoristaId)
+                    .HasName("fk_ABASTECIMENTO_MOTORISTA1_idx");
+
+                entity.HasIndex(e => e.VeiculoId)
+                    .HasName("fk_ABASTECIMENTO_VEICULO1_idx");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Abastecimentocol)
+                    .HasColumnName("ABASTECIMENTOcol")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Data)
+                    .HasColumnName("DATA")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.LeituraOdometro).HasColumnName("LEITURA_ODOMETRO");
+
+                entity.Property(e => e.LitrosAbastecidos).HasColumnName("LITROS_ABASTECIDOS");
+
+                entity.Property(e => e.MotoristaId)
+                    .HasColumnName("MOTORISTA_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.VeiculoId)
+                    .HasColumnName("VEICULO_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.Motorista)
+                    .WithMany(p => p.Abastecimento)
+                    .HasForeignKey(d => d.MotoristaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_ABASTECIMENTO_MOTORISTA1");
+
+                entity.HasOne(d => d.Veiculo)
+                    .WithMany(p => p.Abastecimento)
+                    .HasForeignKey(d => d.VeiculoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_ABASTECIMENTO_VEICULO1");
+            });
+
             modelBuilder.Entity<ConsumivelVeicular>(entity =>
             {
                 entity.ToTable("consumivel_veicular", "bd_quero_transporte");
@@ -122,9 +177,13 @@ namespace Data.Entities
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Motorista>(entity =>
+            modelBuilder.Entity<Motoristas>(entity =>
             {
-                entity.ToTable("motorista", "bd_quero_transporte");
+                entity.ToTable("motoristas", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.IdUsuario)
                     .HasName("fk_TB_MOTORISTA_TB_USUARIO1_idx");
@@ -152,7 +211,7 @@ namespace Data.Entities
                     .HasColumnType("date");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
-                    .WithMany(p => p.Motorista)
+                    .WithMany(p => p.Motoristas)
                     .HasForeignKey(d => d.IdUsuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TB_MOTORISTA_TB_USUARIO1");
@@ -177,12 +236,140 @@ namespace Data.Entities
                     .HasColumnType("enum('A VISTA','CREDITOS')");
             });
 
+            modelBuilder.Entity<ProximasTrocas>(entity =>
+            {
+                entity.ToTable("proximas_trocas", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.RelatorioMecanicoId)
+                    .HasName("fk_PROXIMAS_TROCAS_RELATORIO_MECANICO1_idx");
+
+                entity.HasIndex(e => e.VeiculosId)
+                    .HasName("fk_PROXIMAS_TROCAS_VEICULOS1_idx");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Especificacao)
+                    .HasColumnName("ESPECIFICACAO")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.KmProximaTroca)
+                    .HasColumnName("KM_PROXIMA_TROCA")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RelatorioMecanicoId).HasColumnName("RELATORIO_MECANICO_ID");
+
+                entity.Property(e => e.VeiculosId)
+                    .HasColumnName("VEICULOS_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.RelatorioMecanico)
+                    .WithMany(p => p.ProximasTrocas)
+                    .HasForeignKey(d => d.RelatorioMecanicoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_PROXIMAS_TROCAS_RELATORIO_MECANICO1");
+
+                entity.HasOne(d => d.Veiculos)
+                    .WithMany(p => p.ProximasTrocas)
+                    .HasForeignKey(d => d.VeiculosId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_PROXIMAS_TROCAS_VEICULOS1");
+            });
+
+            modelBuilder.Entity<RegistroSaidas>(entity =>
+            {
+                entity.ToTable("registro_saidas", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.MotoristaId)
+                    .HasName("fk_REGISTRO_SAIDAS_MOTORISTA1_idx");
+
+                entity.HasIndex(e => e.VeiculoId)
+                    .HasName("fk_REGISTRO_SAIDAS_VEICULO1_idx");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Data)
+                    .HasColumnName("DATA")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Descricao)
+                    .HasColumnName("DESCRICAO")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HorarioRetorno).HasColumnName("HORARIO_RETORNO");
+
+                entity.Property(e => e.HorarioSaida).HasColumnName("HORARIO_SAIDA");
+
+                entity.Property(e => e.LeituraOdometroFinal).HasColumnName("LEITURA_ODOMETRO_FINAL");
+
+                entity.Property(e => e.LeituraOdometroInicial).HasColumnName("LEITURA_ODOMETRO_INICIAL");
+
+                entity.Property(e => e.MotoristaId)
+                    .HasColumnName("MOTORISTA_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.VeiculoId)
+                    .HasColumnName("VEICULO_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.Motorista)
+                    .WithMany(p => p.RegistroSaidas)
+                    .HasForeignKey(d => d.MotoristaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_REGISTRO_SAIDAS_MOTORISTA1");
+
+                entity.HasOne(d => d.Veiculo)
+                    .WithMany(p => p.RegistroSaidas)
+                    .HasForeignKey(d => d.VeiculoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_REGISTRO_SAIDAS_VEICULO1");
+            });
+
+            modelBuilder.Entity<RelatorioMecanico>(entity =>
+            {
+                entity.ToTable("relatorio_mecanico", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Descricao)
+                    .HasColumnName("DESCRICAO")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OrdemServico)
+                    .HasColumnName("ORDEM_SERVICO")
+                    .HasColumnType("blob");
+
+                entity.Property(e => e.ValorPecas)
+                    .HasColumnName("VALOR_PECAS")
+                    .HasColumnType("decimal(2,0)");
+
+                entity.Property(e => e.ValorServico)
+                    .HasColumnName("VALOR_SERVICO")
+                    .HasColumnType("decimal(2,0)");
+
+                entity.Property(e => e.ValorTotal)
+                    .HasColumnName("VALOR_TOTAL")
+                    .HasColumnType("decimal(2,0)");
+            });
+
             modelBuilder.Entity<Rota>(entity =>
             {
                 entity.ToTable("rota", "bd_quero_transporte");
-
-                entity.HasIndex(e => e.IdRota)
-                    .HasName("fk_TB_ROTA_TB_ROTA1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -195,8 +382,10 @@ namespace Data.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.DiaSemana)
+                    .IsRequired()
                     .HasColumnName("DIA_SEMANA")
-                    .HasDefaultValueSql("0");
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.EhComposta)
                     .HasColumnName("EH_COMPOSTA")
@@ -206,20 +395,56 @@ namespace Data.Entities
 
                 entity.Property(e => e.HorarioSaida).HasColumnName("HORARIO_SAIDA");
 
-                entity.Property(e => e.IdRota)
-                    .HasColumnName("ID_ROTA")
-                    .HasColumnType("int unsigned");
-
                 entity.Property(e => e.Origem)
                     .IsRequired()
                     .HasColumnName("ORIGEM")
                     .HasMaxLength(30)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RotaFrota>(entity =>
+            {
+                entity.ToTable("rota_frota", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("fk_TB_FROTA_has_TB_ROTA_TB_FROTA1_idx");
+
+                entity.HasIndex(e => e.IdRota)
+                    .HasName("fk_TB_FROTA_has_TB_ROTA_TB_ROTA1_idx");
+
+                entity.HasIndex(e => e.UnidadesId)
+                    .HasName("fk_ROTA_FROTA_UNIDADES1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasColumnType("int unsigned")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.IdRota)
+                    .HasColumnName("ID_ROTA")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.UnidadesId)
+                    .HasColumnName("UNIDADES_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.RotaFrota)
+                    .HasForeignKey<RotaFrota>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TB_FROTA_has_TB_ROTA_TB_FROTA1");
 
                 entity.HasOne(d => d.IdRotaNavigation)
-                    .WithMany(p => p.InverseIdRotaNavigation)
+                    .WithMany(p => p.RotaFrota)
                     .HasForeignKey(d => d.IdRota)
-                    .HasConstraintName("fk_TB_ROTA_TB_ROTA1");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TB_FROTA_has_TB_ROTA_TB_ROTA1");
+
+                entity.HasOne(d => d.Unidades)
+                    .WithMany(p => p.RotaFrota)
+                    .HasForeignKey(d => d.UnidadesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_ROTA_FROTA_UNIDADES1");
             });
 
             modelBuilder.Entity<Solicitacao>(entity =>
@@ -280,6 +505,109 @@ namespace Data.Entities
                     .HasConstraintName("fk_SOLICITACAO_VIAGEM1");
             });
 
+            modelBuilder.Entity<SolicitacoesManutencao>(entity =>
+            {
+                entity.ToTable("solicitacoes_manutencao", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.RelatorioMecanicoId)
+                    .HasName("fk_SOLICITACOES_MANUTENCAO_RELATORIO_MECANICO1_idx");
+
+                entity.HasIndex(e => e.TipoManutençãoId)
+                    .HasName("fk_SOLICITAR_MANUTENCAO_TIPO_MANUTENÇÃO1_idx");
+
+                entity.HasIndex(e => e.UsuarioId)
+                    .HasName("fk_SOLICITACOES_MANUTENCAO_USUARIO1_idx");
+
+                entity.HasIndex(e => e.VeiculoId)
+                    .HasName("fk_Solicitação_manutencao_VEICULO1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.Arquivo)
+                    .HasColumnName("ARQUIVO")
+                    .HasColumnType("blob");
+
+                entity.Property(e => e.Data)
+                    .HasColumnName("DATA")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Descricao)
+                    .HasColumnName("DESCRICAO")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LeituraOdometro).HasColumnName("LEITURA_ODOMETRO");
+
+                entity.Property(e => e.NumeroSolicitacao)
+                    .HasColumnName("NUMERO_SOLICITACAO")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RelatorioMecanico)
+                    .HasColumnName("RELATORIO_MECANICO")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RelatorioMecanicoId).HasColumnName("RELATORIO_MECANICO_ID");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("STATUS")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TipoManutençãoId).HasColumnName("TIPO_MANUTENÇÃO_ID");
+
+                entity.Property(e => e.UsuarioId)
+                    .HasColumnName("USUARIO_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.VeiculoId)
+                    .HasColumnName("VEICULO_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.RelatorioMecanicoNavigation)
+                    .WithMany(p => p.SolicitacoesManutencao)
+                    .HasForeignKey(d => d.RelatorioMecanicoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_SOLICITACOES_MANUTENCAO_RELATORIO_MECANICO1");
+
+                entity.HasOne(d => d.TipoManutenção)
+                    .WithMany(p => p.SolicitacoesManutencao)
+                    .HasForeignKey(d => d.TipoManutençãoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_SOLICITAR_MANUTENCAO_TIPO_MANUTENÇÃO1");
+
+                entity.HasOne(d => d.Usuario)
+                    .WithMany(p => p.SolicitacoesManutencao)
+                    .HasForeignKey(d => d.UsuarioId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_SOLICITACOES_MANUTENCAO_USUARIO1");
+
+                entity.HasOne(d => d.Veiculo)
+                    .WithMany(p => p.SolicitacoesManutencao)
+                    .HasForeignKey(d => d.VeiculoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Solicitação_manutencao_VEICULO1");
+            });
+
+            modelBuilder.Entity<TiposManutencao>(entity =>
+            {
+                entity.ToTable("tipos_manutencao", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Tipo)
+                    .HasColumnName("TIPO")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Transacao>(entity =>
             {
                 entity.ToTable("transacao", "bd_quero_transporte");
@@ -328,13 +656,57 @@ namespace Data.Entities
                     .HasConstraintName("fk_TB_TRANSACAO_TB_USUARIO1");
             });
 
-            modelBuilder.Entity<Usuario>(entity =>
+            modelBuilder.Entity<Unidades>(entity =>
             {
-                entity.ToTable("usuario", "bd_quero_transporte");
+                entity.ToTable("unidades", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("idUnidades_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.ArquivoFoto)
+                    .HasColumnName("ARQUIVO_FOTO")
+                    .HasColumnType("blob");
+
+                entity.Property(e => e.Endereco)
+                    .HasColumnName("ENDERECO")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NomeUnidade)
+                    .HasColumnName("NOME_UNIDADE")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SiglaUnidade)
+                    .HasColumnName("SIGLA_UNIDADE")
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Telefone)
+                    .HasColumnName("TELEFONE")
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Usuarios>(entity =>
+            {
+                entity.ToTable("usuarios", "bd_quero_transporte");
 
                 entity.HasIndex(e => e.Cpf)
                     .HasName("CPF_UNIQUE")
                     .IsUnique();
+
+                entity.HasIndex(e => e.NumeroMatricula)
+                    .HasName("NUMERO_MATRICULA_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.UnidadesIdUnidades)
+                    .HasName("fk_USUARIO_Unidades1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -358,6 +730,11 @@ namespace Data.Entities
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.NumeroMatricula)
+                    .HasColumnName("NUMERO_MATRICULA")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Senha)
                     .IsRequired()
                     .HasColumnName("SENHA")
@@ -374,11 +751,21 @@ namespace Data.Entities
                     .IsRequired()
                     .HasColumnName("TIPO")
                     .HasColumnType("enum('CLIENTE','MOTORISTA','ADMIN','GESTOR')");
+
+                entity.Property(e => e.UnidadesIdUnidades)
+                    .HasColumnName("UNIDADES_ID_UNIDADES")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.UnidadesIdUnidadesNavigation)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.UnidadesIdUnidades)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_USUARIO_Unidades1");
             });
 
-            modelBuilder.Entity<Veiculo>(entity =>
+            modelBuilder.Entity<Veiculos>(entity =>
             {
-                entity.ToTable("veiculo", "bd_quero_transporte");
+                entity.ToTable("veiculos", "bd_quero_transporte");
 
                 entity.HasIndex(e => e.IdFrota)
                     .HasName("fk_TB_VEICULO_TB_FROTA1_idx");
@@ -427,6 +814,8 @@ namespace Data.Entities
                     .HasColumnName("ID_FROTA")
                     .HasColumnType("int unsigned");
 
+                entity.Property(e => e.LeituraOdômetro).HasColumnName("LEITURA_ODÔMETRO");
+
                 entity.Property(e => e.Marca)
                     .IsRequired()
                     .HasColumnName("MARCA")
@@ -439,14 +828,37 @@ namespace Data.Entities
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.NomeclaturaViatura)
+                    .HasColumnName("NOMECLATURA_VIATURA")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Placa)
                     .IsRequired()
                     .HasColumnName("PLACA")
                     .HasMaxLength(7)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Renavam)
+                    .HasColumnName("RENAVAM")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("STATUS")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValorVeiculo)
+                    .HasColumnName("VALOR_VEICULO")
+                    .HasColumnType("decimal(2,0)");
+
+                entity.Property(e => e.VencimentoIpva)
+                    .HasColumnName("VENCIMENTO_IPVA")
+                    .HasColumnType("date");
+
                 entity.HasOne(d => d.IdFrotaNavigation)
-                    .WithMany(p => p.Veiculo)
+                    .WithMany(p => p.Veiculos)
                     .HasForeignKey(d => d.IdFrota)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TB_VEICULO_TB_FROTA1");
@@ -497,6 +909,56 @@ namespace Data.Entities
                     .HasForeignKey(d => d.IdVeiculo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TB_ROTA_has_TB_VEICULO_TB_VEICULO1");
+            });
+
+            modelBuilder.Entity<Vistorias>(entity =>
+            {
+                entity.ToTable("vistorias", "bd_quero_transporte");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("ID_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.MotoristaId)
+                    .HasName("fk_Vistorias_MOTORISTA1_idx");
+
+                entity.HasIndex(e => e.VeiculoId)
+                    .HasName("fk_Vistorias_VEICULO1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.Data)
+                    .HasColumnName("DATA")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Descricao)
+                    .HasColumnName("DESCRICAO")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LeituraOdometro).HasColumnName("LEITURA_ODOMETRO");
+
+                entity.Property(e => e.MotoristaId)
+                    .HasColumnName("MOTORISTA_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.VeiculoId)
+                    .HasColumnName("VEICULO_ID")
+                    .HasColumnType("int unsigned");
+
+                entity.HasOne(d => d.Motorista)
+                    .WithMany(p => p.Vistorias)
+                    .HasForeignKey(d => d.MotoristaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Vistorias_MOTORISTA1");
+
+                entity.HasOne(d => d.Veiculo)
+                    .WithMany(p => p.Vistorias)
+                    .HasForeignKey(d => d.VeiculoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Vistorias_VEICULO1");
             });
         }
     }

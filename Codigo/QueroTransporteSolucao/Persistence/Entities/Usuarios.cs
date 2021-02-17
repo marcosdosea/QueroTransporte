@@ -2,13 +2,14 @@
 
 namespace Data.Entities
 {
-    public partial class Usuario
+    public partial class Usuarios
     {
-        public Usuario()
+        public Usuarios()
         {
             Credito = new HashSet<Credito>();
-            Motorista = new HashSet<Motorista>();
+            Motoristas = new HashSet<Motoristas>();
             Solicitacao = new HashSet<Solicitacao>();
+            SolicitacoesManutencao = new HashSet<SolicitacoesManutencao>();
             Transacao = new HashSet<Transacao>();
         }
 
@@ -19,10 +20,14 @@ namespace Data.Entities
         public string Email { get; set; }
         public string Telefone { get; set; }
         public string Tipo { get; set; }
+        public int UnidadesIdUnidades { get; set; }
+        public string NumeroMatricula { get; set; }
 
+        public Unidades UnidadesIdUnidadesNavigation { get; set; }
         public ICollection<Credito> Credito { get; set; }
-        public ICollection<Motorista> Motorista { get; set; }
+        public ICollection<Motoristas> Motoristas { get; set; }
         public ICollection<Solicitacao> Solicitacao { get; set; }
+        public ICollection<SolicitacoesManutencao> SolicitacoesManutencao { get; set; }
         public ICollection<Transacao> Transacao { get; set; }
     }
 }

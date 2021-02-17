@@ -26,7 +26,7 @@ namespace Data.Repositories
         /// <returns> </returns>
         public bool Inserir(MotoristaModel objeto)
         {
-            _context.Motorista.Add(_mapper.Map<Motorista>(objeto));
+            _context.Motoristas.Add(_mapper.Map<Motoristas>(objeto));
             return _context.SaveChanges() == 1;
         }
 
@@ -36,7 +36,7 @@ namespace Data.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         public MotoristaModel ObterPorId(int id)
-            => _context.Motorista.Where(motorista => motorista.Id == id)
+            => _context.Motoristas.Where(motorista => motorista.Id == id)
                 .Select(motorista => new MotoristaModel
                 {
                     Id = motorista.Id,
@@ -53,7 +53,7 @@ namespace Data.Repositories
         /// <returns></returns>
         public bool Remover(int id)
         {
-            _context.Motorista.Remove(_context.Motorista.Find(id));
+            _context.Motoristas.Remove(_context.Motoristas.Find(id));
             return _context.SaveChanges() == 1;
         }
         /// <summary>
@@ -62,8 +62,8 @@ namespace Data.Repositories
         /// <param name="objeto"></param>
         public bool Editar(MotoristaModel objeto)
         {
-            objeto.IdUsuario = _context.Motorista.Where(x => x.Id == objeto.Id).Select(x => x.IdUsuario).FirstOrDefault();
-            _context.Update(_mapper.Map<Motorista>(objeto));
+            objeto.IdUsuario = _context.Motoristas.Where(x => x.Id == objeto.Id).Select(x => x.IdUsuario).FirstOrDefault();
+            _context.Update(_mapper.Map<Motoristas>(objeto));
             return _context.SaveChanges() == 1;
 
         }
@@ -72,7 +72,7 @@ namespace Data.Repositories
         /// </summary>
         /// <returns></returns>
         public List<MotoristaModel> ObterTodos()
-            => _context.Motorista
+            => _context.Motoristas
                 .Select(motorista => new MotoristaModel
                 {
                     Id = motorista.Id,
