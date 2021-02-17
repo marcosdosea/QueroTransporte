@@ -2,13 +2,13 @@
 
 namespace Data.Entities
 {
-    public partial class BD_QUERO_TRANSPORTEContext : DbContext
+    public partial class ContextDB : DbContext
     {
-        public BD_QUERO_TRANSPORTEContext()
+        public ContextDB()
         {
         }
 
-        public BD_QUERO_TRANSPORTEContext(DbContextOptions<BD_QUERO_TRANSPORTEContext> options)
+        public ContextDB(DbContextOptions<ContextDB> options)
             : base(options)
         {
         }

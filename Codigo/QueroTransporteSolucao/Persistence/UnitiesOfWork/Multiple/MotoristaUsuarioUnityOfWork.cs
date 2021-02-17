@@ -11,9 +11,9 @@ namespace Data.UnitiesOfWork.Multiple
         public IUsuarioRepository UsuarioRepository { get; }
         public IMotoristaRepository MotoristaRepository { get; }
 
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
-        public MotoristaUsuarioUnityOfWork(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public MotoristaUsuarioUnityOfWork(ContextDB context, IMapper mapper)
         {
             UsuarioRepository = new UsuarioRepository(context, mapper);
             MotoristaRepository = new MotoristaRepository(context, mapper);

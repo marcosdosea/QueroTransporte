@@ -9,9 +9,9 @@ namespace Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
-        public UsuarioRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public UsuarioRepository(ContextDB context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

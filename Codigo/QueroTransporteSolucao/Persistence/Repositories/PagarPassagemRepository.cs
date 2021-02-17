@@ -8,8 +8,8 @@ namespace Data.Repositories
 {
     public class PagarPassagemRepository : IPagarPassagemRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
-        public PagarPassagemRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly ContextDB _context;
+        public PagarPassagemRepository(ContextDB context)
         {
             _context = context;
         }

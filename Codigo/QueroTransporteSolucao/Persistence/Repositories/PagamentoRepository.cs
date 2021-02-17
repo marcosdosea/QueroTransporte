@@ -8,9 +8,9 @@ namespace Data.Repositories
 {
     public class PagamentoRepository : IPagamentoRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
 
-        public PagamentoRepository(BD_QUERO_TRANSPORTEContext context)
+        public PagamentoRepository(ContextDB context)
         {
             _context = context;
         }

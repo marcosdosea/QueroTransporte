@@ -10,10 +10,10 @@ namespace Data.Repositories
 {
     public class FrotaRepository : IFrotaRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
 
-        public FrotaRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public FrotaRepository(ContextDB context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

@@ -9,9 +9,9 @@ namespace Data.Repositories
 {
     public class ComprarCreditoRepository : IComprarCreditoRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
-        public ComprarCreditoRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public ComprarCreditoRepository(ContextDB context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

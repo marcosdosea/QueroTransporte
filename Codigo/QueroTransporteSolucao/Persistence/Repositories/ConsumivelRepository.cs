@@ -9,9 +9,9 @@ namespace Data.Repositories
 {
     public class ConsumivelRepository : IConsumivelVeicularRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
-        public ConsumivelRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public ConsumivelRepository(ContextDB context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

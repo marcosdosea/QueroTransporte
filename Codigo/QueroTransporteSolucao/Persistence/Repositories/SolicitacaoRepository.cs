@@ -9,8 +9,8 @@ namespace Data.Repositories
 {
     public class SolicitacaoRepository : ISolicitacaoRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
-        public SolicitacaoRepository(BD_QUERO_TRANSPORTEContext context)
+        private readonly ContextDB _context;
+        public SolicitacaoRepository(ContextDB context)
         {
             _context = context;
         }

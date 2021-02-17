@@ -9,9 +9,9 @@ namespace Data.Repositories
 {
     public class RotaRepository : IRotaRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
 
-        public RotaRepository(BD_QUERO_TRANSPORTEContext context)
+        public RotaRepository(ContextDB context)
         {
             _context = context;
         }

@@ -9,9 +9,9 @@ namespace Data.Repositories
 {
     public class VeiculoRepository : IVeiculoRepository
     {
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
-        public VeiculoRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public VeiculoRepository(ContextDB context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

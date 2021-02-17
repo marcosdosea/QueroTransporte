@@ -10,10 +10,10 @@ namespace Data.Repositories
     public class MotoristaRepository : IMotoristaRepository
     {
 
-        private readonly BD_QUERO_TRANSPORTEContext _context;
+        private readonly ContextDB _context;
         private readonly IMapper _mapper;
 
-        public MotoristaRepository(BD_QUERO_TRANSPORTEContext context, IMapper mapper)
+        public MotoristaRepository(ContextDB context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

@@ -39,7 +39,7 @@ namespace QueroTransporteWeb
                 });
 
 
-            services.AddDbContext<BD_QUERO_TRANSPORTEContext>(options =>
+            services.AddDbContext<ContextDB>(options =>
                 options.UseMySQL(
                     Configuration.GetConnectionString("QueroTransporteConnection")));
 
