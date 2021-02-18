@@ -23,7 +23,9 @@ namespace Data.Repositories
         /// <param name="objeto">Objeto na qual irá sobreescrever o objeto (usuario) antigo</param>
         public bool Editar(UsuarioModel objeto)
         {
-            _context.Usuarios.Update(_mapper.Map<Usuarios>(objeto));
+            var x = _mapper.Map<Usuarios>(objeto);
+            x.UnidadesIdUnidades = 1;
+            _context.Usuarios.Update(x);
             return _context.SaveChanges() == 1;
         }
 
@@ -52,7 +54,7 @@ namespace Data.Repositories
         /// <param name="id">serve para buscar um usuario no banco para excluir</param>
         public bool Remover(int id)
         {
-            _context.Remove(_context.Usuarios.FirstOrDefault(x => x.Id == id));
+            _context.Usuarios.Remove(_context.Usuarios.FirstOrDefault(x => x.Id == id));
             return _context.SaveChanges() == 1;
         }
 
@@ -62,7 +64,10 @@ namespace Data.Repositories
         /// <param name="objeto">Objeto que será adicionando no banco</param>
         public bool Inserir(UsuarioModel objeto)
         {
-            _context.Usuarios.Add(_mapper.Map<Usuarios>(objeto));
+            // Alterar pra receber o ID correto da unidade (caso não seja o primeiro acesso)
+            var x = _mapper.Map<Usuarios>(objeto);
+            x.UnidadesIdUnidades = 1;
+            _context.Usuarios.Add(x);
             return _context.SaveChanges() == 1;
         }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QueroTransporte.Model;
+using System;
 
 namespace QueroTransporteWeb.Controllers
 {
@@ -15,19 +16,19 @@ namespace QueroTransporteWeb.Controllers
             FrotaService = frotaService;
         }
         // GET: Frota
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterTodos());
         }
 
         // GET: Frota/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
         }
 
         // GET: Frota/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -35,13 +36,12 @@ namespace QueroTransporteWeb.Controllers
         // POST: Frota/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FrotaModel frota)
+        public IActionResult Create(FrotaModel frota)
         {
             try
             {
-                if (ModelState.IsValid)
-                    if (FrotaService.FrotaUnityOfWork.FrotaRepository.Inserir(frota))
-                        return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid && FrotaService.FrotaUnityOfWork.FrotaRepository.Inserir(frota))
+                    return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -51,7 +51,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // GET: Frota/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
         }
@@ -59,7 +59,7 @@ namespace QueroTransporteWeb.Controllers
         // POST: Frota/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -74,15 +74,10 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // GET: Frota/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
-        }
+        public IActionResult Delete(int id) => View(FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(id));
 
         // POST: Frota/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Remove(int id)
         {
             try
             {
@@ -91,7 +86,7 @@ namespace QueroTransporteWeb.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index), new { msg = "Erro" });
         }

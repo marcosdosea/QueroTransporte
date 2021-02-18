@@ -22,7 +22,7 @@ namespace QueroTransporteWeb.Controllers
             VeiculoService = gerenciadorVeiculo;
         }
         // GET: ManterViagem
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var listViewModels = new List<ViagemRotaViewModel>();
             foreach (var viagem in ViagemService.ViagemUnityOfWork.ViagemRepository.ObterTodos())
@@ -42,7 +42,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // GET: ManterViagem/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
             ViewBag.rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
@@ -51,7 +51,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // GET: ManterViagem/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             ViewBag.rotas = new SelectList(RotaService.RotaUnityOfWork.RotaRepository.ObterDetalhesRota(), "Id", "DetalhesRota");
             ViewBag.placas = new SelectList(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos(), "Id", "Placa");
@@ -61,7 +61,7 @@ namespace QueroTransporteWeb.Controllers
         // POST: ManterViagem/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViagemModel viagemModel)
+        public IActionResult Create(ViagemModel viagemModel)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // GET: ManterViagem/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
             var rotas = RotaService.RotaUnityOfWork.RotaRepository.ObterTodos();
@@ -89,7 +89,7 @@ namespace QueroTransporteWeb.Controllers
         // POST: ManterViagem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ViagemModel viagemModel)
+        public IActionResult Edit(int id, ViagemModel viagemModel)
         {
             try
             {
@@ -105,7 +105,8 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // GET: ManterViagem/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public IActionResult Delete(int id)
         {
             var viagem = ViagemService.ViagemUnityOfWork.ViagemRepository.ObterPorId(id);
             ViewBag.rota = RotaService.RotaUnityOfWork.RotaRepository.ObterPorId(viagem.IdRota);
@@ -114,9 +115,7 @@ namespace QueroTransporteWeb.Controllers
         }
 
         // POST: ManterViagem/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Remove(int id)
         {
             try
             {
