@@ -1,12 +1,12 @@
-﻿@model IEnumerable<QueroTransporte.Model.VeiculoModel>
+﻿@model IEnumerable<Domain.Models.ViewModel.VeiculoFrotaViewModel>
 
 @{
-    ViewData["Title"] = "Manter Veiculo";
+    ViewData["Title"] = "Veiculo";
 }
 
 
     <div class="x_title">
-        <h2>Manter Veículos</h2>
+        <h2>Veículos</h2>
         <a class="btn btn-primary" style="float:right" asp-controller="Veiculo" asp-action="Create">Adicionar Veiculo</a>
         <div class="clearfix"></div>
     </div>
@@ -14,24 +14,27 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Placa)
+                @Html.DisplayNameFor(model => model.Veiculo.Placa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Marca)
+                @Html.DisplayNameFor(model => model.Veiculo.Marca)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Modelo)
+                @Html.DisplayNameFor(model => model.Veiculo.Modelo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cor)
+                @Html.DisplayNameFor(model => model.Veiculo.Cor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataEmplacamento)
+                @Html.DisplayNameFor(model => model.Veiculo.DataEmplacamento)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnoModelo)
+                @Html.DisplayNameFor(model => model.Veiculo.AnoModelo)
             </th>
-          
+            <th>
+                Frota
+            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -39,28 +42,30 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Placa)
+                @Html.DisplayFor(modelItem => item.Veiculo.Placa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Marca)
+                @Html.DisplayFor(modelItem => item.Veiculo.Marca)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
+                @Html.DisplayFor(modelItem => item.Veiculo.Modelo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cor)
+                @Html.DisplayFor(modelItem => item.Veiculo.Cor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataEmplacamento)
+                @Html.DisplayFor(modelItem => item.Veiculo.DataEmplacamento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AnoModelo)
+                @Html.DisplayFor(modelItem => item.Veiculo.AnoModelo)
             </td>
-         
             <td>
-                <a href="@Url.Action("Details", "Veiculo", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
-                <a href="@Url.Action("Edit", "Veiculo", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                <a href="@Url.Action("Delete", "Veiculo", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
+                @Html.DisplayFor(modelItem => item.Frota.Titulo)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "Veiculo", new { id = item.Veiculo.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
+                <a href="@Url.Action("Edit", "Veiculo", new { id = item.Veiculo.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                <a href="@Url.Action("Delete", "Veiculo", new { id = item.Veiculo.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
             </td>
         </tr>
 }

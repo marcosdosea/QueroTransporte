@@ -1,10 +1,12 @@
 
 using Domain.Interfaces.Services;
+using Domain.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QueroTransporte.Model;
+using System.Collections.Generic;
 
 namespace QueroTransporte.QueroTransporteWeb
 {
@@ -21,7 +23,14 @@ namespace QueroTransporte.QueroTransporteWeb
         }
 
 
-        public IActionResult Index() => View(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos());
+        public IActionResult Index()
+        {
+            var lista = new List<VeiculoFrotaViewModel>();
+            var veiculos = VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos();
+
+            veiculos.ForEach(v => lista.Add(new VeiculoFrotaViewModel { Frota = FrotaService.FrotaUnityOfWork.FrotaRepository.ObterPorId(v.IdFrota), Veiculo = v }));
+            return View(lista);
+        }
 
         public IActionResult Create()
         {
@@ -31,7 +40,7 @@ namespace QueroTransporte.QueroTransporteWeb
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VeiculoModel veiculoModel)
+        public IActionResult Create(VeiculoModel veiculoModel)
         {
             if (ModelState.IsValid)
             {

@@ -35,6 +35,7 @@ namespace QueroTransporte.QueroTransporteWeb
         public IActionResult Create()
         {
             ViewBag.Consumiveis = new SelectList(ConsumivelService.ConsumivelUnityOfWork.ConsumivelVeicularRepository.ObterTodos(), "Id");
+            ViewBag.Veiculos = new SelectList(VeiculoService.VeiculoUnityOfWork.VeiculoRepository.ObterTodos(), "Id", "Placa");
             return View();
         }
 

@@ -20,15 +20,17 @@
                 <input asp-for="Descricao" class="form-control" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
+            <!--
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input asp-for="IsPublic" /> @Html.DisplayNameFor(model => model.IsPublic)
+            </label>
+        </div>
+    </div>
+        -->
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsPublic" /> @Html.DisplayNameFor(model => model.IsPublic)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />  <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+                <input type="submit" value="Salvar" class="btn btn-success" />  <a class="btn btn-danger" asp-action="Index">Cancelar</a>
             </div>
         </form>
     </div>

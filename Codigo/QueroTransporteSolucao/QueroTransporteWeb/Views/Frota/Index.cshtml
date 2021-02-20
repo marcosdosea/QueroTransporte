@@ -19,31 +19,35 @@
             <th>
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPublic)
-            </th>
+            <!--
+    <th>
+        @Html.DisplayNameFor(model => model.IsPublic)
+    </th>
+        -->
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsPublic)
-                </td>
-                <td>
-                    <a href="@Url.Action("Details", "Frota", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
-                    <a href="@Url.Action("Edit", "Frota", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                    <a href="@Url.Action("Delete", "Frota", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <!--
+        <td>
+            @Html.DisplayFor(modelItem => item.IsPublic)
+        </td>
+    -->
+            <td>
+                <a href="@Url.Action("Details", "Frota", new { id = item.Id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Detalhes </a>
+                <a href="@Url.Action("Edit", "Frota", new { id = item.Id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                <a href="@Url.Action("Delete", "Frota", new { id = item.Id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Remover </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

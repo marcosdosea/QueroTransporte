@@ -1,21 +1,21 @@
 ﻿@model QueroTransporte.Model.ConsumivelVeicularModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Consumiveis";
 }
 
-<h2>Create</h2>
-
-<h4>ConsumivelVeicularModel</h4>
+<h2>Cadastro</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdVeiculo" class="control-label"></label>
-                <input asp-for="IdVeiculo" class="form-control" />
-                <span asp-validation-for="IdVeiculo" class="text-danger"></span>
+                <label class="control-label">Placa Veiculo</label>
+                @*ViewBag.RotaList is holding all the routs values*@
+                @Html.DropDownListFor(model => model.IdVeiculo, ViewBag.Veiculos as SelectList, new
+                { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdVeiculo, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="Valor" class="control-label"></label>

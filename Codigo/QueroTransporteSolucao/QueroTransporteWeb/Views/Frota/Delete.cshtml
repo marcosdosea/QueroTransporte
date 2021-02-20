@@ -18,13 +18,15 @@
                 <label asp-for="Descricao" class="control-label"></label>
                 <input asp-for="Descricao" class="form-control" readonly />
             </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsPublic" readonly /> @Html.DisplayNameFor(model => model.IsPublic)
-                    </label>
-                </div>
-            </div>
+            <!--
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input asp-for="IsPublic" readonly /> @Html.DisplayNameFor(model => model.IsPublic)
+            </label>
+        </div>
+    </div>
+        -->
             <div class="form-group">
                 <a href="@Url.Action("Remove", "Frota", new { id = Model.Id })" class="btn btn-success"> Remover </a>
                 <a class="btn btn-danger" asp-action="Index">Cancelar</a>

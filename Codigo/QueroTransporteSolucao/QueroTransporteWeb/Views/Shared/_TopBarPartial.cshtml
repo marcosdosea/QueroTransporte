@@ -24,49 +24,53 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="https://instagram.faju8-1.fna.fbcdn.net/vp/bd2fab5b7961c32747d7ac0ebee2823d/5DD6066A/t51.2885-15/e35/64268963_620399681782719_5372864629773112534_n.jpg?_nc_ht=instagram.faju8-1.fna.fbcdn.net" alt="">@nome
+                        <img src="https://99181-282044-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2016/05/icon-user-default.png" alt="">@nome
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="@Url.Action("Editar", "Usuario", new { id = idUsuario })"> Meus Dados </a></li>
-                        <li>
-                            <a href="javascript:;">
-                                <span class="badge bg-red pull-right">50%</span>
-                                <span>Configurações</span>
-                            </a>
-                        </li>
+                        <!--
+    <li><a href="@Url.Action("Editar", "Usuario", new { id = idUsuario })"> Meus Dados </a></li>
+    <li>
+        <a href="javascript:;">
+            <span class="badge bg-red pull-right">50%</span>
+            <span>Configurações</span>
+        </a>
+    </li>
+        -->
                         <li><a href="@Url.Action("Logout", "Login")"><i class="fa fa-sign-out pull-right"></i> Sair </a></li>
                     </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">1</span>
+                <!--
+    <li role="presentation" class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-envelope-o"></i>
+            <span class="badge bg-green">1</span>
+        </a>
+        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+            <li>
+                <a>
+                    <span class="image"><img src="https://99181-282044-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2016/05/icon-user-default.png" alt="Profile Image"></span>
+                    <span>
+                        <span>Gabriel Santana</span>
+                        <span class="time">3 mins ago</span>
+                    </span>
+                    <span class="message">
+                        Exemplo de notificação.
+                    </span>
+                </a>
+            </li>
+            <li>
+                <div class="text-center">
+                    <a>
+                        <strong>Ver todos alertas</strong>
+                        <i class="fa fa-angle-right"></i>
                     </a>
-                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                        <li>
-                            <a>
-                                <span class="image"><img src="https://instagram.faju8-1.fna.fbcdn.net/vp/bd2fab5b7961c32747d7ac0ebee2823d/5DD6066A/t51.2885-15/e35/64268963_620399681782719_5372864629773112534_n.jpg?_nc_ht=instagram.faju8-1.fna.fbcdn.net" alt="Profile Image"></span>
-                                <span>
-                                    <span>Gabriel Santana</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Exemplo de notificação.
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="text-center">
-                                <a>
-                                    <strong>Ver todos alertas</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                </div>
+            </li>
+        </ul>
+    </li>
+        -->
             </ul>
         </nav>
     </div>
